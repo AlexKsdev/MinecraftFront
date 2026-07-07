@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { Menu, X } from "lucide-react";
 import { MobileNav } from "./MobileNav";
 import styles from "./SiteHeader.module.scss";
 
@@ -54,7 +55,7 @@ export function SiteHeader() {
             aria-label="Toggle menu"
             type="button"
           >
-            {menuOpen ? "✕" : "☰"}
+            {menuOpen ? <X size={22} /> : <Menu size={22} />}
           </button>
         </div>
       </div>

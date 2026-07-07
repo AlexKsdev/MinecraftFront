@@ -1,0 +1,5 @@
+// Pixel display font for headings/brand/numeric callouts.
+$font-pixel: var(--font-pixel), monospace;
+
+// Default body font — only needed to override an ancestor that set $font-pixel.
+$font-body: var(--font-body), sans-serif;

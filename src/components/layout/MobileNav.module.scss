@@ -1,4 +1,5 @@
 @use "abstracts/colors" as colors;
+@use "abstracts/typography" as typo;
 
 .panel {
   border-top: 1px solid colors.$color-border;
@@ -22,8 +23,8 @@
 
 .cta {
   text-align: center;
-  font-size: 0.85rem;
-  font-weight: 600;
+  font-family: typo.$font-pixel;
+  font-size: 0.65rem;
   color: colors.$color-primary-foreground;
   background: colors.$color-primary;
   padding: 0.65rem;

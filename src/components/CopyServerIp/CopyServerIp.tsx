@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { Check, Copy } from "lucide-react";
 import styles from "./CopyServerIp.module.scss";
 
 export function CopyServerIp({ serverIp }: { serverIp: string }) {
@@ -20,7 +21,7 @@ export function CopyServerIp({ serverIp }: { serverIp: string }) {
     <button className={styles.button} onClick={handleCopy} type="button">
       <span>{serverIp}</span>
       <span className={`${styles.status} ${copied ? styles.copied : ""}`}>
-        {copied ? "✓ copied" : "copy"}
+        {copied ? <Check size={14} /> : <Copy size={14} />}
       </span>
     </button>
   );

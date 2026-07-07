@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { User } from "lucide-react";
 import { CopyServerIp } from "@/components/CopyServerIp/CopyServerIp";
 import { SERVER_IP } from "../constants";
 import styles from "./CtaSection.module.scss";
@@ -14,8 +15,8 @@ export function CtaSection() {
         </p>
         <div className={styles.actions}>
           <CopyServerIp serverIp={SERVER_IP} />
-          <Link href="/account" className={styles.discordButton}>
-            👤 Create account
+          <Link href="/account" className={styles.accountButton}>
+            <User size={14} /> Create account
           </Link>
         </div>
       </div>

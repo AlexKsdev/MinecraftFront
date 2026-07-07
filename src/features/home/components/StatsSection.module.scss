@@ -1,5 +1,6 @@
 @use "abstracts/colors" as colors;
 @use "abstracts/breakpoints" as bp;
+@use "abstracts/typography" as typo;
 
 .section {
   padding: 3rem 1.5rem;
@@ -20,10 +21,10 @@
 }
 
 .value {
-  font-size: 1.75rem;
-  font-weight: 700;
+  font-family: typo.$font-pixel;
+  font-size: 1.1rem;
   color: colors.$color-primary;
-  margin-bottom: 0.25rem;
+  margin-bottom: 0.5rem;
 }
 
 .label {

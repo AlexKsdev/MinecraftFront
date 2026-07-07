@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { Sword } from "lucide-react";
 import { CopyServerIp } from "@/components/CopyServerIp/CopyServerIp";
 import { SERVER_IP } from "../constants";
 import styles from "./Hero.module.scss";
@@ -7,7 +8,9 @@ export function Hero() {
   return (
     <section className={styles.hero}>
       <div>
-        <span className={styles.badge}>⚔ Survival · PvP · Economy</span>
+        <span className={styles.badge}>
+          <Sword size={12} /> Survival · PvP · Economy
+        </span>
         <h1 className={styles.title}>
           Minecraft<span className={styles.titleAccent}>Front</span>
         </h1>
@@ -18,7 +21,7 @@ export function Hero() {
         <div className={styles.actions}>
           <CopyServerIp serverIp={SERVER_IP} />
           <Link href="/shop" className={styles.playButton}>
-            ⚔ Play now
+            <Sword size={14} /> Play now
           </Link>
         </div>
       </div>

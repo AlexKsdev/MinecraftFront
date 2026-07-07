@@ -1,5 +1,6 @@
 @use "abstracts/colors" as colors;
 @use "abstracts/breakpoints" as bp;
+@use "abstracts/typography" as typo;
 
 .section {
   padding: 2rem 1.5rem;
@@ -38,9 +39,10 @@
 }
 
 .icon {
-  font-size: 1.5rem;
+  color: colors.$color-primary;
 }
 
 .label {
-  font-size: 0.8rem;
+  font-family: typo.$font-pixel;
+  font-size: 0.6rem;
 }

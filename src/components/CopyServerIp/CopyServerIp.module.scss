@@ -19,6 +19,8 @@
 }
 
 .status {
+  display: inline-flex;
+  align-items: center;
   color: colors.$color-muted-foreground;
 
   &.copied {

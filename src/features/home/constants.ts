@@ -1,10 +1,25 @@
+import {
+  ShoppingBag,
+  BookOpen,
+  BookMarked,
+  User,
+  Pickaxe,
+  Shield,
+  Users,
+  Zap,
+  TreePine,
+  Star,
+  Gem,
+  Crown,
+} from "lucide-react";
+
 export { SERVER_IP } from "@/constants";
 
 export const quickLinks = [
-  { icon: "🛒", label: "Shop", href: "/shop" },
-  { icon: "📖", label: "Blog", href: "/blog" },
-  { icon: "📚", label: "Wiki", href: "/wiki" },
-  { icon: "👤", label: "Account", href: "/account" },
+  { icon: ShoppingBag, label: "Shop", href: "/shop" },
+  { icon: BookOpen, label: "Blog", href: "/blog" },
+  { icon: BookMarked, label: "Wiki", href: "/wiki" },
+  { icon: User, label: "Account", href: "/account" },
 ];
 
 export const stats = [
@@ -15,19 +30,19 @@ export const stats = [
 ];
 
 export const features = [
-  { icon: "⛏️", title: "Survival mode", desc: "Classic hardcore survival with custom terrain generation and rare biomes." },
-  { icon: "🛡️", title: "Anti-cheat", desc: "Advanced protection system keeps the game fair for every player." },
-  { icon: "👥", title: "Active community", desc: "Thousands of players online. Clans, events, and weekly tournaments." },
-  { icon: "⚡", title: "Zero-lag gameplay", desc: "Dedicated high-performance servers with 99.9% uptime guarantee." },
-  { icon: "🌲", title: "Custom world", desc: "Unique handcrafted world with hidden dungeons and secret locations." },
-  { icon: "⭐", title: "Regular events", desc: "Weekly in-game events with exclusive rewards and rare items." },
+  { icon: Pickaxe, title: "Survival mode", desc: "Classic hardcore survival with custom terrain generation and rare biomes." },
+  { icon: Shield, title: "Anti-cheat", desc: "Advanced protection system keeps the game fair for every player." },
+  { icon: Users, title: "Active community", desc: "Thousands of players online. Clans, events, and weekly tournaments." },
+  { icon: Zap, title: "Zero-lag gameplay", desc: "Dedicated high-performance servers with 99.9% uptime guarantee." },
+  { icon: TreePine, title: "Custom world", desc: "Unique handcrafted world with hidden dungeons and secret locations." },
+  { icon: Star, title: "Regular events", desc: "Weekly in-game events with exclusive rewards and rare items." },
 ];
 
 export const plans = [
   {
     name: "VIP",
     price: "$4.99",
-    icon: "🛡️",
+    icon: Shield,
     features: [
       "Custom /nick command",
       "Access to VIP lounge",
@@ -38,7 +53,7 @@ export const plans = [
   {
     name: "Elite",
     price: "$9.99",
-    icon: "💎",
+    icon: Gem,
     featured: true,
     features: [
       "Everything in VIP",
@@ -50,7 +65,7 @@ export const plans = [
   {
     name: "Legend",
     price: "$19.99",
-    icon: "👑",
+    icon: Crown,
     features: [
       "Everything in Elite",
       "Custom particle effects",

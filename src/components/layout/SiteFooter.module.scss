@@ -1,5 +1,6 @@
 @use "abstracts/colors" as colors;
 @use "abstracts/breakpoints" as bp;
+@use "abstracts/typography" as typo;
 
 .footer {
   background: colors.$color-card;
@@ -23,8 +24,8 @@
 }
 
 .brand {
-  font-weight: 700;
-  font-size: 0.95rem;
+  font-family: typo.$font-pixel;
+  font-size: 0.75rem;
   color: colors.$color-foreground;
 }
 
@@ -47,7 +48,8 @@
   background: colors.$color-secondary;
   border-radius: 0.375rem;
   padding: 0.4rem 0.75rem;
-  font-size: 0.75rem;
+  font-family: typo.$font-pixel;
+  font-size: 0.6rem;
   color: colors.$color-muted-foreground;
 }
 
@@ -59,7 +61,8 @@
 }
 
 .heading {
-  font-size: 0.8rem;
+  font-family: typo.$font-pixel;
+  font-size: 0.65rem;
   color: colors.$color-foreground;
   margin-bottom: 1rem;
 }

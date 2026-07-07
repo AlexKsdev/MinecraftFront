@@ -1,5 +1,6 @@
 @use "abstracts/colors" as colors;
 @use "abstracts/breakpoints" as bp;
+@use "abstracts/typography" as typo;
 
 .header {
   position: sticky;
@@ -25,8 +26,8 @@
 }
 
 .logo {
-  font-weight: 700;
-  font-size: 0.95rem;
+  font-family: typo.$font-pixel;
+  font-size: 0.75rem;
   color: colors.$color-foreground;
   text-decoration: none;
 }
@@ -63,8 +64,8 @@
 
 .cta {
   display: none;
-  font-size: 0.8rem;
-  font-weight: 600;
+  font-family: typo.$font-pixel;
+  font-size: 0.6rem;
   color: colors.$color-primary-foreground;
   background: colors.$color-primary;
   padding: 0.5rem 1rem;
@@ -77,10 +78,10 @@
 }
 
 .menuToggle {
+  display: flex;
   background: none;
   border: none;
   color: colors.$color-foreground;
-  font-size: 1.25rem;
   cursor: pointer;
   line-height: 1;
 

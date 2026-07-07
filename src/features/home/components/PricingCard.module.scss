@@ -1,4 +1,5 @@
 @use "abstracts/colors" as colors;
+@use "abstracts/typography" as typo;
 
 .card {
   position: relative;
@@ -17,31 +18,36 @@
   top: -0.75rem;
   left: 50%;
   transform: translateX(-50%);
+  font-family: typo.$font-pixel;
   background: colors.$color-accent-sky;
   color: #000;
-  font-size: 0.65rem;
-  padding: 0.2rem 0.6rem;
+  font-size: 0.6rem;
+  padding: 0.3rem 0.6rem;
   border-radius: 0.25rem;
 }
 
 .icon {
-  font-size: 1.75rem;
+  display: block;
+  color: colors.$color-primary;
   margin-bottom: 1rem;
 }
 
 .name {
+  font-family: typo.$font-pixel;
   color: colors.$color-foreground;
-  font-size: 1.1rem;
-  margin-bottom: 0.25rem;
+  font-size: 0.9rem;
+  margin-bottom: 0.75rem;
 }
 
 .price {
+  font-family: typo.$font-pixel;
   color: colors.$color-foreground;
-  font-size: 1.5rem;
+  font-size: 1.25rem;
   margin-bottom: 1.5rem;
 
   span {
-    font-size: 0.75rem;
+    font-family: typo.$font-body;
+    font-size: 0.7rem;
     color: colors.$color-muted-foreground;
   }
 }
@@ -57,9 +63,16 @@
 
 .feature {
   display: flex;
+  align-items: flex-start;
   gap: 0.5rem;
   font-size: 0.85rem;
   color: colors.$color-muted-foreground;
+}
+
+.checkIcon {
+  flex-shrink: 0;
+  margin-top: 0.15rem;
+  color: colors.$color-primary;
 }
 
 .cta {
