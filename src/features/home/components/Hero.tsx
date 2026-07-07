@@ -7,7 +7,9 @@ import styles from "./Hero.module.scss";
 export function Hero() {
   return (
     <section className={styles.hero}>
-      <div>
+      <div className={styles.backgroundImage} />
+      <div className={styles.overlay} />
+      <div className={styles.content}>
         <span className={styles.badge}>
           <Sword size={12} /> Survival · PvP · Economy
         </span>

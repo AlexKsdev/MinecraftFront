@@ -10,8 +10,32 @@
   justify-content: center;
   text-align: center;
   padding: 4rem 1.5rem;
-  background: radial-gradient(ellipse at top, #12261a 0%, colors.$color-background 60%);
+  background: colors.$color-background;
   overflow: hidden;
+}
+
+.backgroundImage {
+  position: absolute;
+  inset: 0;
+  background-image: url("/hero-bg.jpg");
+  background-size: cover;
+  background-position: center;
+}
+
+.overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0.8) 0%,
+    rgba(0, 0, 0, 0.6) 50%,
+    colors.$color-background 100%
+  );
+}
+
+.content {
+  position: relative;
+  z-index: 1;
 }
 
 .badge {
