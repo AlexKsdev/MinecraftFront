@@ -1,0 +1,32 @@
+@use "abstracts/colors" as colors;
+@use "abstracts/breakpoints" as bp;
+
+.section {
+  padding: 3rem 1.5rem;
+  background: colors.$color-secondary;
+}
+
+.grid {
+  max-width: 72rem;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
+  text-align: center;
+
+  @include bp.respond-to(md) {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+.value {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: colors.$color-primary;
+  margin-bottom: 0.25rem;
+}
+
+.label {
+  font-size: 0.85rem;
+  color: colors.$color-muted-foreground;
+}

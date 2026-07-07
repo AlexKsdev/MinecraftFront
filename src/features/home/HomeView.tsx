@@ -1,12 +1,20 @@
-import Container from "@mui/material/Container";
-import Typography from "@mui/material/Typography";
+import { Hero } from "./components/Hero";
+import { QuickLinks } from "./components/QuickLinks";
+import { StatsSection } from "./components/StatsSection";
+import { FeaturesSection } from "./components/FeaturesSection";
+import { PricingSection } from "./components/PricingSection";
+import { CtaSection } from "./components/CtaSection";
+import styles from "./HomeView.module.scss";
 
 export function HomeView() {
   return (
-    <Container sx={{ py: 6 }}>
-      <Typography variant="h4" component="h1">
-        Home
-      </Typography>
-    </Container>
+    <div className={styles.page}>
+      <Hero />
+      <QuickLinks />
+      <StatsSection />
+      <FeaturesSection />
+      <PricingSection />
+      <CtaSection />
+    </div>
   );
 }

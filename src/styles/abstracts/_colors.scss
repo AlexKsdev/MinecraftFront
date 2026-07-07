@@ -1,0 +1,15 @@
+// Shared brand palette. Reuse these across .module.scss files; keep
+// one-off colors local to the component that uses them.
+$color-background: #0a0a0a;
+$color-foreground: #f0f0f0;
+$color-card: #1a1a1a;
+$color-border: #2a2a2a;
+
+$color-primary: #22c55e;
+$color-primary-foreground: #000000;
+$color-secondary: #222222;
+$color-muted-foreground: #a0a0a0;
+
+$color-accent-amber: #fbbf24;
+$color-accent-sky: #38bdf8;
+$color-accent-purple: #a855f7;
