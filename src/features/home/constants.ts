@@ -1,4 +1,4 @@
-export const SERVER_IP = "play.minecraftfront.net";
+export { SERVER_IP } from "@/constants";
 
 export const quickLinks = [
   { icon: "🛒", label: "Shop", href: "/shop" },
