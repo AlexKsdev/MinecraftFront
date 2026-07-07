@@ -1,4 +1,9 @@
+"use client";
+
 import Link from "next/link";
+import AppBar from "@mui/material/AppBar";
+import Toolbar from "@mui/material/Toolbar";
+import Button from "@mui/material/Button";
 
 const NAV_LINKS = [
   { href: "/", label: "Home" },
@@ -10,12 +15,14 @@ const NAV_LINKS = [
 
 export function SiteHeader() {
   return (
-    <header className="flex items-center gap-6 border-b px-6 py-4">
-      {NAV_LINKS.map((link) => (
-        <Link key={link.href} href={link.href}>
-          {link.label}
-        </Link>
-      ))}
-    </header>
+    <AppBar position="static" color="default" elevation={0}>
+      <Toolbar sx={{ gap: 1 }}>
+        {NAV_LINKS.map((link) => (
+          <Button key={link.href} component={Link} href={link.href}>
+            {link.label}
+          </Button>
+        ))}
+      </Toolbar>
+    </AppBar>
   );
 }

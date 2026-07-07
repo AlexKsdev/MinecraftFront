@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import { ThemeRegistry } from "@/components/providers/ThemeRegistry";
 import { SiteHeader } from "@/components/layout/SiteHeader";
 import "./globals.css";
 
@@ -24,13 +25,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html
-      lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
-    >
-      <body className="min-h-full flex flex-col">
-        <SiteHeader />
-        {children}
+    <html lang="en" className={`${geistSans.variable} ${geistMono.variable}`}>
+      <body>
+        <ThemeRegistry>
+          <SiteHeader />
+          {children}
+        </ThemeRegistry>
       </body>
     </html>
   );

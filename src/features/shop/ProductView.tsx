@@ -1,7 +1,12 @@
+import Container from "@mui/material/Container";
+import Typography from "@mui/material/Typography";
+
 export function ProductView({ slug }: { slug: string }) {
   return (
-    <section className="px-6 py-12">
-      <h1 className="text-2xl font-semibold">Product: {slug}</h1>
-    </section>
+    <Container sx={{ py: 6 }}>
+      <Typography variant="h4" component="h1">
+        Product: {slug}
+      </Typography>
+    </Container>
   );
 }
