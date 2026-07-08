@@ -21,7 +21,7 @@ export const quickLinks = [
   { icon: ShoppingBag, label: "Shop", href: "/shop", accent: "amber" as const },
   { icon: BookOpen, label: "Blog", href: "/blog", accent: "sky" as const },
   { icon: BookMarked, label: "Wiki", href: "/wiki", accent: "purple" as const },
-  { icon: MessageSquare, label: "Discord", href: "/discord", accent: "indigo" as const },
+  { icon: MessageSquare, label: "Discord", href: "#", accent: "indigo" as const },
   { icon: User, label: "Account", href: "/account", accent: "primary" as const },
   { icon: Trophy, label: "Top Players", href: "/wiki", accent: "amber" as const },
 ];
