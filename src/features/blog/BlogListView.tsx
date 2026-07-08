@@ -1,12 +1,12 @@
-import Container from "@mui/material/Container";
-import Typography from "@mui/material/Typography";
+import { BlogHeader } from "./components/BlogHeader";
+import { BlogGrid } from "./components/BlogGrid";
+import styles from "./BlogListView.module.scss";
 
 export function BlogListView() {
   return (
-    <Container sx={{ pt: 8, pb: 6 }}>
-      <Typography variant="h4" component="h1">
-        Blog
-      </Typography>
-    </Container>
+    <div className={styles.page}>
+      <BlogHeader />
+      <BlogGrid />
+    </div>
   );
 }
