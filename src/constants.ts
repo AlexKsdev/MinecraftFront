@@ -1,1 +1,1 @@
-export const SERVER_IP = "play.minecraftfront.net";
+export const SERVER_IP = "play.purecraft.net";

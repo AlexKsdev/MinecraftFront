@@ -19,7 +19,7 @@ export function CopyServerIp({ serverIp }: { serverIp: string }) {
 
   return (
     <button className={styles.button} onClick={handleCopy} type="button">
-      <span>{serverIp}</span>
+      <span className={styles.ip}>{serverIp}</span>
       <span className={`${styles.status} ${copied ? styles.copied : ""}`}>
         {copied ? <Check size={14} /> : <Copy size={14} />}
       </span>

@@ -21,7 +21,7 @@ export function SiteFooter() {
         <div className={styles.grid}>
           <div>
             <span className={styles.brand}>
-              Minecraft<span className={styles.brandAccent}>Front</span>
+              <span className={styles.brandAccent}>Pure</span>Craft
             </span>
             <p className={styles.tagline}>
               The ultimate Minecraft survival experience. Build, explore, and
@@ -61,7 +61,7 @@ export function SiteFooter() {
         </div>
 
         <div className={styles.bottom}>
-          <span>© 2026 MinecraftFront. Not affiliated with Mojang.</span>
+          <span>© 2026 PureCraft. Not affiliated with Mojang.</span>
           <span>Made with ♥ for the community</span>
         </div>
       </div>

@@ -1,4 +1,5 @@
 @use "abstracts/colors" as colors;
+@use "abstracts/typography" as typo;
 
 .button {
   display: flex;
@@ -9,13 +10,17 @@
   border: 1px solid colors.$color-border;
   background: rgba(34, 197, 94, 0.05);
   color: colors.$color-foreground;
-  font-size: 0.85rem;
   cursor: pointer;
   transition: border-color 0.2s ease;
 
   &:hover {
     border-color: rgba(34, 197, 94, 0.5);
   }
+}
+
+.ip {
+  font-family: typo.$font-pixel;
+  font-size: 0.7rem;
 }
 
 .status {

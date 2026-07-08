@@ -7,7 +7,11 @@ export function QuickLinks() {
     <section className={styles.section}>
       <div className={styles.grid}>
         {quickLinks.map((link) => (
-          <Link key={link.href} href={link.href} className={styles.link}>
+          <Link
+            key={link.label}
+            href={link.href}
+            className={`${styles.link} ${styles[link.accent]}`}
+          >
             <link.icon className={styles.icon} size={24} />
             <span className={styles.label}>{link.label}</span>
           </Link>

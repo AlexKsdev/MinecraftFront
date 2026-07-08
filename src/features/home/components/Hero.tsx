@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Sword } from "lucide-react";
+import { Sword, Swords } from "lucide-react";
 import { CopyServerIp } from "@/components/CopyServerIp/CopyServerIp";
 import { SERVER_IP } from "../constants";
 import styles from "./Hero.module.scss";
@@ -11,10 +11,10 @@ export function Hero() {
       <div className={styles.overlay} />
       <div className={styles.content}>
         <span className={styles.badge}>
-          <Sword size={12} /> Survival · PvP · Economy
+          <Swords size={12} /> Survival · PvP · Economy
         </span>
         <h1 className={styles.title}>
-          Minecraft<span className={styles.titleAccent}>Front</span>
+          <span className={styles.titleAccent}>Pure</span>Craft
         </h1>
         <p className={styles.subtitle}>
           The ultimate Minecraft survival experience. Forge your legend, build

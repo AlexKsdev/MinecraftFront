@@ -5,7 +5,7 @@ export function FeaturesSection() {
   return (
     <section className={styles.section}>
       <div className={styles.heading}>
-        <h2 className={styles.title}>Why MinecraftFront?</h2>
+        <h2 className={styles.title}>Why PureCraft?</h2>
         <p className={styles.subtitle}>
           We&apos;ve built the perfect Minecraft experience — balanced,
           exciting, and always improving.

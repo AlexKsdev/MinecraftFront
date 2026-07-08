@@ -3,8 +3,9 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Menu, X } from "lucide-react";
+import { Menu, Sword, X } from "lucide-react";
 import { MobileNav } from "./MobileNav";
+import { AuthModal } from "@/components/AuthModal/AuthModal";
 import styles from "./SiteHeader.module.scss";
 
 const NAV_LINKS = [
@@ -12,12 +13,12 @@ const NAV_LINKS = [
   { href: "/shop", label: "Shop" },
   { href: "/blog", label: "Blog" },
   { href: "/wiki", label: "Wiki" },
-  { href: "/account", label: "Account" },
 ];
 
 export function SiteHeader() {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [authOpen, setAuthOpen] = useState(false);
   const pathname = usePathname();
 
   useEffect(() => {
@@ -30,7 +31,7 @@ export function SiteHeader() {
     <header className={`${styles.header} ${scrolled ? styles.scrolled : ""}`}>
       <div className={styles.inner}>
         <Link href="/" className={styles.logo}>
-          Minecraft<span className={styles.logoAccent}>Front</span>
+          <span className={styles.logoAccent}>Pure</span>Craft
         </Link>
 
         <nav className={styles.desktopNav}>
@@ -46,9 +47,13 @@ export function SiteHeader() {
         </nav>
 
         <div className={styles.actions}>
-          <Link href="/shop" className={styles.cta}>
-            Play now
-          </Link>
+          <button
+            className={styles.cta}
+            onClick={() => setAuthOpen(true)}
+            type="button"
+          >
+            <Sword size={12} /> Join Now
+          </button>
           <button
             className={styles.menuToggle}
             onClick={() => setMenuOpen((open) => !open)}
@@ -65,8 +70,14 @@ export function SiteHeader() {
           links={NAV_LINKS}
           pathname={pathname}
           onNavigate={() => setMenuOpen(false)}
+          onJoinClick={() => {
+            setMenuOpen(false);
+            setAuthOpen(true);
+          }}
         />
       )}
+
+      <AuthModal open={authOpen} onClose={() => setAuthOpen(false)} />
     </header>
   );
 }

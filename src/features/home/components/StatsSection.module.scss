@@ -4,7 +4,7 @@
 
 .section {
   padding: 3rem 1.5rem;
-  background: colors.$color-secondary;
+  background-color: color-mix(in oklab, colors.$color-secondary 30%, transparent);
 }
 
 .grid {
