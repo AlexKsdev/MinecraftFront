@@ -14,7 +14,10 @@ export function FeaturesSection() {
       <div className={styles.grid}>
         {features.map((feature) => (
           <div key={feature.title} className={styles.card}>
-            <feature.icon className={styles.icon} size={28} />
+            <feature.icon
+              className={`${styles.icon} ${styles[feature.accent]}`}
+              size={28}
+            />
             <h3 className={styles.cardTitle}>{feature.title}</h3>
             <p className={styles.cardDesc}>{feature.desc}</p>
           </div>

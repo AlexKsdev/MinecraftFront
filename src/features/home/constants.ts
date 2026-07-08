@@ -34,12 +34,12 @@ export const stats = [
 ];
 
 export const features = [
-  { icon: Pickaxe, title: "Survival mode", desc: "Classic hardcore survival with custom terrain generation and rare biomes." },
-  { icon: Shield, title: "Anti-cheat", desc: "Advanced protection system keeps the game fair for every player." },
-  { icon: Users, title: "Active community", desc: "Thousands of players online. Clans, events, and weekly tournaments." },
-  { icon: Zap, title: "Zero-lag gameplay", desc: "Dedicated high-performance servers with 99.9% uptime guarantee." },
-  { icon: TreePine, title: "Custom world", desc: "Unique handcrafted world with hidden dungeons and secret locations." },
-  { icon: Star, title: "Regular events", desc: "Weekly in-game events with exclusive rewards and rare items." },
+  { icon: Pickaxe, title: "Survival mode", desc: "Classic hardcore survival with custom terrain generation and rare biomes.", accent: "amber" as const },
+  { icon: Shield, title: "Anti-cheat", desc: "Advanced protection system keeps the game fair for every player.", accent: "primary" as const },
+  { icon: Users, title: "Active community", desc: "Thousands of players online. Clans, events, and weekly tournaments.", accent: "sky" as const },
+  { icon: Zap, title: "Zero-lag gameplay", desc: "Dedicated high-performance servers with 99.9% uptime guarantee.", accent: "yellow" as const },
+  { icon: TreePine, title: "Custom world", desc: "Unique handcrafted world with hidden dungeons and secret locations.", accent: "green" as const },
+  { icon: Star, title: "Regular events", desc: "Weekly in-game events with exclusive rewards and rare items.", accent: "purple" as const },
 ];
 
 export const plans = [
@@ -47,6 +47,7 @@ export const plans = [
     name: "VIP",
     price: "$4.99",
     icon: Shield,
+    accent: "amber" as const,
     features: [
       "Custom /nick command",
       "Access to VIP lounge",
@@ -58,6 +59,7 @@ export const plans = [
     name: "Elite",
     price: "$9.99",
     icon: Gem,
+    accent: "sky" as const,
     featured: true,
     features: [
       "Everything in VIP",
@@ -70,6 +72,7 @@ export const plans = [
     name: "Legend",
     price: "$19.99",
     icon: Crown,
+    accent: "purple" as const,
     features: [
       "Everything in Elite",
       "Custom particle effects",

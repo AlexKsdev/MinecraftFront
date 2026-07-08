@@ -44,11 +44,18 @@
   background: colors.$color-card;
   border-radius: 0.5rem;
   padding: 1.5rem;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35);
+  }
 }
 
 .icon {
   display: block;
-  color: colors.$color-primary;
   margin-bottom: 1rem;
 }
 
@@ -63,4 +70,28 @@
   color: colors.$color-muted-foreground;
   font-size: 0.85rem;
   line-height: 1.5;
+}
+
+.amber {
+  color: colors.$color-accent-amber;
+}
+
+.sky {
+  color: colors.$color-accent-sky;
+}
+
+.purple {
+  color: colors.$color-accent-purple;
+}
+
+.yellow {
+  color: colors.$color-accent-yellow;
+}
+
+.green {
+  color: #4ade80;
+}
+
+.primary {
+  color: colors.$color-primary;
 }

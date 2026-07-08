@@ -7,9 +7,17 @@
   background: colors.$color-card;
   border-radius: 0.5rem;
   padding: 1.5rem;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 16px 36px rgba(0, 0, 0, 0.4);
+  }
 
   &.featured {
-    border-color: rgba(56, 189, 248, 0.6);
+    box-shadow: 0 0 0 1px rgba(56, 189, 248, 0.3);
   }
 }
 
@@ -28,7 +36,6 @@
 
 .icon {
   display: block;
-  color: colors.$color-primary;
   margin-bottom: 1rem;
 }
 
@@ -84,4 +91,34 @@
   color: colors.$color-foreground;
   text-decoration: none;
   font-size: 0.85rem;
+}
+
+.amber {
+  --accent: #{colors.$color-accent-amber};
+}
+
+.sky {
+  --accent: #{colors.$color-accent-sky};
+}
+
+.purple {
+  --accent: #{colors.$color-accent-purple};
+}
+
+.card.amber,
+.card.sky,
+.card.purple {
+  border-color: color-mix(in oklab, var(--accent) 40%, transparent);
+
+  .icon,
+  .name,
+  .price,
+  .checkIcon {
+    color: var(--accent);
+  }
+
+  .cta {
+    border: 1px solid color-mix(in oklab, var(--accent) 50%, transparent);
+    color: var(--accent);
+  }
 }

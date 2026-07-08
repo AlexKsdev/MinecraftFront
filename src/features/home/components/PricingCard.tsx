@@ -5,7 +5,9 @@ import styles from "./PricingCard.module.scss";
 
 export function PricingCard({ plan }: { plan: (typeof plans)[number] }) {
   return (
-    <div className={`${styles.card} ${plan.featured ? styles.featured : ""}`}>
+    <div
+      className={`${styles.card} ${styles[plan.accent]} ${plan.featured ? styles.featured : ""}`}
+    >
       {plan.featured && <span className={styles.badge}>POPULAR</span>}
       <plan.icon className={styles.icon} size={28} />
       <h3 className={styles.name}>{plan.name}</h3>
