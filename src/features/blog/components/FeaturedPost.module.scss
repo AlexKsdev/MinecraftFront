@@ -3,11 +3,13 @@
 @use "abstracts/breakpoints" as bp;
 
 .post {
+  display: block;
   border: 1px solid colors.$color-border;
   background: colors.$color-card;
   border-radius: 0.75rem;
   overflow: hidden;
   margin-bottom: 2.5rem;
+  text-decoration: none;
   transition: border-color 0.2s ease;
 
   &:hover {

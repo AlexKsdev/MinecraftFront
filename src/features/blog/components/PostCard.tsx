@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { Clock } from "lucide-react";
 import type { BlogPost } from "../constants";
 import { PostTag } from "./PostTag";
@@ -5,7 +6,7 @@ import styles from "./PostCard.module.scss";
 
 export function PostCard({ post }: { post: BlogPost }) {
   return (
-    <article className={styles.card}>
+    <Link href={`/blog/${post.slug}`} className={styles.card}>
       <div className={styles.imageWrap}>
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img src={post.image} alt={post.title} className={styles.image} />
@@ -23,6 +24,6 @@ export function PostCard({ post }: { post: BlogPost }) {
           <span>{post.date}</span>
         </div>
       </div>
-    </article>
+    </Link>
   );
 }

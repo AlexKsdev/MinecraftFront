@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { ChevronRight, Clock, User } from "lucide-react";
 import type { BlogPost } from "../constants";
 import { PostTag } from "./PostTag";
@@ -5,7 +6,7 @@ import styles from "./FeaturedPost.module.scss";
 
 export function FeaturedPost({ post }: { post: BlogPost }) {
   return (
-    <article className={styles.post}>
+    <Link href={`/blog/${post.slug}`} className={styles.post}>
       <div className={styles.imageWrap}>
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img src={post.image} alt={post.title} className={styles.image} />
@@ -29,6 +30,6 @@ export function FeaturedPost({ post }: { post: BlogPost }) {
           Read More <ChevronRight size={12} />
         </span>
       </div>
-    </article>
+    </Link>
   );
 }

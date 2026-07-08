@@ -1,0 +1,74 @@
+@use "abstracts/colors" as colors;
+@use "abstracts/typography" as typo;
+
+.page {
+  min-height: 100vh;
+  background: colors.$color-background;
+  color: colors.$color-foreground;
+}
+
+.wrapper {
+  max-width: 48rem;
+  margin: 0 auto;
+  padding: 7rem 1.5rem 4rem;
+}
+
+.backLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.85rem;
+  color: colors.$color-muted-foreground;
+  text-decoration: none;
+  margin-bottom: 1.5rem;
+
+  &:hover {
+    color: colors.$color-primary;
+  }
+}
+
+.tag {
+  margin-bottom: 1rem;
+}
+
+.title {
+  font-family: typo.$font-pixel;
+  font-size: 1.25rem;
+  line-height: 1.6;
+  color: colors.$color-foreground;
+  margin-bottom: 1.25rem;
+}
+
+.meta {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+  font-size: 0.8rem;
+  color: colors.$color-muted-foreground;
+  margin-bottom: 2rem;
+}
+
+.metaItem {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.imageWrap {
+  border-radius: 0.75rem;
+  overflow: hidden;
+  margin-bottom: 2rem;
+}
+
+.image {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.body {
+  color: colors.$color-muted-foreground;
+  font-size: 1rem;
+  line-height: 1.8;
+}

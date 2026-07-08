@@ -2,10 +2,12 @@
 @use "abstracts/typography" as typo;
 
 .card {
+  display: block;
   border: 1px solid colors.$color-border;
   background: colors.$color-card;
   border-radius: 0.75rem;
   overflow: hidden;
+  text-decoration: none;
   transition:
     transform 0.2s ease,
     box-shadow 0.2s ease,

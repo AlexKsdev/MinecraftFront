@@ -2,6 +2,7 @@ export type TagAccent = "primary" | "amber" | "sky" | "purple" | "yellow";
 
 export interface BlogPost {
   id: number;
+  slug: string;
   title: string;
   excerpt: string;
   date: string;
@@ -15,6 +16,7 @@ export interface BlogPost {
 export const posts: BlogPost[] = [
   {
     id: 1,
+    slug: "season-5-update-new-biomes-dungeons",
     title: "Season 5 Update: New Biomes & Dungeons",
     excerpt:
       "Season 5 brings massive world changes — explore 3 new biomes, 12 new dungeons, and the long-awaited End realm expansion.",
@@ -27,6 +29,7 @@ export const posts: BlogPost[] = [
   },
   {
     id: 2,
+    slug: "holiday-event-festive-build-contest-2024",
     title: "Holiday Event: Festive Build Contest 2024",
     excerpt:
       "Join our annual holiday build contest! Best festive builds win exclusive cosmetics, in-game currency, and real prizes.",
@@ -39,6 +42,7 @@ export const posts: BlogPost[] = [
   },
   {
     id: 3,
+    slug: "anti-cheat-3-0-a-fairer-purecraft",
     title: "Anti-Cheat 3.0: A Fairer PureCraft",
     excerpt:
       "We've completely rewritten our anti-cheat system. Here's what changed, what we detect, and how we keep the game fair.",
@@ -51,6 +55,7 @@ export const posts: BlogPost[] = [
   },
   {
     id: 4,
+    slug: "meet-the-staff-interview-with-moderatorx",
     title: "Meet the Staff: Interview with ModeratorX",
     excerpt:
       "We sat down with one of our longest-serving moderators to talk about the server, community, and what makes PureCraft special.",
@@ -63,6 +68,7 @@ export const posts: BlogPost[] = [
   },
   {
     id: 5,
+    slug: "economy-rebalance-prices-trades-updated",
     title: "Economy Rebalance: Prices & Trades Updated",
     excerpt:
       "After months of community feedback, we've rebalanced the entire server economy. Here's the full breakdown of what changed.",
@@ -75,6 +81,7 @@ export const posts: BlogPost[] = [
   },
   {
     id: 6,
+    slug: "top-10-starter-tips-for-new-players",
     title: "Top 10 Starter Tips for New Players",
     excerpt:
       "Just joined PureCraft? Here are 10 essential tips to get you started — from finding a base location to your first trade.",
