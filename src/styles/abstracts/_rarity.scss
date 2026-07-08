@@ -1,0 +1,21 @@
+@use "colors";
+
+// Sets --rarity on whichever element carries one of these classes, so
+// child selectors can just read var(--rarity) without compound selectors.
+@mixin modifiers {
+  .common {
+    --rarity: #{colors.$color-muted-foreground};
+  }
+  .uncommon {
+    --rarity: #{colors.$color-accent-green};
+  }
+  .rare {
+    --rarity: #{colors.$color-accent-blue};
+  }
+  .epic {
+    --rarity: #{colors.$color-accent-purple};
+  }
+  .legendary {
+    --rarity: #{colors.$color-accent-amber};
+  }
+}

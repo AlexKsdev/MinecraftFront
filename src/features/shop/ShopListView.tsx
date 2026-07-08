@@ -1,12 +1,12 @@
-import Container from "@mui/material/Container";
-import Typography from "@mui/material/Typography";
+import { ShopHeader } from "./components/ShopHeader";
+import { ShopBrowser } from "./components/ShopBrowser";
+import styles from "./ShopListView.module.scss";
 
 export function ShopListView() {
   return (
-    <Container sx={{ pt: 8, pb: 6 }}>
-      <Typography variant="h4" component="h1">
-        Shop
-      </Typography>
-    </Container>
+    <div className={styles.page}>
+      <ShopHeader />
+      <ShopBrowser />
+    </div>
   );
 }

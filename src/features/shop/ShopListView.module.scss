@@ -1,0 +1,7 @@
+@use "abstracts/colors" as colors;
+
+.page {
+  min-height: 100vh;
+  background: colors.$color-background;
+  color: colors.$color-foreground;
+}
