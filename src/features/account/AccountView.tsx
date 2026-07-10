@@ -1,40 +1,56 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
-import { Coins, Gem, Check, Copy } from "lucide-react";
+import { useRouter } from "next/navigation";
 import {
-  PLAYER, TABS, STATS, RECENT_ACTIVITY, PERKS, DAILY_BONUSES, COIN_REWARDS,
+  Coins, Gem, Check, Copy, Clock, Sword, Map, TrendingUp,
+} from "lucide-react";
+import {
+  getProfile, avatarUrl, formatPlaytime, formatBlocks, formatJoinDate,
+  UnauthorizedError, type Profile,
+} from "@/lib/account/api";
+import {
+  TABS, RECENT_ACTIVITY, PERKS, DAILY_BONUSES, COIN_REWARDS,
   REFERRAL_CODE, REFERRAL_FRIENDS, REFERRAL_MILESTONES, ACHIEVEMENTS, QUESTS,
   type TabId,
 } from "./constants";
 import styles from "./AccountView.module.scss";
 
-function XpBar() {
-  const pct = Math.round((PLAYER.xp / PLAYER.xpNext) * 100);
+function buildStats(p: Profile) {
+  return [
+    { label: "Playtime", value: formatPlaytime(p.playtimeMinutes), icon: Clock, accent: "var(--primary)" },
+    { label: "Kills", value: String(p.kills), icon: Sword, accent: "#f87171" },
+    { label: "Blocks", value: formatBlocks(p.blocksPlaced), icon: Map, accent: "#fbbf24" },
+    { label: "K/D Ratio", value: p.deaths ? (p.kills / p.deaths).toFixed(2) : String(p.kills), icon: TrendingUp, accent: "#38bdf8" },
+  ];
+}
+
+function XpBar({ player }: { player: Profile }) {
+  const pct = Math.round((player.xp / player.xpNext) * 100);
   return (
     <div className={styles.xp}>
       <div className={styles.xpTop}>
-        <span>Level {PLAYER.level}</span>
+        <span>Level {player.level}</span>
         <span>
-          {PLAYER.xp.toLocaleString("en-US")} / {PLAYER.xpNext.toLocaleString("en-US")} XP
+          {player.xp.toLocaleString("en-US")} / {player.xpNext.toLocaleString("en-US")} XP
         </span>
       </div>
       <div className={styles.track}>
         <div className={styles.trackFill} style={{ width: `${pct}%` }} />
       </div>
       <p className={styles.xpHint}>
-        {pct}% to Level {PLAYER.level + 1}
+        {pct}% to Level {player.level + 1}
       </p>
     </div>
   );
 }
 
-function OverviewTab() {
+function OverviewTab({ player }: { player: Profile }) {
   return (
     <div className={styles.stack}>
       <section className={styles.statsGrid}>
-        {STATS.map((stat) => {
+        {buildStats(player).map((stat) => {
           const Icon = stat.icon;
           return (
             <div key={stat.label} className={styles.statCard}>
@@ -48,11 +64,6 @@ function OverviewTab() {
             </div>
           );
         })}
-      </section>
-
-      <section className={styles.card}>
-        <h2 className={styles.cardTitle}>Experience</h2>
-        <XpBar />
       </section>
 
       <section className={styles.card}>
@@ -80,14 +91,14 @@ function OverviewTab() {
   );
 }
 
-function BonusesTab() {
+function BonusesTab({ player }: { player: Profile }) {
   const [claimed, setClaimed] = useState(false);
   return (
     <div className={styles.stack}>
       <div className={styles.streakBanner}>
         <span className={styles.streakEmoji}>🔥</span>
         <div>
-          <p className={styles.streakTitle}>{PLAYER.streak} Day Streak!</p>
+          <p className={styles.streakTitle}>{player.streak} Day Streak!</p>
           <p className={styles.muted}>Log in tomorrow to keep your streak and claim Day 8 reward.</p>
         </div>
       </div>
@@ -95,7 +106,7 @@ function BonusesTab() {
       <section className={styles.card}>
         <div className={styles.rowBetween}>
           <h2 className={styles.cardTitle}>Daily Login Rewards</h2>
-          <span className={styles.muted}>Day {PLAYER.streak} / 14</span>
+          <span className={styles.muted}>Day {player.streak} / 14</span>
         </div>
         <div className={styles.bonusGrid}>
           {DAILY_BONUSES.map((b) => {
@@ -314,6 +325,40 @@ function QuestsTab() {
 
 export function AccountView() {
   const [tab, setTab] = useState<TabId>("overview");
+  const [profile, setProfile] = useState<Profile | null>(null);
+  const [error, setError] = useState<string | null>(null);
+  const router = useRouter();
+
+  useEffect(() => {
+    let active = true;
+    getProfile()
+      .then((p) => {
+        if (active) setProfile(p);
+      })
+      .catch((err: unknown) => {
+        if (!active) return;
+        if (err instanceof UnauthorizedError) {
+          router.replace("/");
+          return;
+        }
+        setError(err instanceof Error ? err.message : "Something went wrong");
+      });
+    return () => {
+      active = false;
+    };
+  }, [router]);
+
+  if (error || !profile) {
+    return (
+      <div className={styles.page}>
+        <div className={styles.inner}>
+          <section className={styles.card}>
+            <p className={styles.muted}>{error ?? "Loading your profile…"}</p>
+          </section>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className={styles.page}>
@@ -321,20 +366,20 @@ export function AccountView() {
         {/* Profile header */}
         <section className={styles.profile}>
           <div className={styles.avatarWrap}>
-            <Image src={PLAYER.avatar} alt={PLAYER.name} width={80} height={80} className={styles.avatar} unoptimized />
-            <span className={styles.rankBadge}>{PLAYER.rank}</span>
+            <Image src={avatarUrl(profile)} alt={profile.name} width={80} height={80} className={styles.avatar} unoptimized />
+            <span className={styles.rankBadge}>{profile.rank}</span>
           </div>
           <div className={styles.identity}>
             <div className={styles.nameRow}>
-              <h1 className={styles.name}>{PLAYER.name}</h1>
+              <h1 className={styles.name}>{profile.name}</h1>
               <span className={styles.online}><span className={styles.onlineDot} />Online</span>
             </div>
-            <p className={styles.meta}>{PLAYER.email} · Joined {PLAYER.joinDate}</p>
-            <XpBar />
+            <p className={styles.meta}>{profile.email} · Joined {formatJoinDate(profile.createdAt)}</p>
+            <XpBar player={profile} />
           </div>
           <div className={styles.currency}>
-            <span className={`${styles.coin} ${styles.coinAmber}`}><Coins size={14} />{PLAYER.coins.toLocaleString("en-US")}</span>
-            <span className={`${styles.coin} ${styles.coinPurple}`}><Gem size={14} />{PLAYER.gems}</span>
+            <span className={`${styles.coin} ${styles.coinAmber}`}><Coins size={14} />{profile.coins.toLocaleString("en-US")}</span>
+            <span className={`${styles.coin} ${styles.coinPurple}`}><Gem size={14} />{profile.gems}</span>
           </div>
         </section>
 
@@ -357,8 +402,8 @@ export function AccountView() {
         </div>
 
         {/* Tab content */}
-        {tab === "overview" && <OverviewTab />}
-        {tab === "bonuses" && <BonusesTab />}
+        {tab === "overview" && <OverviewTab player={profile} />}
+        {tab === "bonuses" && <BonusesTab player={profile} />}
         {tab === "referral" && <ReferralTab />}
         {tab === "achievements" && <AchievementsTab />}
         {tab === "quests" && <QuestsTab />}

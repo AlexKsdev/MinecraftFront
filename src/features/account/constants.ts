@@ -1,28 +1,10 @@
 import {
-  Clock, Sword, Map, TrendingUp, Coins, Star, Zap, Gem, Crown, Shield,
+  Sword, Map, Coins, Star, Zap, Gem, Crown, Shield,
   Gift, Award, Target, Users, Calendar, Flame, Trophy, BarChart3,
   type LucideIcon,
 } from "lucide-react";
 
 export type TabId = "overview" | "bonuses" | "referral" | "achievements" | "quests";
-
-export const PLAYER = {
-  name: "Steve_PureCraft",
-  email: "steve@purecraft.net",
-  rank: "Elite",
-  avatar: "https://mc-heads.net/avatar/Steve/128",
-  level: 47,
-  xp: 7340,
-  xpNext: 10000,
-  coins: 4820,
-  gems: 38,
-  joinDate: "Mar 2022",
-  playtime: "142h",
-  kills: 382,
-  deaths: 94,
-  blocksPlaced: "1.2M",
-  streak: 7,
-};
 
 export const TABS: { id: TabId; label: string; icon: LucideIcon }[] = [
   { id: "overview", label: "Overview", icon: BarChart3 },
@@ -33,13 +15,6 @@ export const TABS: { id: TabId; label: string; icon: LucideIcon }[] = [
 ];
 
 /* ── Overview ── */
-export const STATS: { label: string; value: string; icon: LucideIcon; accent: string }[] = [
-  { label: "Playtime", value: PLAYER.playtime, icon: Clock, accent: "var(--primary)" },
-  { label: "Kills", value: String(PLAYER.kills), icon: Sword, accent: "#f87171" },
-  { label: "Blocks", value: PLAYER.blocksPlaced, icon: Map, accent: "#fbbf24" },
-  { label: "K/D Ratio", value: (PLAYER.kills / PLAYER.deaths).toFixed(2), icon: TrendingUp, accent: "#38bdf8" },
-];
-
 export const RECENT_ACTIVITY: { action: string; time: string; color: string }[] = [
   { action: "Won Arena Battle vs DiamondGirl", time: "1h ago", color: "#f87171" },
   { action: "Opened Rare Crate — got Diamond Sword", time: "3h ago", color: "#60a5fa" },
