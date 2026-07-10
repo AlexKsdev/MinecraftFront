@@ -1,0 +1,97 @@
+@use "abstracts/colors" as colors;
+@use "abstracts/breakpoints" as bp;
+@use "abstracts/typography" as typo;
+
+.section {
+  padding: 4rem 1.5rem;
+}
+
+.heading {
+  text-align: center;
+  max-width: 36rem;
+  margin: 0 auto 3rem;
+}
+
+.title {
+  font-family: typo.$font-pixel;
+  font-size: 1.1rem;
+  color: colors.$color-foreground;
+  margin-bottom: 1rem;
+}
+
+.subtitle {
+  color: colors.$color-muted-foreground;
+}
+
+.grid {
+  max-width: 72rem;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+
+  @include bp.respond-to(md) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @include bp.respond-to(lg) {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.card {
+  border: 1px solid colors.$color-border;
+  background: colors.$color-card;
+  border-radius: 0.5rem;
+  padding: 1.5rem;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35);
+  }
+}
+
+.icon {
+  display: block;
+  margin-bottom: 1rem;
+}
+
+.cardTitle {
+  font-family: typo.$font-pixel;
+  color: colors.$color-foreground;
+  font-size: 0.75rem;
+  margin-bottom: 0.75rem;
+}
+
+.cardDesc {
+  color: colors.$color-muted-foreground;
+  font-size: 0.85rem;
+  line-height: 1.5;
+}
+
+.amber {
+  color: colors.$color-accent-amber;
+}
+
+.sky {
+  color: colors.$color-accent-sky;
+}
+
+.purple {
+  color: colors.$color-accent-purple;
+}
+
+.yellow {
+  color: colors.$color-accent-yellow;
+}
+
+.green {
+  color: colors.$color-accent-green;
+}
+
+.primary {
+  color: colors.$color-primary;
+}

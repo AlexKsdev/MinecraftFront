@@ -1,0 +1,6 @@
+@use "abstracts/colors" as colors;
+
+.page {
+  background: colors.$color-background;
+  color: colors.$color-foreground;
+}

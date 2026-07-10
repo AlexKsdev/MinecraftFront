@@ -1,0 +1,16 @@
+{
+  "files.exclude": {
+    "**/node_modules": true,
+    "**/.claude": true,
+    "**/dist": true,
+    "**/.next": true,
+    "**/package-lock.json": true,
+    "**/yarn.lock": true,
+    "**/robots.txt": true,
+    "**/README.md": true,
+    "**/next-env.d.ts": true,
+    "**/tsconfig.build.json": true,
+    "**/tsconfig.tsbuildinfo": true,
+    "**/eslint.config.mjs": true      
+  }
+}

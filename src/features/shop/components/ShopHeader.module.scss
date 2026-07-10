@@ -1,0 +1,48 @@
+@use "abstracts/colors" as colors;
+@use "abstracts/typography" as typo;
+@use "abstracts/rarity";
+
+@include rarity.modifiers;
+
+.header {
+  background: colors.$color-card;
+  border-bottom: 1px solid colors.$color-border;
+  padding: 7rem 1.5rem 3rem;
+  text-align: center;
+}
+
+.icon {
+  color: colors.$color-primary;
+  margin-bottom: 1rem;
+}
+
+.title {
+  font-family: typo.$font-pixel;
+  font-size: 1.35rem;
+  color: colors.$color-foreground;
+  margin-bottom: 0.75rem;
+}
+
+.subtitle {
+  color: colors.$color-muted-foreground;
+  max-width: 32rem;
+  margin: 0 auto;
+}
+
+.legend {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.75rem;
+  margin-top: 1.5rem;
+}
+
+.legendItem {
+  font-family: typo.$font-pixel;
+  font-size: 0.6rem;
+  padding: 0.4rem 0.75rem;
+  border-radius: 0.25rem;
+  border: 1px solid color-mix(in oklab, var(--rarity) 30%, transparent);
+  background: color-mix(in oklab, var(--rarity) 8%, transparent);
+  color: var(--rarity);
+}

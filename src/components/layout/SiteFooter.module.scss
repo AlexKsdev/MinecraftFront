@@ -1,0 +1,101 @@
+@use "abstracts/colors" as colors;
+@use "abstracts/breakpoints" as bp;
+@use "abstracts/typography" as typo;
+
+.footer {
+  background: colors.$color-card;
+  border-top: 1px solid colors.$color-border;
+}
+
+.inner {
+  max-width: 72rem;
+  margin: 0 auto;
+  padding: 3rem 1.5rem;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+
+  @include bp.respond-to(md) {
+    grid-template-columns: 2fr 1fr 1fr;
+  }
+}
+
+.brand {
+  font-family: typo.$font-pixel;
+  font-size: 0.75rem;
+  color: colors.$color-foreground;
+}
+
+.brandAccent {
+  color: colors.$color-primary;
+}
+
+.tagline {
+  color: colors.$color-muted-foreground;
+  font-size: 0.85rem;
+  margin: 0.75rem 0 1rem;
+  max-width: 20rem;
+  line-height: 1.5;
+}
+
+.ipBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: colors.$color-secondary;
+  border-radius: 0.375rem;
+  padding: 0.4rem 0.75rem;
+  font-family: typo.$font-pixel;
+  font-size: 0.6rem;
+  color: colors.$color-muted-foreground;
+}
+
+.ipDot {
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 50%;
+  background: colors.$color-primary;
+}
+
+.heading {
+  font-family: typo.$font-pixel;
+  font-size: 0.65rem;
+  color: colors.$color-foreground;
+  margin-bottom: 1rem;
+}
+
+.list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.link {
+  font-size: 0.85rem;
+  color: colors.$color-muted-foreground;
+  text-decoration: none;
+}
+
+.bottom {
+  border-top: 1px solid colors.$color-border;
+  margin-top: 2rem;
+  padding-top: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+  text-align: center;
+  font-size: 0.75rem;
+  color: colors.$color-muted-foreground;
+
+  @include bp.respond-to(sm) {
+    flex-direction: row;
+    justify-content: space-between;
+  }
+}

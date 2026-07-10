@@ -1,0 +1,21 @@
+@use "abstracts/breakpoints" as bp;
+
+.body {
+  max-width: 72rem;
+  margin: 0 auto;
+  padding: 2.5rem 1.5rem;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+
+  @include bp.respond-to(md) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @include bp.respond-to(lg) {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}

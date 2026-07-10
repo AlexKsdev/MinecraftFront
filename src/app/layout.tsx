@@ -1,14 +1,19 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Poppins, Press_Start_2P } from "next/font/google";
+import { ThemeRegistry } from "@/components/providers/ThemeRegistry";
+import { SiteHeader } from "@/components/layout/SiteHeader";
+import { SiteFooter } from "@/components/layout/SiteFooter";
 import "./globals.css";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const bodyFont = Poppins({
+  weight: ["300", "400", "500", "600", "700"],
+  variable: "--font-body",
   subsets: ["latin"],
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const pixelFont = Press_Start_2P({
+  weight: "400",
+  variable: "--font-pixel",
   subsets: ["latin"],
 });
 
@@ -23,11 +28,21 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html
-      lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
-    >
-      <body className="min-h-full flex flex-col">{children}</body>
+    <html lang="en" className={`${bodyFont.variable} ${pixelFont.variable}`} suppressHydrationWarning>
+      <body>
+        {/* Apply the saved theme before paint to avoid a flash / hydration mismatch. */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html:
+              "(function(){try{if(localStorage.getItem('pc-theme')==='light'){document.documentElement.setAttribute('data-theme','light');}}catch(e){}})();",
+          }}
+        />
+        <ThemeRegistry>
+          <SiteHeader />
+          {children}
+          <SiteFooter />
+        </ThemeRegistry>
+      </body>
     </html>
   );
 }

@@ -1,0 +1,33 @@
+@use "abstracts/colors" as colors;
+@use "abstracts/breakpoints" as bp;
+@use "abstracts/typography" as typo;
+
+.section {
+  padding: 3rem 1.5rem;
+  background-color: color-mix(in oklab, colors.$color-secondary 30%, transparent);
+}
+
+.grid {
+  max-width: 72rem;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
+  text-align: center;
+
+  @include bp.respond-to(md) {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+.value {
+  font-family: typo.$font-pixel;
+  font-size: 1.1rem;
+  color: colors.$color-primary;
+  margin-bottom: 0.5rem;
+}
+
+.label {
+  font-size: 0.85rem;
+  color: colors.$color-muted-foreground;
+}

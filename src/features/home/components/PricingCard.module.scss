@@ -1,0 +1,124 @@
+@use "abstracts/colors" as colors;
+@use "abstracts/typography" as typo;
+
+.card {
+  position: relative;
+  border: 1px solid colors.$color-border;
+  background: colors.$color-card;
+  border-radius: 0.5rem;
+  padding: 1.5rem;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 16px 36px rgba(0, 0, 0, 0.4);
+  }
+
+  &.featured {
+    box-shadow: 0 0 0 1px rgba(56, 189, 248, 0.3);
+  }
+}
+
+.badge {
+  position: absolute;
+  top: -0.75rem;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: typo.$font-pixel;
+  background: colors.$color-accent-sky;
+  color: #000;
+  font-size: 0.6rem;
+  padding: 0.3rem 0.6rem;
+  border-radius: 0.25rem;
+}
+
+.icon {
+  display: block;
+  margin-bottom: 1rem;
+}
+
+.name {
+  font-family: typo.$font-pixel;
+  color: colors.$color-foreground;
+  font-size: 0.9rem;
+  margin-bottom: 0.75rem;
+}
+
+.price {
+  font-family: typo.$font-pixel;
+  color: colors.$color-foreground;
+  font-size: 1.25rem;
+  margin-bottom: 1.5rem;
+
+  span {
+    font-family: typo.$font-body;
+    font-size: 0.7rem;
+    color: colors.$color-muted-foreground;
+  }
+}
+
+.features {
+  list-style: none;
+  margin: 0 0 1.5rem;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.feature {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+  font-size: 0.85rem;
+  color: colors.$color-muted-foreground;
+}
+
+.checkIcon {
+  flex-shrink: 0;
+  margin-top: 0.15rem;
+  color: colors.$color-primary;
+}
+
+.cta {
+  display: block;
+  text-align: center;
+  border: 1px solid colors.$color-border;
+  border-radius: 0.375rem;
+  padding: 0.75rem;
+  color: colors.$color-foreground;
+  text-decoration: none;
+  font-size: 0.85rem;
+}
+
+.amber {
+  --accent: #{colors.$color-accent-amber};
+}
+
+.sky {
+  --accent: #{colors.$color-accent-sky};
+}
+
+.purple {
+  --accent: #{colors.$color-accent-purple};
+}
+
+.card.amber,
+.card.sky,
+.card.purple {
+  border-color: color-mix(in oklab, var(--accent) 40%, transparent);
+
+  .icon,
+  .name,
+  .price,
+  .checkIcon {
+    color: var(--accent);
+  }
+
+  .cta {
+    border: 1px solid color-mix(in oklab, var(--accent) 50%, transparent);
+    color: var(--accent);
+  }
+}
