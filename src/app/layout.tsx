@@ -28,8 +28,15 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${bodyFont.variable} ${pixelFont.variable}`}>
+    <html lang="en" className={`${bodyFont.variable} ${pixelFont.variable}`} suppressHydrationWarning>
       <body>
+        {/* Apply the saved theme before paint to avoid a flash / hydration mismatch. */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html:
+              "(function(){try{if(localStorage.getItem('pc-theme')==='light'){document.documentElement.setAttribute('data-theme','light');}}catch(e){}})();",
+          }}
+        />
         <ThemeRegistry>
           <SiteHeader />
           {children}

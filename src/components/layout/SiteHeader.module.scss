@@ -9,16 +9,44 @@
   right: 0;
   z-index: 50;
   background: transparent;
-  border-bottom: 1px solid transparent;
-  transition:
-    background-color 0.2s ease,
-    border-color 0.2s ease,
-    box-shadow 0.2s ease;
+  transition: box-shadow 0.2s ease;
 
   &.scrolled {
-    background: colors.$color-background;
-    border-bottom-color: colors.$color-border;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.35);
+    /* Translucent, glassy — no border. */
+    background: color-mix(in oklab, colors.$color-background 30%, transparent);
+    backdrop-filter: blur(12px);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  }
+}
+
+/* Header is over the dark hero photo — force light text in both themes. */
+.overHero {
+  .logo {
+    color: #f4f4f5;
+  }
+
+  .link {
+    color: rgba(244, 244, 245, 0.75);
+
+    &:hover {
+      color: #ffffff;
+    }
+
+    &.active {
+      color: colors.$color-primary;
+    }
+  }
+
+  .themeToggle {
+    color: rgba(244, 244, 245, 0.8);
+
+    &:hover {
+      color: #ffffff;
+    }
+  }
+
+  .menuToggle {
+    color: #f4f4f5;
   }
 }
 
@@ -86,6 +114,24 @@
 
   @include bp.respond-to(md) {
     display: inline-flex;
+  }
+}
+
+.themeToggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: none;
+  color: colors.$color-muted-foreground;
+  cursor: pointer;
+  line-height: 1;
+  padding: 0.25rem;
+  border-radius: 0.375rem;
+  transition: color 0.2s ease;
+
+  &:hover {
+    color: colors.$color-foreground;
   }
 }
 

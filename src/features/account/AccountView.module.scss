@@ -1,0 +1,699 @@
+@use "abstracts/colors" as colors;
+@use "abstracts/breakpoints" as bp;
+@use "abstracts/typography" as typo;
+
+.page {
+  min-height: 100vh;
+  padding: 5rem 1.5rem 4rem;
+  background: colors.$color-background;
+  color: colors.$color-foreground;
+}
+
+.inner {
+  max-width: 56rem;
+  margin: 0 auto;
+}
+
+.stack {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+/* ── Shared primitives ── */
+.card {
+  background: colors.$color-card;
+  border: 1px solid colors.$color-border;
+  border-radius: 0.75rem;
+  padding: 1.25rem;
+}
+
+.cardTitle {
+  font-family: typo.$font-pixel;
+  font-size: 0.75rem;
+  color: colors.$color-foreground;
+  margin-bottom: 1rem;
+}
+
+.muted {
+  font-size: 0.8rem;
+  color: colors.$color-muted-foreground;
+}
+
+.tiny {
+  font-size: 0.65rem;
+  color: colors.$color-muted-foreground;
+}
+
+.dim {
+  opacity: 0.55;
+}
+
+.rowBetween {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.dot {
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.accentPrimary {
+  color: colors.$color-primary;
+  font-weight: 500;
+}
+.accentSky {
+  color: colors.$color-accent-sky;
+  font-weight: 500;
+}
+.accentAmber {
+  color: colors.$color-accent-amber;
+  font-family: typo.$font-pixel;
+  font-size: 0.7rem;
+}
+
+.primaryBtn {
+  width: 100%;
+  font-family: typo.$font-pixel;
+  font-size: 0.65rem;
+  background: colors.$color-primary;
+  color: colors.$color-primary-foreground;
+  border: none;
+  border-radius: 0.5rem;
+  padding: 0.75rem;
+  margin-top: 0.75rem;
+  cursor: pointer;
+  transition: background 0.2s ease;
+
+  &:hover {
+    background: color-mix(in oklab, colors.$color-primary 90%, transparent);
+  }
+}
+
+.track {
+  height: 0.5rem;
+  border-radius: 999px;
+  background: colors.$color-secondary;
+  overflow: hidden;
+}
+.trackThin {
+  height: 0.375rem;
+  border-radius: 999px;
+  background: colors.$color-secondary;
+  overflow: hidden;
+}
+.trackFill {
+  height: 100%;
+  border-radius: 999px;
+  background: colors.$color-primary;
+  transition: width 0.3s ease;
+}
+.trackFillSoft {
+  height: 100%;
+  border-radius: 999px;
+  background: color-mix(in oklab, colors.$color-primary 60%, transparent);
+  transition: width 0.3s ease;
+}
+
+/* ── Profile header ── */
+.profile {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1.25rem;
+  background: colors.$color-card;
+  border: 1px solid colors.$color-border;
+  border-radius: 0.75rem;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+
+  @include bp.respond-to(sm) {
+    flex-direction: row;
+    align-items: center;
+  }
+}
+
+.avatarWrap {
+  position: relative;
+  flex-shrink: 0;
+}
+.avatar {
+  border-radius: 0.75rem;
+  border: 2px solid color-mix(in oklab, colors.$color-primary 40%, transparent);
+}
+.rankBadge {
+  position: absolute;
+  bottom: -0.25rem;
+  right: -0.25rem;
+  font-family: typo.$font-pixel;
+  font-size: 0.5rem;
+  background: colors.$color-accent-sky;
+  color: #fff;
+  padding: 0.15rem 0.4rem;
+  border-radius: 0.25rem;
+}
+
+.identity {
+  flex: 1;
+  min-width: 0;
+  width: 100%;
+}
+.nameRow {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  margin-bottom: 0.25rem;
+}
+.name {
+  font-family: typo.$font-pixel;
+  font-size: 1rem;
+  color: colors.$color-foreground;
+}
+.online {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.75rem;
+  color: colors.$color-primary;
+}
+.onlineDot {
+  width: 0.375rem;
+  height: 0.375rem;
+  border-radius: 50%;
+  background: colors.$color-primary;
+}
+.meta {
+  font-size: 0.85rem;
+  color: colors.$color-muted-foreground;
+  margin-bottom: 0.75rem;
+}
+
+.xp {
+  width: 100%;
+}
+.xpTop {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.75rem;
+  color: colors.$color-muted-foreground;
+  margin-bottom: 0.25rem;
+}
+.xpHint {
+  font-size: 0.75rem;
+  color: colors.$color-muted-foreground;
+  margin-top: 0.25rem;
+}
+
+.currency {
+  display: flex;
+  gap: 0.75rem;
+
+  @include bp.respond-to(sm) {
+    flex-direction: column;
+    align-items: flex-end;
+  }
+}
+.coin {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-family: typo.$font-pixel;
+  font-size: 0.7rem;
+  padding: 0.35rem 0.65rem;
+  border-radius: 0.5rem;
+  border: 1px solid;
+}
+.coinAmber {
+  color: colors.$color-accent-amber;
+  background: color-mix(in oklab, colors.$color-accent-amber 10%, transparent);
+  border-color: color-mix(in oklab, colors.$color-accent-amber 20%, transparent);
+}
+.coinPurple {
+  color: colors.$color-accent-purple;
+  background: color-mix(in oklab, colors.$color-accent-purple 10%, transparent);
+  border-color: color-mix(in oklab, colors.$color-accent-purple 20%, transparent);
+}
+
+/* ── Tabs ── */
+.tabs {
+  display: flex;
+  gap: 0.25rem;
+  margin-bottom: 1.5rem;
+  overflow-x: auto;
+  padding-bottom: 0.25rem;
+}
+.tab {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-shrink: 0;
+  font-family: typo.$font-pixel;
+  font-size: 0.65rem;
+  white-space: nowrap;
+  padding: 0.65rem 1rem;
+  border-radius: 0.5rem;
+  border: 1px solid colors.$color-border;
+  background: colors.$color-card;
+  color: colors.$color-muted-foreground;
+  cursor: pointer;
+  transition: all 0.2s ease;
+
+  &:hover {
+    color: colors.$color-foreground;
+    border-color: color-mix(in oklab, colors.$color-primary 30%, transparent);
+  }
+}
+.tabActive {
+  background: colors.$color-primary;
+  color: colors.$color-primary-foreground;
+  border-color: colors.$color-primary;
+
+  &:hover {
+    color: colors.$color-primary-foreground;
+  }
+}
+
+/* ── Overview ── */
+.statsGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.75rem;
+
+  @include bp.respond-to(sm) {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+.statCard {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  background: colors.$color-card;
+  border: 1px solid colors.$color-border;
+  border-radius: 0.5rem;
+  padding: 1rem;
+}
+.statIcon {
+  display: flex;
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  background: colors.$color-secondary;
+}
+.statValue {
+  font-family: typo.$font-pixel;
+  font-size: 0.85rem;
+  color: colors.$color-foreground;
+}
+.statLabel {
+  font-size: 0.75rem;
+  color: colors.$color-muted-foreground;
+  margin-top: 0.15rem;
+}
+
+.activityList {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.activityItem {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-size: 0.875rem;
+}
+.activityAction {
+  flex: 1;
+  color: colors.$color-foreground;
+}
+
+.perks {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+.perk {
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: colors.$color-primary;
+  background: color-mix(in oklab, colors.$color-primary 10%, transparent);
+  border: 1px solid color-mix(in oklab, colors.$color-primary 20%, transparent);
+  padding: 0.25rem 0.75rem;
+  border-radius: 0.375rem;
+}
+
+/* ── Bonuses ── */
+.streakBanner {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1.25rem;
+  border-radius: 0.75rem;
+  border: 1px solid color-mix(in oklab, #fb923c 30%, transparent);
+  background: color-mix(in oklab, #fb923c 10%, transparent);
+}
+.streakEmoji {
+  font-size: 2rem;
+}
+.streakTitle {
+  font-family: typo.$font-pixel;
+  font-size: 0.85rem;
+  color: #fb923c;
+  margin-bottom: 0.25rem;
+}
+
+.bonusGrid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 0.5rem;
+}
+.bonusDay {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  border: 1px solid colors.$color-border;
+  background: color-mix(in oklab, colors.$color-secondary 20%, transparent);
+  text-align: center;
+}
+.bonusToday {
+  border-color: colors.$color-primary;
+  background: color-mix(in oklab, colors.$color-primary 10%, transparent);
+}
+.bonusClaimed {
+  opacity: 0.5;
+}
+.bonusCheck {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0.5rem;
+  background: color-mix(in oklab, colors.$color-background 60%, transparent);
+  color: colors.$color-primary;
+}
+.todayTag {
+  position: absolute;
+  top: -0.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: typo.$font-pixel;
+  font-size: 0.4rem;
+  background: colors.$color-primary;
+  color: colors.$color-primary-foreground;
+  padding: 0.1rem 0.3rem;
+  border-radius: 0.25rem;
+  white-space: nowrap;
+}
+.dayLabel {
+  font-size: 0.55rem;
+  color: colors.$color-muted-foreground;
+}
+.dayReward {
+  font-size: 0.5rem;
+  line-height: 1.2;
+  color: colors.$color-foreground;
+}
+.claimWrap {
+  margin-top: 1.25rem;
+}
+.claimedNote {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-top: 0.75rem;
+  padding: 0.75rem;
+  border-radius: 0.5rem;
+  border: 1px solid color-mix(in oklab, colors.$color-primary 30%, transparent);
+  background: colors.$color-secondary;
+  color: colors.$color-primary;
+  font-family: typo.$font-pixel;
+  font-size: 0.65rem;
+}
+
+.rewardGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.75rem;
+
+  @include bp.respond-to(sm) {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+.rewardCard {
+  background: color-mix(in oklab, colors.$color-secondary 50%, transparent);
+  border-radius: 0.5rem;
+  padding: 1rem;
+}
+.rewardLabel {
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: colors.$color-foreground;
+  margin-top: 0.5rem;
+}
+.rewardDesc {
+  font-size: 0.75rem;
+  color: colors.$color-muted-foreground;
+  margin: 0.15rem 0 0.75rem;
+}
+.rewardValue {
+  font-family: typo.$font-pixel;
+  font-size: 0.65rem;
+  color: colors.$color-primary;
+}
+
+/* ── Referral ── */
+.heroCard {
+  text-align: center;
+  padding: 1.5rem;
+  border-radius: 0.75rem;
+  border: 1px solid color-mix(in oklab, colors.$color-primary 30%, transparent);
+  background: color-mix(in oklab, colors.$color-primary 8%, transparent);
+}
+.heroEmoji {
+  font-size: 2rem;
+}
+.heroTitle {
+  font-family: typo.$font-pixel;
+  font-size: 0.9rem;
+  color: colors.$color-foreground;
+  margin: 0.75rem 0 0.5rem;
+}
+
+.linkRow {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 0.75rem;
+}
+.linkBox {
+  flex: 1;
+  min-width: 0;
+  background: colors.$color-secondary;
+  border: 1px solid colors.$color-border;
+  border-radius: 0.375rem;
+  padding: 0.6rem 0.75rem;
+  font-size: 0.8rem;
+  color: colors.$color-muted-foreground;
+  font-family: monospace;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.copyBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  flex-shrink: 0;
+  font-family: typo.$font-pixel;
+  font-size: 0.6rem;
+  background: colors.$color-primary;
+  color: colors.$color-primary-foreground;
+  border: none;
+  border-radius: 0.375rem;
+  padding: 0 1rem;
+  cursor: pointer;
+}
+.code {
+  font-family: typo.$font-pixel;
+  color: colors.$color-primary;
+}
+
+.slotGrid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+.slot {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  border: 1px solid colors.$color-border;
+  background: color-mix(in oklab, colors.$color-secondary 30%, transparent);
+  color: colors.$color-muted-foreground;
+  opacity: 0.4;
+  text-align: center;
+}
+.slotActive {
+  opacity: 1;
+  border-color: color-mix(in oklab, colors.$color-primary 40%, transparent);
+  background: color-mix(in oklab, colors.$color-primary 5%, transparent);
+  color: colors.$color-primary;
+}
+.slotLabel {
+  font-family: typo.$font-pixel;
+  font-size: 0.5rem;
+  color: colors.$color-muted-foreground;
+}
+
+.friendList {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.friendItem {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+.friendAvatar {
+  border-radius: 0.375rem;
+  border: 1px solid colors.$color-border;
+}
+.friendMeta {
+  flex: 1;
+}
+.friendName {
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: colors.$color-foreground;
+}
+.totalRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid colors.$color-border;
+}
+
+.milestoneList {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.milestoneItem {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-size: 0.85rem;
+}
+.milestoneBadge {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.5rem;
+  height: 1.5rem;
+  flex-shrink: 0;
+  border-radius: 50%;
+  border: 1px solid colors.$color-border;
+  background: colors.$color-secondary;
+  font-size: 0.6rem;
+  color: colors.$color-muted-foreground;
+}
+.milestoneDone {
+  border-color: colors.$color-primary;
+  background: color-mix(in oklab, colors.$color-primary 20%, transparent);
+  color: colors.$color-primary;
+}
+.milestoneText {
+  flex: 1;
+  color: colors.$color-foreground;
+}
+
+/* ── Achievements ── */
+.achieveGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+
+  @include bp.respond-to(sm) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+.achieveCard {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  background: colors.$color-card;
+  border: 1px solid colors.$color-border;
+  border-radius: 0.75rem;
+  padding: 1rem;
+}
+.achieveDone {
+  border-color: color-mix(in oklab, colors.$color-primary 30%, transparent);
+}
+.achieveIcon {
+  display: flex;
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  background: colors.$color-secondary;
+  flex-shrink: 0;
+}
+.achieveBody {
+  flex: 1;
+  min-width: 0;
+}
+.achieveHead {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.15rem;
+}
+.achieveTitle {
+  font-family: typo.$font-pixel;
+  font-size: 0.7rem;
+  color: colors.$color-foreground;
+}
+.achieveProgress {
+  margin-top: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+/* ── Quests ── */
+.questRow {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 0.75rem;
+}
+.questMeta {
+  flex: 1;
+}
+.questTitle {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: colors.$color-foreground;
+}

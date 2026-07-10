@@ -7,9 +7,64 @@
   --primary-foreground: #000000;
   --secondary: #222222;
   --muted-foreground: #a0a0a0;
+  --scrollbar-thumb: #3f3f46;
+  color-scheme: dark;
+}
+
+/* Soft, muted light theme — warm off-white paper, no harsh pure white */
+:root[data-theme="light"] {
+  --background: #e7e4dd;
+  --foreground: #2b2a26;
+  --card: #f1efe9;
+  --border: #d3cec4;
+  --primary: #16a34a;
+  --primary-foreground: #ffffff;
+  --secondary: #dcd8cf;
+  --muted-foreground: #6d685f;
+  --scrollbar-thumb: #c2bdb2;
+  color-scheme: light;
 }
 
 html,
 body {
   height: 100%;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+}
+
+/* ── Custom scrollbars (vertical + horizontal), site-wide ── */
+/* Firefox — scrollbar-width doesn't inherit, so apply to every element */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--scrollbar-thumb) transparent;
+}
+
+/* WebKit / Chromium */
+*::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+*::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: var(--scrollbar-thumb);
+  border-radius: 999px;
+  /* Transparent border + padding-box clip gives the thumb inset padding
+     on any background, and keeps it pill-shaped. */
+  border: 2px solid transparent;
+  background-clip: padding-box;
+}
+
+*::-webkit-scrollbar-thumb:hover {
+  background-color: var(--primary);
+}
+
+*::-webkit-scrollbar-corner {
+  background: transparent;
 }

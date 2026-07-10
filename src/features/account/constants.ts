@@ -1,0 +1,112 @@
+import {
+  Clock, Sword, Map, TrendingUp, Coins, Star, Zap, Gem, Crown, Shield,
+  Gift, Award, Target, Users, Calendar, Flame, Trophy, BarChart3,
+  type LucideIcon,
+} from "lucide-react";
+
+export type TabId = "overview" | "bonuses" | "referral" | "achievements" | "quests";
+
+export const PLAYER = {
+  name: "Steve_PureCraft",
+  email: "steve@purecraft.net",
+  rank: "Elite",
+  avatar: "https://mc-heads.net/avatar/Steve/128",
+  level: 47,
+  xp: 7340,
+  xpNext: 10000,
+  coins: 4820,
+  gems: 38,
+  joinDate: "Mar 2022",
+  playtime: "142h",
+  kills: 382,
+  deaths: 94,
+  blocksPlaced: "1.2M",
+  streak: 7,
+};
+
+export const TABS: { id: TabId; label: string; icon: LucideIcon }[] = [
+  { id: "overview", label: "Overview", icon: BarChart3 },
+  { id: "bonuses", label: "Bonuses", icon: Gift },
+  { id: "referral", label: "Invite Friends", icon: Users },
+  { id: "achievements", label: "Achievements", icon: Trophy },
+  { id: "quests", label: "Quests", icon: Target },
+];
+
+/* ── Overview ── */
+export const STATS: { label: string; value: string; icon: LucideIcon; accent: string }[] = [
+  { label: "Playtime", value: PLAYER.playtime, icon: Clock, accent: "var(--primary)" },
+  { label: "Kills", value: String(PLAYER.kills), icon: Sword, accent: "#f87171" },
+  { label: "Blocks", value: PLAYER.blocksPlaced, icon: Map, accent: "#fbbf24" },
+  { label: "K/D Ratio", value: (PLAYER.kills / PLAYER.deaths).toFixed(2), icon: TrendingUp, accent: "#38bdf8" },
+];
+
+export const RECENT_ACTIVITY: { action: string; time: string; color: string }[] = [
+  { action: "Won Arena Battle vs DiamondGirl", time: "1h ago", color: "#f87171" },
+  { action: "Opened Rare Crate — got Diamond Sword", time: "3h ago", color: "#60a5fa" },
+  { action: "Traded 500 Coins with CreeperKing", time: "Yesterday", color: "#fbbf24" },
+  { action: "Completed daily quest: Mine 200 Ores", time: "Yesterday", color: "var(--primary)" },
+  { action: "Earned Achievement: Builder Pro", time: "2 days ago", color: "#a855f7" },
+];
+
+export const PERKS = ["Fly Mode", "2x XP Active", "Elite Rank", "Custom Nick", "Priority Queue", "10 Homes"];
+
+/* ── Bonuses ── */
+export const DAILY_BONUSES: {
+  day: number; reward: string; icon: LucideIcon; color: string; claimed: boolean; today?: boolean;
+}[] = [
+  { day: 1, reward: "100 Coins", icon: Coins, color: "#fbbf24", claimed: true },
+  { day: 2, reward: "200 Coins", icon: Coins, color: "#fbbf24", claimed: true },
+  { day: 3, reward: "1 Rare Key", icon: Star, color: "#60a5fa", claimed: true },
+  { day: 4, reward: "500 Coins", icon: Coins, color: "#fbbf24", claimed: true },
+  { day: 5, reward: "2x XP (1h)", icon: Zap, color: "#4ade80", claimed: true },
+  { day: 6, reward: "1 Elite Key", icon: Gem, color: "#38bdf8", claimed: true },
+  { day: 7, reward: "Legend Crate", icon: Crown, color: "#a855f7", claimed: false, today: true },
+  { day: 8, reward: "1000 Coins", icon: Coins, color: "#fbbf24", claimed: false },
+  { day: 9, reward: "3 Rare Keys", icon: Star, color: "#60a5fa", claimed: false },
+  { day: 10, reward: "VIP for 3d", icon: Shield, color: "#fbbf24", claimed: false },
+  { day: 11, reward: "5000 Coins", icon: Coins, color: "#fbbf24", claimed: false },
+  { day: 12, reward: "Mystery Box", icon: Gift, color: "#f472b6", claimed: false },
+  { day: 13, reward: "2x XP (24h)", icon: Zap, color: "#4ade80", claimed: false },
+  { day: 14, reward: "MEGA Crate", icon: Crown, color: "#facc15", claimed: false },
+];
+
+export const COIN_REWARDS: { label: string; desc: string; reward: string; icon: LucideIcon; color: string }[] = [
+  { label: "Vote Reward", desc: "Vote for the server daily", reward: "+150 Coins", icon: Star, color: "#fbbf24" },
+  { label: "Forum Post", desc: "Post in the community forum", reward: "+50 Coins", icon: Award, color: "#38bdf8" },
+  { label: "Bug Report", desc: "Submit a valid bug report", reward: "+300 Coins", icon: Target, color: "var(--primary)" },
+];
+
+/* ── Referral ── */
+export const REFERRAL_CODE = "STEVE-PC42";
+export const REFERRAL_FRIENDS: { name: string; joined: string; reward: number; avatar: string }[] = [
+  { name: "Alex_B", joined: "2 days ago", reward: 200, avatar: "https://mc-heads.net/avatar/Alex/32" },
+  { name: "CreeperKing", joined: "1 week ago", reward: 200, avatar: "https://mc-heads.net/avatar/Herobrine/32" },
+  { name: "DiamondGirl", joined: "2 weeks ago", reward: 200, avatar: "https://mc-heads.net/avatar/DiamondGirl/32" },
+];
+export const REFERRAL_MILESTONES: { target: number; reward: string; done: boolean }[] = [
+  { target: 1, reward: "200 Coins", done: true },
+  { target: 3, reward: "1 Elite Key + Badge", done: true },
+  { target: 5, reward: "Referral Legend Badge + 1000 Coins", done: false },
+  { target: 10, reward: "VIP Rank (7 days) + 3000 Coins", done: false },
+  { target: 25, reward: "Elite Rank (permanent)", done: false },
+];
+
+/* ── Achievements ── */
+export const ACHIEVEMENTS: {
+  title: string; desc: string; icon: LucideIcon; color: string; progress: number; done: boolean; current?: number; total?: number;
+}[] = [
+  { title: "First Blood", desc: "Win your first PvP fight", icon: Sword, color: "#f87171", progress: 100, done: true },
+  { title: "Builder Pro", desc: "Place 1 million blocks", icon: Map, color: "#fbbf24", progress: 100, done: true },
+  { title: "Streak Master", desc: "Log in 14 days in a row", icon: Flame, color: "#fb923c", progress: 50, done: false, current: 7, total: 14 },
+  { title: "Social Butterfly", desc: "Invite 5 friends", icon: Users, color: "#38bdf8", progress: 60, done: false, current: 3, total: 5 },
+  { title: "Treasure Hunter", desc: "Open 50 crates", icon: Gift, color: "#a855f7", progress: 36, done: false, current: 18, total: 50 },
+  { title: "Legend", desc: "Reach level 100", icon: Crown, color: "#facc15", progress: 47, done: false, current: 47, total: 100 },
+];
+
+/* ── Quests ── */
+export const QUESTS: { title: string; reward: string; icon: LucideIcon; color: string; progress: number; total: number }[] = [
+  { title: "Kill 10 players", reward: "500 Coins", icon: Sword, color: "#f87171", progress: 7, total: 10 },
+  { title: "Mine 200 ores", reward: "300 Coins", icon: Target, color: "#fbbf24", progress: 200, total: 200 },
+  { title: "Trade with 3 players", reward: "1 Rare Key", icon: Users, color: "#38bdf8", progress: 1, total: 3 },
+  { title: "Log in 7 days", reward: "Legend Crate", icon: Calendar, color: "#a855f7", progress: 7, total: 7 },
+];

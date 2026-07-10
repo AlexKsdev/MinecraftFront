@@ -56,7 +56,8 @@
   font-family: typo.$font-pixel;
   font-size: 1.5rem;
   line-height: 1.4;
-  color: colors.$color-foreground;
+  /* Hero always sits on a dark photo + overlay, so keep text light in both themes. */
+  color: #f4f4f5;
   text-shadow: 0 0 24px rgba(34, 197, 94, 0.35);
   margin: 0 0 1.5rem;
 
@@ -72,7 +73,7 @@
 .subtitle {
   max-width: 40rem;
   margin: 0 auto 2rem;
-  color: colors.$color-muted-foreground;
+  color: rgba(244, 244, 245, 0.72);
   font-size: 1.05rem;
 }
 
