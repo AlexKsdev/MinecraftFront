@@ -1,6 +1,6 @@
 import type { LoginInput, RegisterInput } from "./schemas";
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:3000";
+export const API_URL = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:3000";
 const SESSION_KEY = "pc-auth";
 
 export interface AuthUser {
