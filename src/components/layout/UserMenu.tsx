@@ -12,17 +12,27 @@ import {
   UnauthorizedError,
   type Profile,
 } from "@/lib/account/api";
+import {
+  useBalances,
+  publishBalances,
+  clearBalances,
+} from "@/lib/account/balances";
 import styles from "./UserMenu.module.scss";
 
 export function UserMenu({ name }: { name: string }) {
   const [open, setOpen] = useState(false);
   const [profile, setProfile] = useState<Profile | null>(null);
+  const balances = useBalances();
   const router = useRouter();
 
   useEffect(() => {
     let active = true;
     getProfile()
-      .then((p) => active && setProfile(p))
+      .then((p) => {
+        if (!active) return;
+        setProfile(p);
+        publishBalances({ coins: p.coins, gems: p.gems });
+      })
       .catch((err: unknown) => {
         if (err instanceof UnauthorizedError) return;
       });
@@ -37,9 +47,13 @@ export function UserMenu({ name }: { name: string }) {
 
   function logout() {
     clearSession();
+    clearBalances();
     setOpen(false);
     router.push("/");
   }
+
+  const coins = balances?.coins ?? profile?.coins ?? null;
+  const gems = balances?.gems ?? profile?.gems ?? null;
 
   return (
     <div
@@ -84,11 +98,11 @@ export function UserMenu({ name }: { name: string }) {
           <div className={styles.balances}>
             <span className={`${styles.balance} ${styles.coins}`}>
               <Coins size={14} />
-              {profile ? profile.coins.toLocaleString("en-US") : "—"}
+              {coins !== null ? coins.toLocaleString("en-US") : "—"}
             </span>
             <span className={`${styles.balance} ${styles.gems}`}>
               <Gem size={14} />
-              {profile ? profile.gems.toLocaleString("en-US") : "—"}
+              {gems !== null ? gems.toLocaleString("en-US") : "—"}
             </span>
           </div>
 

@@ -2,7 +2,9 @@
 
 import { useEffect, useState } from "react";
 import { Coins, Gem } from "lucide-react";
-import { getProfile, UnauthorizedError, type Profile } from "@/lib/account/api";
+import { getProfile, UnauthorizedError } from "@/lib/account/api";
+import { useBalances, publishBalances } from "@/lib/account/balances";
+import { useSession } from "@/lib/auth/useSession";
 import {
   getProducts,
   getGemPacks,
@@ -15,8 +17,6 @@ import {
 import { categories } from "../constants";
 import { ItemCard } from "./ItemCard";
 import styles from "./ShopBrowser.module.scss";
-
-type Balances = Pick<Profile, "coins" | "gems">;
 
 type PaymentBanner = "success" | "cancelled" | null;
 
@@ -32,10 +32,14 @@ export function ShopBrowser() {
   const [error, setError] = useState<string | null>(null);
   const [activeCategory, setActiveCategory] = useState<string>("All");
 
-  const [balances, setBalances] = useState<Balances | null>(null);
   const [packs, setPacks] = useState<GemPack[]>([]);
   const [checkoutPack, setCheckoutPack] = useState<string | null>(null);
   const [banner, setBanner] = useState<PaymentBanner>(null);
+  const [toast, setToast] = useState<string | null>(null);
+
+  const session = useSession();
+  const isAuthed = session !== null;
+  const balances = useBalances();
 
   useEffect(() => {
     let active = true;
@@ -55,7 +59,7 @@ export function ShopBrowser() {
 
     // Balances only matter when signed in; missing session is not an error here.
     getProfile()
-      .then((p) => active && setBalances({ coins: p.coins, gems: p.gems }))
+      .then((p) => active && publishBalances({ coins: p.coins, gems: p.gems }))
       .catch((err: unknown) => {
         if (!active || err instanceof UnauthorizedError) return;
       });
@@ -68,7 +72,11 @@ export function ShopBrowser() {
     };
   }, []);
 
-  const isAuthed = balances !== null;
+  useEffect(() => {
+    if (!toast) return;
+    const timer = setTimeout(() => setToast(null), 3500);
+    return () => clearTimeout(timer);
+  }, [toast]);
 
   const filtered =
     activeCategory === "All"
@@ -76,7 +84,11 @@ export function ShopBrowser() {
       : products.filter((item) => item.category === activeCategory);
 
   function handlePurchased(result: PurchaseResult) {
-    setBalances({ coins: result.coins, gems: result.gems });
+    publishBalances({ coins: result.coins, gems: result.gems });
+    const symbol = result.currency === "GEMS" ? "💎" : "🪙";
+    setToast(
+      `${result.product.name} — −${result.price.toLocaleString("en-US")} ${symbol}`,
+    );
   }
 
   async function buyGems(pack: GemPack) {
@@ -190,6 +202,13 @@ export function ShopBrowser() {
             ))}
           </div>
         </section>
+      )}
+
+      {toast && (
+        <div className={styles.toast} role="status">
+          <Coins size={16} className={styles.toastIcon} />
+          <span>{toast}</span>
+        </div>
       )}
     </div>
   );

@@ -8,6 +8,41 @@
   padding: 2.5rem 1.5rem;
 }
 
+.toast {
+  position: fixed;
+  right: 1.5rem;
+  bottom: 1.5rem;
+  z-index: 80;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  max-width: min(22rem, calc(100vw - 3rem));
+  padding: 0.85rem 1.1rem;
+  border-radius: 0.6rem;
+  border: 1px solid rgba(34, 197, 94, 0.4);
+  background: colors.$color-card;
+  color: colors.$color-foreground;
+  font-size: 0.8rem;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.4);
+  animation: toast-in 0.25s ease;
+}
+
+.toastIcon {
+  flex-shrink: 0;
+  color: colors.$color-accent-amber;
+}
+
+@keyframes toast-in {
+  from {
+    opacity: 0;
+    transform: translateY(0.75rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 .banner {
   margin-bottom: 1.5rem;
   padding: 0.85rem 1.1rem;
