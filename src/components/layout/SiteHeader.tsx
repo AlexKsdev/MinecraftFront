@@ -5,7 +5,9 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Menu, Moon, Sun, Sword, X } from "lucide-react";
 import { MobileNav } from "./MobileNav";
+import { UserMenu } from "./UserMenu";
 import { AuthModal } from "@/components/AuthModal/AuthModal";
+import { useSession } from "@/lib/auth/useSession";
 import styles from "./SiteHeader.module.scss";
 
 const NAV_LINKS = [
@@ -33,6 +35,7 @@ export function SiteHeader() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [authOpen, setAuthOpen] = useState(false);
   const pathname = usePathname();
+  const session = useSession();
   const theme = useSyncExternalStore(subscribeTheme, getThemeSnapshot, () => "dark");
 
   useEffect(() => {
@@ -92,13 +95,17 @@ export function SiteHeader() {
           >
             {theme === "dark" ? <Sun size={18} /> : <Moon size={18} />}
           </button>
-          <button
-            className={styles.cta}
-            onClick={() => setAuthOpen(true)}
-            type="button"
-          >
-            <Sword size={12} /> Join Now
-          </button>
+          {session ? (
+            <UserMenu name={session.user.name} />
+          ) : (
+            <button
+              className={styles.cta}
+              onClick={() => setAuthOpen(true)}
+              type="button"
+            >
+              <Sword size={12} /> Join Now
+            </button>
+          )}
           <button
             className={styles.menuToggle}
             onClick={() => setMenuOpen((open) => !open)}
