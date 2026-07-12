@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { AlertCircle, Coins, Gem } from "lucide-react";
 import { getProfile, UnauthorizedError } from "@/lib/account/api";
-import { useBalances, publishBalances } from "@/lib/account/balances";
+import { publishBalances } from "@/lib/account/balances";
 import { useSession } from "@/lib/auth/useSession";
 import {
   getProducts,
@@ -11,12 +11,25 @@ import {
   createCheckout,
   formatPrice,
   type Product,
+  type ProductSort,
   type PurchaseResult,
   type GemPack,
 } from "@/lib/shop/api";
 import { categories } from "../constants";
 import { ItemCard } from "./ItemCard";
 import styles from "./ShopBrowser.module.scss";
+
+const PAGE_SIZE = 6;
+
+const SORT_OPTIONS: { value: "" | ProductSort; label: string }[] = [
+  { value: "", label: "Featured" },
+  { value: "coins_asc", label: "Coins: Low to High" },
+  { value: "coins_desc", label: "Coins: High to Low" },
+  { value: "gems_asc", label: "Gems: Low to High" },
+  { value: "gems_desc", label: "Gems: High to Low" },
+  { value: "rarity_desc", label: "Rarity: High to Low" },
+  { value: "rarity_asc", label: "Rarity: Low to High" },
+];
 
 type PaymentBanner = "success" | "cancelled" | null;
 
@@ -28,9 +41,13 @@ function readPaymentBanner(): PaymentBanner {
 
 export function ShopBrowser() {
   const [products, setProducts] = useState<Product[]>([]);
+  const [total, setTotal] = useState(0);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+
   const [activeCategory, setActiveCategory] = useState<string>("All");
+  const [sort, setSort] = useState<"" | ProductSort>("");
+  const [page, setPage] = useState(1);
 
   const [packs, setPacks] = useState<GemPack[]>([]);
   const [checkoutPack, setCheckoutPack] = useState<string | null>(null);
@@ -39,25 +56,17 @@ export function ShopBrowser() {
 
   const session = useSession();
   const isAuthed = session !== null;
-  const balances = useBalances();
 
+  const totalPages = Math.max(1, Math.ceil(total / PAGE_SIZE));
+
+  // One-time: gem packs, balances, and the Stripe redirect banner.
   useEffect(() => {
     let active = true;
-
-    getProducts()
-      .then((items) => active && setProducts(items))
-      .catch(
-        (err: unknown) =>
-          active &&
-          setError(err instanceof Error ? err.message : "Failed to load shop"),
-      )
-      .finally(() => active && setLoading(false));
 
     getGemPacks()
       .then((list) => active && setPacks(list))
       .catch(() => {});
 
-    // Balances only matter when signed in; missing session is not an error here.
     getProfile()
       .then((p) => active && publishBalances({ coins: p.coins, gems: p.gems }))
       .catch((err: unknown) => {
@@ -72,16 +81,50 @@ export function ShopBrowser() {
     };
   }, []);
 
+  // Re-fetch the current page whenever the filter, sort, or page changes.
+  useEffect(() => {
+    let active = true;
+    // Show the loading state while the new page/filter/sort request is in flight.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setLoading(true);
+    getProducts({
+      page,
+      limit: PAGE_SIZE,
+      category: activeCategory,
+      sort: sort || undefined,
+    })
+      .then((data) => {
+        if (!active) return;
+        setProducts(data.items);
+        setTotal(data.total);
+        setError(null);
+      })
+      .catch(
+        (err: unknown) =>
+          active &&
+          setError(err instanceof Error ? err.message : "Failed to load shop"),
+      )
+      .finally(() => active && setLoading(false));
+    return () => {
+      active = false;
+    };
+  }, [activeCategory, sort, page]);
+
   useEffect(() => {
     if (!toast) return;
     const timer = setTimeout(() => setToast(null), 3500);
     return () => clearTimeout(timer);
   }, [toast]);
 
-  const filtered =
-    activeCategory === "All"
-      ? products
-      : products.filter((item) => item.category === activeCategory);
+  function selectCategory(category: string) {
+    setActiveCategory(category);
+    setPage(1);
+  }
+
+  function changeSort(value: "" | ProductSort) {
+    setSort(value);
+    setPage(1);
+  }
 
   function handlePurchased(result: PurchaseResult) {
     publishBalances({ coins: result.coins, gems: result.gems });
@@ -127,24 +170,11 @@ export function ShopBrowser() {
         </div>
       )}
 
-      {isAuthed && balances && (
-        <div className={styles.balances}>
-          <span className={`${styles.balance} ${styles.balanceCoins}`}>
-            <Coins size={14} />
-            {balances.coins.toLocaleString("en-US")}
-          </span>
-          <span className={`${styles.balance} ${styles.balanceGems}`}>
-            <Gem size={14} />
-            {balances.gems.toLocaleString("en-US")}
-          </span>
-        </div>
-      )}
-
       <div className={styles.categories}>
         {categories.map((category) => (
           <button
             key={category}
-            onClick={() => setActiveCategory(category)}
+            onClick={() => selectCategory(category)}
             className={`${styles.categoryButton} ${activeCategory === category ? styles.active : ""}`}
             type="button"
           >
@@ -153,19 +183,38 @@ export function ShopBrowser() {
         ))}
       </div>
 
-      {loading ? (
-        <p className={styles.count}>Loading items…</p>
-      ) : error ? (
-        <p className={styles.count}>{error}</p>
-      ) : (
-        <>
-          <p className={styles.count}>
-            {filtered.length} item{filtered.length !== 1 ? "s" : ""} in{" "}
-            <span className={styles.countHighlight}>{activeCategory}</span>
-          </p>
+      <div className={styles.toolbar}>
+        <p className={styles.count}>
+          {loading ? (
+            "Loading items…"
+          ) : error ? (
+            error
+          ) : (
+            <>
+              {total} item{total !== 1 ? "s" : ""} in{" "}
+              <span className={styles.countHighlight}>{activeCategory}</span>
+            </>
+          )}
+        </p>
 
+        <select
+          className={styles.sort}
+          value={sort}
+          onChange={(e) => changeSort(e.target.value as "" | ProductSort)}
+          aria-label="Sort products"
+        >
+          {SORT_OPTIONS.map((option) => (
+            <option key={option.value} value={option.value}>
+              {option.label}
+            </option>
+          ))}
+        </select>
+      </div>
+
+      {!loading && !error && (
+        <>
           <div className={styles.grid}>
-            {filtered.map((item) => (
+            {products.map((item) => (
               <ItemCard
                 key={item.id}
                 product={item}
@@ -175,6 +224,37 @@ export function ShopBrowser() {
               />
             ))}
           </div>
+
+          {totalPages > 1 && (
+            <div className={styles.pagination}>
+              <button
+                className={styles.pageButton}
+                type="button"
+                onClick={() => setPage((p) => Math.max(1, p - 1))}
+                disabled={page === 1}
+              >
+                Prev
+              </button>
+              {Array.from({ length: totalPages }, (_, i) => i + 1).map((n) => (
+                <button
+                  key={n}
+                  className={`${styles.pageButton} ${n === page ? styles.pageActive : ""}`}
+                  type="button"
+                  onClick={() => setPage(n)}
+                >
+                  {n}
+                </button>
+              ))}
+              <button
+                className={styles.pageButton}
+                type="button"
+                onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
+                disabled={page === totalPages}
+              >
+                Next
+              </button>
+            </div>
+          )}
         </>
       )}
 

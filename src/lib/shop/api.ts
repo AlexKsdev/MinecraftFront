@@ -34,6 +34,28 @@ export interface GemPack {
   priceCents: number;
 }
 
+export type ProductSort =
+  | "coins_asc"
+  | "coins_desc"
+  | "gems_asc"
+  | "gems_desc"
+  | "rarity_asc"
+  | "rarity_desc";
+
+export interface PaginatedProducts {
+  items: Product[];
+  total: number;
+  page: number;
+  limit: number;
+}
+
+export interface ProductQuery {
+  page?: number;
+  limit?: number;
+  category?: string;
+  sort?: ProductSort;
+}
+
 function extractError(data: unknown, fallback: string): string {
   if (data && typeof data === "object" && "message" in data) {
     const message = (data as { message: unknown }).message;
@@ -43,16 +65,26 @@ function extractError(data: unknown, fallback: string): string {
   return fallback;
 }
 
-/** Public shop catalog. Fetches the full list; the UI filters by category. */
-export async function getProducts(): Promise<Product[]> {
+/** Public shop catalog — server-side paginated, filtered and sorted. */
+export async function getProducts(
+  query: ProductQuery = {},
+): Promise<PaginatedProducts> {
+  const params = new URLSearchParams();
+  if (query.page) params.set("page", String(query.page));
+  if (query.limit) params.set("limit", String(query.limit));
+  if (query.category && query.category !== "All") {
+    params.set("category", query.category);
+  }
+  if (query.sort) params.set("sort", query.sort);
+
   let res: Response;
   try {
-    res = await fetch(`${API_URL}/products?limit=100`);
+    res = await fetch(`${API_URL}/products?${params.toString()}`);
   } catch {
     throw new Error("Cannot reach the server. Please try again.");
   }
   if (!res.ok) throw new Error("Failed to load the shop");
-  return res.json() as Promise<Product[]>;
+  return res.json() as Promise<PaginatedProducts>;
 }
 
 /** Buy a product with the user's in-game currency. Requires a session. */
