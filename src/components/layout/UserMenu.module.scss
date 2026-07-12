@@ -38,16 +38,6 @@
   border: 1px solid colors.$color-border;
   background: colors.$color-card;
   box-shadow: 0 16px 40px rgba(0, 0, 0, 0.35);
-
-  // Invisible bridge so moving from the avatar into the popover doesn't close it.
-  &::before {
-    content: "";
-    position: absolute;
-    top: -0.6rem;
-    left: 0;
-    right: 0;
-    height: 0.6rem;
-  }
 }
 
 .head {

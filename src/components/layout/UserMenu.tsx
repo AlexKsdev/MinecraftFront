@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
@@ -24,6 +24,7 @@ export function UserMenu({ name }: { name: string }) {
   const [profile, setProfile] = useState<Profile | null>(null);
   const balances = useBalances();
   const router = useRouter();
+  const wrapRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     let active = true;
@@ -41,6 +42,25 @@ export function UserMenu({ name }: { name: string }) {
     };
   }, []);
 
+  // Click-to-open menu: close on an outside click or Escape.
+  useEffect(() => {
+    if (!open) return;
+    const onPointerDown = (event: MouseEvent) => {
+      if (wrapRef.current && !wrapRef.current.contains(event.target as Node)) {
+        setOpen(false);
+      }
+    };
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setOpen(false);
+    };
+    document.addEventListener("mousedown", onPointerDown);
+    document.addEventListener("keydown", onKeyDown);
+    return () => {
+      document.removeEventListener("mousedown", onPointerDown);
+      document.removeEventListener("keydown", onKeyDown);
+    };
+  }, [open]);
+
   const src = profile
     ? avatarUrl(profile)
     : `https://mc-heads.net/avatar/${encodeURIComponent(name)}/64`;
@@ -56,11 +76,7 @@ export function UserMenu({ name }: { name: string }) {
   const gems = balances?.gems ?? profile?.gems ?? null;
 
   return (
-    <div
-      className={styles.wrap}
-      onMouseEnter={() => setOpen(true)}
-      onMouseLeave={() => setOpen(false)}
-    >
+    <div className={styles.wrap} ref={wrapRef}>
       <button
         className={styles.avatarBtn}
         type="button"
