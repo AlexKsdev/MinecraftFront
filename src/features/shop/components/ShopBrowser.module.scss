@@ -27,9 +27,18 @@
   animation: toast-in 0.25s ease;
 }
 
+.toastError {
+  border-color: rgba(248, 113, 113, 0.5);
+}
+
 .toastIcon {
   flex-shrink: 0;
   color: colors.$color-accent-amber;
+}
+
+.toastIconError {
+  flex-shrink: 0;
+  color: colors.$color-accent-red;
 }
 
 @keyframes toast-in {

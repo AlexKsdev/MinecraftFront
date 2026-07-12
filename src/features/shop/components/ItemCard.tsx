@@ -8,10 +8,11 @@ import {
   type Product,
   type PurchaseResult,
 } from "@/lib/shop/api";
+import { openAuthModal } from "@/lib/auth/api";
 import { UnauthorizedError } from "@/lib/account/api";
 import styles from "./ItemCard.module.scss";
 
-type Status = "idle" | "buying" | "owned" | "error";
+type Status = "idle" | "buying" | "owned";
 
 const FALLBACK_RARITY: Rarity = "Common";
 
@@ -19,36 +20,38 @@ export function ItemCard({
   product,
   isAuthed,
   onPurchased,
+  onError,
 }: {
   product: Product;
   isAuthed: boolean;
   onPurchased: (result: PurchaseResult) => void;
+  onError: (message: string) => void;
 }) {
   const [status, setStatus] = useState<Status>("idle");
-  const [message, setMessage] = useState<string | null>(null);
 
   const rarity = RARITY[(product.rarity as Rarity) in RARITY ? (product.rarity as Rarity) : FALLBACK_RARITY];
   const isGems = product.currency === "GEMS";
 
   async function buy() {
     if (!isAuthed) {
-      setStatus("error");
-      setMessage("Sign in to buy items");
+      openAuthModal();
       return;
     }
     setStatus("buying");
-    setMessage(null);
     try {
       const result = await purchaseProduct(product.id);
       onPurchased(result);
       setStatus("owned");
     } catch (err: unknown) {
-      setStatus("error");
-      if (err instanceof UnauthorizedError) {
-        setMessage("Session expired — sign in again");
-      } else {
-        setMessage(err instanceof Error ? err.message : "Purchase failed");
-      }
+      setStatus("idle");
+      onError(
+        err instanceof UnauthorizedError
+          ? "Session expired — sign in again"
+          : err instanceof Error
+            ? err.message
+            : "Purchase failed",
+      );
+      if (err instanceof UnauthorizedError) openAuthModal();
     }
   }
 
@@ -92,8 +95,6 @@ export function ItemCard({
             ? "Purchased ✓"
             : "Buy Now"}
       </button>
-
-      {message && <p className={styles.buyMessage}>{message}</p>}
     </div>
   );
 }

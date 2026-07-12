@@ -67,6 +67,16 @@ function notifyAuthChange(): void {
   }
 }
 
+/** Fires when any component wants the login/register modal opened. */
+export const OPEN_AUTH_EVENT = "pc-open-auth";
+
+/** Request the auth modal from anywhere (e.g. a Buy click while logged out). */
+export function openAuthModal(): void {
+  if (typeof window !== "undefined") {
+    window.dispatchEvent(new Event(OPEN_AUTH_EVENT));
+  }
+}
+
 export function storeSession(res: AuthResponse): void {
   try {
     localStorage.setItem(SESSION_KEY, JSON.stringify(res));

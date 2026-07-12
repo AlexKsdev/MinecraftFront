@@ -7,6 +7,7 @@ import { Menu, Moon, Sun, Sword, X } from "lucide-react";
 import { MobileNav } from "./MobileNav";
 import { UserMenu } from "./UserMenu";
 import { AuthModal } from "@/components/AuthModal/AuthModal";
+import { OPEN_AUTH_EVENT } from "@/lib/auth/api";
 import { useSession } from "@/lib/auth/useSession";
 import styles from "./SiteHeader.module.scss";
 
@@ -45,6 +46,13 @@ export function SiteHeader() {
     };
     window.addEventListener("scroll", onScroll);
     return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  // Any component (e.g. a Buy click while logged out) can request the modal.
+  useEffect(() => {
+    const open = () => setAuthOpen(true);
+    window.addEventListener(OPEN_AUTH_EVENT, open);
+    return () => window.removeEventListener(OPEN_AUTH_EVENT, open);
   }, []);
 
   const toggleTheme = () => {

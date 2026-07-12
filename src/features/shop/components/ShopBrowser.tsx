@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Coins, Gem } from "lucide-react";
+import { AlertCircle, Coins, Gem } from "lucide-react";
 import { getProfile, UnauthorizedError } from "@/lib/account/api";
 import { useBalances, publishBalances } from "@/lib/account/balances";
 import { useSession } from "@/lib/auth/useSession";
@@ -35,7 +35,7 @@ export function ShopBrowser() {
   const [packs, setPacks] = useState<GemPack[]>([]);
   const [checkoutPack, setCheckoutPack] = useState<string | null>(null);
   const [banner, setBanner] = useState<PaymentBanner>(null);
-  const [toast, setToast] = useState<string | null>(null);
+  const [toast, setToast] = useState<{ text: string; ok: boolean } | null>(null);
 
   const session = useSession();
   const isAuthed = session !== null;
@@ -86,9 +86,14 @@ export function ShopBrowser() {
   function handlePurchased(result: PurchaseResult) {
     publishBalances({ coins: result.coins, gems: result.gems });
     const symbol = result.currency === "GEMS" ? "💎" : "🪙";
-    setToast(
-      `${result.product.name} — −${result.price.toLocaleString("en-US")} ${symbol}`,
-    );
+    setToast({
+      text: `${result.product.name} — −${result.price.toLocaleString("en-US")} ${symbol}`,
+      ok: true,
+    });
+  }
+
+  function handlePurchaseError(message: string) {
+    setToast({ text: message, ok: false });
   }
 
   async function buyGems(pack: GemPack) {
@@ -166,6 +171,7 @@ export function ShopBrowser() {
                 product={item}
                 isAuthed={isAuthed}
                 onPurchased={handlePurchased}
+                onError={handlePurchaseError}
               />
             ))}
           </div>
@@ -205,9 +211,16 @@ export function ShopBrowser() {
       )}
 
       {toast && (
-        <div className={styles.toast} role="status">
-          <Coins size={16} className={styles.toastIcon} />
-          <span>{toast}</span>
+        <div
+          className={`${styles.toast} ${toast.ok ? "" : styles.toastError}`}
+          role="status"
+        >
+          {toast.ok ? (
+            <Coins size={16} className={styles.toastIcon} />
+          ) : (
+            <AlertCircle size={16} className={styles.toastIconError} />
+          )}
+          <span>{toast.text}</span>
         </div>
       )}
     </div>
