@@ -76,6 +76,10 @@
   color: colors.$color-accent-amber;
 }
 
+.priceGems {
+  color: #c084fc;
+}
+
 .priceLabel {
   font-size: 0.7rem;
   color: colors.$color-muted-foreground;
@@ -118,5 +122,10 @@
 
   &:hover {
     background: rgba(255, 255, 255, 0.05);
+  }
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: default;
   }
 }
