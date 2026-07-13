@@ -58,6 +58,34 @@ export function registerUser(input: RegisterInput): Promise<AuthResponse> {
   return postAuth("/auth/register", input);
 }
 
+async function postJson(path: string, body: unknown): Promise<{ message: string }> {
+  let res: Response;
+  try {
+    res = await fetch(`${API_URL}${path}`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(body),
+    });
+  } catch {
+    throw new Error("Cannot reach the server. Please try again.");
+  }
+
+  const data: unknown = await res.json().catch(() => null);
+  if (!res.ok) throw new Error(extractError(data));
+  return data as { message: string };
+}
+
+export function forgotPassword(email: string): Promise<{ message: string }> {
+  return postJson("/auth/forgot-password", { email });
+}
+
+export function resetPassword(
+  token: string,
+  newPassword: string,
+): Promise<{ message: string }> {
+  return postJson("/auth/reset-password", { token, newPassword });
+}
+
 /** Fires (same-tab) whenever the stored session changes, so the UI can react. */
 export const AUTH_EVENT = "pc-authchange";
 
