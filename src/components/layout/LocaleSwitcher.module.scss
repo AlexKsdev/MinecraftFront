@@ -1,0 +1,38 @@
+@use "abstracts/colors" as colors;
+@use "abstracts/typography" as typo;
+
+.switcher {
+  display: flex;
+  align-items: center;
+  gap: 0.15rem;
+  padding: 0.2rem;
+  border-radius: 0.375rem;
+  border: 1px solid colors.$color-border;
+
+  &.overHero {
+    border-color: rgba(244, 244, 245, 0.3);
+  }
+}
+
+.option {
+  font-family: typo.$font-pixel;
+  font-size: 0.55rem;
+  padding: 0.3rem 0.5rem;
+  border-radius: 0.25rem;
+  border: none;
+  background: none;
+  color: colors.$color-muted-foreground;
+  cursor: pointer;
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease;
+
+  &:hover {
+    color: colors.$color-foreground;
+  }
+
+  &.active {
+    background: colors.$color-primary;
+    color: colors.$color-primary-foreground;
+  }
+}

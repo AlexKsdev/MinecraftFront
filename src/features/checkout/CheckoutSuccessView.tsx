@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 import { CheckCircle2, Gem } from "lucide-react";
 import { getProfile, UnauthorizedError } from "@/lib/account/api";
 import styles from "./CheckoutSuccessView.module.scss";

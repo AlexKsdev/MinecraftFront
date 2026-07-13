@@ -1,0 +1,33 @@
+{
+  "Header": {
+    "nav": {
+      "home": "Головна",
+      "shop": "Магазин",
+      "blog": "Блог",
+      "wiki": "Вікі"
+    },
+    "joinNow": "Приєднатися",
+    "toggleTheme": "Змінити тему",
+    "toggleMenu": "Меню",
+    "accountMenu": "Меню акаунта",
+    "goToAccount": "В акаунт",
+    "logout": "Вийти"
+  },
+  "Footer": {
+    "tagline": "Найкращий survival-досвід Minecraft. Будуй, досліджуй і перемагай разом із друзями.",
+    "navigationHeading": "Навігація",
+    "communityHeading": "Спільнота",
+    "nav": {
+      "home": "Головна",
+      "shop": "Магазин",
+      "blog": "Блог",
+      "wiki": "Вікі"
+    },
+    "community": {
+      "account": "Акаунт",
+      "rules": "Правила"
+    },
+    "copyright": "© 2026 PureCraft. Не пов'язано з Mojang.",
+    "madeWith": "Зроблено з ♥ для спільноти"
+  }
+}

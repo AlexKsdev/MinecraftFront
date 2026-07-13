@@ -1,4 +1,4 @@
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 import { User } from "lucide-react";
 import { CopyServerIp } from "@/components/CopyServerIp/CopyServerIp";
 import { SERVER_IP } from "../constants";

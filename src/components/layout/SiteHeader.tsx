@@ -1,22 +1,24 @@
 "use client";
 
 import { useEffect, useState, useSyncExternalStore } from "react";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { useTranslations } from "next-intl";
+import { Link, usePathname } from "@/i18n/navigation";
 import { Menu, Moon, Sun, Sword, X } from "lucide-react";
 import { MobileNav } from "./MobileNav";
 import { UserMenu } from "./UserMenu";
+import { LocaleSwitcher } from "./LocaleSwitcher";
 import { AuthModal } from "@/components/AuthModal/AuthModal";
 import { OPEN_AUTH_EVENT } from "@/lib/auth/api";
 import { useSession } from "@/lib/auth/useSession";
 import styles from "./SiteHeader.module.scss";
 
-const NAV_LINKS = [
-  { href: "/", label: "Home" },
-  { href: "/shop", label: "Shop" },
-  { href: "/blog", label: "Blog" },
-  { href: "/wiki", label: "Wiki" },
-];
+const NAV_KEYS = ["home", "shop", "blog", "wiki"] as const;
+const NAV_HREFS: Record<(typeof NAV_KEYS)[number], string> = {
+  home: "/",
+  shop: "/shop",
+  blog: "/blog",
+  wiki: "/wiki",
+};
 
 const THEME_EVENT = "pc-themechange";
 
@@ -38,6 +40,12 @@ export function SiteHeader() {
   const pathname = usePathname();
   const session = useSession();
   const theme = useSyncExternalStore(subscribeTheme, getThemeSnapshot, () => "dark");
+  const t = useTranslations("Header");
+
+  const navLinks = NAV_KEYS.map((key) => ({
+    href: NAV_HREFS[key],
+    label: t(`nav.${key}`),
+  }));
 
   useEffect(() => {
     const onScroll = () => {
@@ -83,7 +91,7 @@ export function SiteHeader() {
         </Link>
 
         <nav className={styles.desktopNav}>
-          {NAV_LINKS.map((link) => (
+          {navLinks.map((link) => (
             <Link
               key={link.href}
               href={link.href}
@@ -95,10 +103,11 @@ export function SiteHeader() {
         </nav>
 
         <div className={styles.actions}>
+          <LocaleSwitcher overHero={overHero} />
           <button
             className={styles.themeToggle}
             onClick={toggleTheme}
-            aria-label="Toggle theme"
+            aria-label={t("toggleTheme")}
             type="button"
           >
             {theme === "dark" ? <Sun size={18} /> : <Moon size={18} />}
@@ -111,13 +120,13 @@ export function SiteHeader() {
               onClick={() => setAuthOpen(true)}
               type="button"
             >
-              <Sword size={12} /> Join Now
+              <Sword size={12} /> {t("joinNow")}
             </button>
           )}
           <button
             className={styles.menuToggle}
             onClick={() => setMenuOpen((open) => !open)}
-            aria-label="Toggle menu"
+            aria-label={t("toggleMenu")}
             type="button"
           >
             {menuOpen ? <X size={22} /> : <Menu size={22} />}
@@ -127,7 +136,7 @@ export function SiteHeader() {
 
       {menuOpen && (
         <MobileNav
-          links={NAV_LINKS}
+          links={navLinks}
           pathname={pathname}
           onNavigate={() => setMenuOpen(false)}
           onJoinClick={() => {

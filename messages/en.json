@@ -1,0 +1,33 @@
+{
+  "Header": {
+    "nav": {
+      "home": "Home",
+      "shop": "Shop",
+      "blog": "Blog",
+      "wiki": "Wiki"
+    },
+    "joinNow": "Join Now",
+    "toggleTheme": "Toggle theme",
+    "toggleMenu": "Toggle menu",
+    "accountMenu": "Account menu",
+    "goToAccount": "Go to Account",
+    "logout": "Log out"
+  },
+  "Footer": {
+    "tagline": "The ultimate Minecraft survival experience. Build, explore, and conquer with friends.",
+    "navigationHeading": "Navigation",
+    "communityHeading": "Community",
+    "nav": {
+      "home": "Home",
+      "shop": "Shop",
+      "blog": "Blog",
+      "wiki": "Wiki"
+    },
+    "community": {
+      "account": "Account",
+      "rules": "Rules"
+    },
+    "copyright": "© 2026 PureCraft. Not affiliated with Mojang.",
+    "madeWith": "Made with ♥ for the community"
+  }
+}
