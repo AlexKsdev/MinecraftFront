@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Script from "next/script";
 import { notFound } from "next/navigation";
 import { hasLocale, NextIntlClientProvider } from "next-intl";
 import { getMessages } from "next-intl/server";
@@ -47,13 +48,10 @@ export default async function RootLayout({
   return (
     <html lang={locale} className={`${bodyFont.variable} ${pixelFont.variable}`} suppressHydrationWarning>
       <body>
-        {/* Apply the saved theme before paint to avoid a flash / hydration mismatch. */}
-        <script
-          dangerouslySetInnerHTML={{
-            __html:
-              "(function(){try{if(localStorage.getItem('pc-theme')==='light'){document.documentElement.setAttribute('data-theme','light');}}catch(e){}})();",
-          }}
-        />
+        {/* Apply the saved theme before paint to avoid a flash / hydration mismatch.
+            An external beforeInteractive script (not inline) avoids React 19's
+            "script tag inside a component" warning while still running early. */}
+        <Script src="/theme-init.js" strategy="beforeInteractive" />
         <NextIntlClientProvider messages={messages}>
           <ThemeRegistry>
             <SiteHeader />
