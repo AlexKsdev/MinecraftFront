@@ -1,12 +1,14 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import { CheckCircle2, Gem } from "lucide-react";
 import { getProfile, UnauthorizedError } from "@/lib/account/api";
 import styles from "./CheckoutSuccessView.module.scss";
 
 export function CheckoutSuccessView() {
+  const t = useTranslations("Checkout");
   const [gems, setGems] = useState<number | null>(null);
 
   useEffect(() => {
@@ -29,25 +31,22 @@ export function CheckoutSuccessView() {
         <span className={styles.icon}>
           <CheckCircle2 size={48} />
         </span>
-        <h1 className={styles.title}>Thank you for your purchase!</h1>
-        <p className={styles.text}>
-          Your payment went through and your gems have been added to your
-          account. Enjoy your loot!
-        </p>
+        <h1 className={styles.title}>{t("title")}</h1>
+        <p className={styles.text}>{t("text")}</p>
 
         {gems !== null && (
           <div className={styles.balance}>
             <Gem size={16} />
-            {gems.toLocaleString("en-US")} gems
+            {t("gems", { count: gems })}
           </div>
         )}
 
         <div className={styles.actions}>
           <Link href="/shop" className={styles.primaryBtn}>
-            Back to Shop
+            {t("backToShop")}
           </Link>
           <Link href="/account" className={styles.secondaryBtn}>
-            View Account
+            {t("viewAccount")}
           </Link>
         </div>
       </div>

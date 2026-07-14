@@ -1,17 +1,11 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useTranslations } from "next-intl";
 import { User, Shield, X } from "lucide-react";
 import { LoginForm } from "./LoginForm";
 import { RegisterForm } from "./RegisterForm";
 import styles from "./AuthModal.module.scss";
-
-const BENEFITS = [
-  "Track your stats & playtime",
-  "Manage your rank & purchases",
-  "Submit support tickets",
-  "Access exclusive member areas",
-];
 
 export function AuthModal({
   open,
@@ -21,6 +15,8 @@ export function AuthModal({
   onClose: () => void;
 }) {
   const [tab, setTab] = useState<"login" | "register">("login");
+  const t = useTranslations("Auth");
+  const benefits = t.raw("modal.benefits") as string[];
 
   useEffect(() => {
     if (!open) {
@@ -46,7 +42,7 @@ export function AuthModal({
   return (
     <div className={styles.overlay} onClick={onClose}>
       <div className={styles.panel} onClick={(e) => e.stopPropagation()}>
-        <button className={styles.close} onClick={onClose} aria-label="Close" type="button">
+        <button className={styles.close} onClick={onClose} aria-label={t("modal.close")} type="button">
           <X size={18} />
         </button>
 
@@ -54,8 +50,8 @@ export function AuthModal({
           <div className={styles.avatar}>
             <User size={28} />
           </div>
-          <h2 className={styles.title}>Player Account</h2>
-          <p className={styles.subtitle}>Manage your PureCraft profile</p>
+          <h2 className={styles.title}>{t("modal.title")}</h2>
+          <p className={styles.subtitle}>{t("modal.subtitle")}</p>
         </div>
 
         <div className={styles.tabs}>
@@ -64,27 +60,27 @@ export function AuthModal({
             onClick={() => setTab("login")}
             type="button"
           >
-            Login
+            {t("modal.loginTab")}
           </button>
           <button
             className={`${styles.tab} ${tab === "register" ? styles.active : ""}`}
             onClick={() => setTab("register")}
             type="button"
           >
-            Register
+            {t("modal.registerTab")}
           </button>
         </div>
 
         {tab === "login" ? <LoginForm onClose={onClose} /> : <RegisterForm onClose={onClose} />}
 
         <div className={styles.divider}>
-          <span>or</span>
+          <span>{t("modal.or")}</span>
         </div>
 
         <div className={styles.benefits}>
-          <p className={styles.benefitsTitle}>ACCOUNT BENEFITS</p>
+          <p className={styles.benefitsTitle}>{t("modal.benefitsTitle")}</p>
           <ul className={styles.benefitsList}>
-            {BENEFITS.map((benefit) => (
+            {benefits.map((benefit) => (
               <li key={benefit} className={styles.benefitItem}>
                 <Shield size={11} className={styles.benefitIcon} />
                 {benefit}

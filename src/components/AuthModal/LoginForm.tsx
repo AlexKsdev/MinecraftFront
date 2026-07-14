@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useTranslations } from "next-intl";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "@/i18n/navigation";
@@ -10,6 +11,7 @@ import { login, storeSession, forgotPassword } from "@/lib/auth/api";
 import styles from "./AuthForm.module.scss";
 
 function ForgotPasswordForm({ onBack }: { onBack: () => void }) {
+  const t = useTranslations("Auth");
   const [email, setEmail] = useState("");
   const [status, setStatus] = useState<"idle" | "sending" | "sent">("idle");
   const [error, setError] = useState<string | null>(null);
@@ -23,19 +25,16 @@ function ForgotPasswordForm({ onBack }: { onBack: () => void }) {
       setStatus("sent");
     } catch (err) {
       setStatus("idle");
-      setError(err instanceof Error ? err.message : "Something went wrong");
+      setError(err instanceof Error ? err.message : t("errors.generic"));
     }
   }
 
   if (status === "sent") {
     return (
       <div className={styles.form}>
-        <p className={styles.label}>
-          If that email is registered, we&apos;ve sent a password reset link.
-          Check your inbox.
-        </p>
+        <p className={styles.label}>{t("forgot.sent")}</p>
         <button className={styles.forgot} type="button" onClick={onBack}>
-          Back to login
+          {t("forgot.backToLogin")}
         </button>
       </div>
     );
@@ -46,7 +45,7 @@ function ForgotPasswordForm({ onBack }: { onBack: () => void }) {
       {error && <p className={styles.formError}>{error}</p>}
       <div className={styles.field}>
         <label className={styles.label} htmlFor="forgot-email">
-          Email
+          {t("fields.email")}
         </label>
         <div className={styles.inputWrap}>
           <Mail size={15} className={styles.inputIcon} />
@@ -54,7 +53,7 @@ function ForgotPasswordForm({ onBack }: { onBack: () => void }) {
             className={styles.input}
             id="forgot-email"
             type="email"
-            placeholder="your@email.com"
+            placeholder={t("fields.emailPlaceholder")}
             autoComplete="email"
             required
             value={email}
@@ -63,16 +62,17 @@ function ForgotPasswordForm({ onBack }: { onBack: () => void }) {
         </div>
       </div>
       <button className={styles.submit} type="submit" disabled={status === "sending"}>
-        {status === "sending" ? "Sending…" : "Send reset link"}
+        {status === "sending" ? t("forgot.sending") : t("forgot.sendLink")}
       </button>
       <button className={styles.forgot} type="button" onClick={onBack}>
-        Back to login
+        {t("forgot.backToLogin")}
       </button>
     </form>
   );
 }
 
 export function LoginForm({ onClose }: { onClose: () => void }) {
+  const t = useTranslations("Auth");
   const [showPass, setShowPass] = useState(false);
   const [forgotMode, setForgotMode] = useState(false);
   const router = useRouter();
@@ -91,7 +91,7 @@ export function LoginForm({ onClose }: { onClose: () => void }) {
       router.push("/account");
     } catch (err) {
       setError("root", {
-        message: err instanceof Error ? err.message : "Login failed",
+        message: err instanceof Error ? err.message : t("errors.loginFailed"),
       });
     }
   });
@@ -106,7 +106,7 @@ export function LoginForm({ onClose }: { onClose: () => void }) {
 
       <div className={styles.field}>
         <label className={styles.label} htmlFor="login-email">
-          Email
+          {t("fields.email")}
         </label>
         <div className={styles.inputWrap}>
           <Mail size={15} className={styles.inputIcon} />
@@ -114,7 +114,7 @@ export function LoginForm({ onClose }: { onClose: () => void }) {
             className={styles.input}
             id="login-email"
             type="email"
-            placeholder="your@email.com"
+            placeholder={t("fields.emailPlaceholder")}
             autoComplete="email"
             {...register("email")}
           />
@@ -124,7 +124,7 @@ export function LoginForm({ onClose }: { onClose: () => void }) {
 
       <div className={styles.field}>
         <label className={styles.label} htmlFor="login-password">
-          Password
+          {t("fields.password")}
         </label>
         <div className={styles.inputWrap}>
           <Lock size={15} className={styles.inputIcon} />
@@ -132,7 +132,7 @@ export function LoginForm({ onClose }: { onClose: () => void }) {
             className={styles.input}
             id="login-password"
             type={showPass ? "text" : "password"}
-            placeholder="Your password"
+            placeholder={t("login.passwordPlaceholder")}
             autoComplete="current-password"
             {...register("password")}
           />
@@ -140,7 +140,7 @@ export function LoginForm({ onClose }: { onClose: () => void }) {
             className={styles.toggle}
             type="button"
             onClick={() => setShowPass((v) => !v)}
-            aria-label={showPass ? "Hide password" : "Show password"}
+            aria-label={showPass ? t("fields.hidePassword") : t("fields.showPassword")}
           >
             {showPass ? <EyeOff size={15} /> : <Eye size={15} />}
           </button>
@@ -149,10 +149,10 @@ export function LoginForm({ onClose }: { onClose: () => void }) {
       </div>
 
       <button className={styles.submit} type="submit" disabled={isSubmitting}>
-        {isSubmitting ? "Logging in…" : "Login"}
+        {isSubmitting ? t("login.submitting") : t("login.submit")}
       </button>
       <button className={styles.forgot} type="button" onClick={() => setForgotMode(true)}>
-        Forgot password?
+        {t("login.forgotPassword")}
       </button>
     </form>
   );
