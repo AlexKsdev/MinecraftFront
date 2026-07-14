@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import Script from "next/script";
+import { cookies } from "next/headers";
 import { notFound } from "next/navigation";
 import { hasLocale, NextIntlClientProvider } from "next-intl";
 import { getMessages } from "next-intl/server";
@@ -45,13 +45,20 @@ export default async function RootLayout({
 
   const messages = await getMessages();
 
+  // Read the theme from a cookie on the server so `data-theme` is in the
+  // initial HTML — no flash, and no client-side <script> (which React 19 warns
+  // about when rendered inside a component).
+  const cookieStore = await cookies();
+  const theme = cookieStore.get("pc-theme")?.value === "light" ? "light" : "dark";
+
   return (
-    <html lang={locale} className={`${bodyFont.variable} ${pixelFont.variable}`} suppressHydrationWarning>
+    <html
+      lang={locale}
+      data-theme={theme}
+      className={`${bodyFont.variable} ${pixelFont.variable}`}
+      suppressHydrationWarning
+    >
       <body>
-        {/* Apply the saved theme before paint to avoid a flash / hydration mismatch.
-            An external beforeInteractive script (not inline) avoids React 19's
-            "script tag inside a component" warning while still running early. */}
-        <Script src="/theme-init.js" strategy="beforeInteractive" />
         <NextIntlClientProvider messages={messages}>
           <ThemeRegistry>
             <SiteHeader />

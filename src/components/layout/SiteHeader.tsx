@@ -66,11 +66,9 @@ export function SiteHeader() {
   const toggleTheme = () => {
     const next = theme === "dark" ? "light" : "dark";
     document.documentElement.setAttribute("data-theme", next);
-    try {
-      localStorage.setItem("pc-theme", next);
-    } catch {
-      // ignore storage errors (private mode, etc.)
-    }
+    // Persist in a cookie so the server can render `data-theme` on the next
+    // request (flash-free, no client init script).
+    document.cookie = `pc-theme=${next}; path=/; max-age=31536000; SameSite=Lax`;
     window.dispatchEvent(new Event(THEME_EVENT));
   };
 
