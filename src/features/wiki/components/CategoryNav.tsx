@@ -1,3 +1,4 @@
+import { useTranslations } from "next-intl";
 import { categories } from "../constants";
 import styles from "./CategoryNav.module.scss";
 
@@ -8,6 +9,7 @@ export function CategoryNav({
   activeCategory: string | null;
   onSelect: (id: string | null) => void;
 }) {
+  const t = useTranslations("Wiki");
   return (
     <div className={styles.nav}>
       <button
@@ -15,7 +17,7 @@ export function CategoryNav({
         className={`${styles.button} ${!activeCategory ? styles.active : ""}`}
         type="button"
       >
-        All
+        {t("all")}
       </button>
       {categories.map((category) => (
         <button

@@ -29,5 +29,296 @@
     },
     "copyright": "© 2026 PureCraft. Not affiliated with Mojang.",
     "madeWith": "Made with ♥ for the community"
+  },
+  "Home": {
+    "hero": {
+      "badge": "Survival · PvP · Economy",
+      "subtitle": "The ultimate Minecraft survival experience. Forge your legend, build your empire, and conquer the world.",
+      "playNow": "Play now"
+    },
+    "quickLinks": {
+      "shop": "Shop",
+      "blog": "Blog",
+      "wiki": "Wiki",
+      "discord": "Discord",
+      "account": "Account",
+      "topPlayers": "Top Players"
+    },
+    "stats": {
+      "players": "Players",
+      "uptime": "Uptime",
+      "years": "Years online",
+      "support": "Support"
+    },
+    "features": {
+      "heading": "Why PureCraft?",
+      "subtitle": "We've built the perfect Minecraft experience — balanced, exciting, and always improving.",
+      "survival": {
+        "title": "Survival mode",
+        "desc": "Classic hardcore survival with custom terrain generation and rare biomes."
+      },
+      "anticheat": {
+        "title": "Anti-cheat",
+        "desc": "Advanced protection system keeps the game fair for every player."
+      },
+      "community": {
+        "title": "Active community",
+        "desc": "Thousands of players online. Clans, events, and weekly tournaments."
+      },
+      "performance": {
+        "title": "Zero-lag gameplay",
+        "desc": "Dedicated high-performance servers with 99.9% uptime guarantee."
+      },
+      "world": {
+        "title": "Custom world",
+        "desc": "Unique handcrafted world with hidden dungeons and secret locations."
+      },
+      "events": {
+        "title": "Regular events",
+        "desc": "Weekly in-game events with exclusive rewards and rare items."
+      }
+    },
+    "pricing": {
+      "heading": "Premium ranks",
+      "subtitle": "Upgrade your gameplay with exclusive perks, cosmetics, and privileges.",
+      "popular": "POPULAR",
+      "perMonth": "/mo",
+      "getPlan": "Get {plan}"
+    },
+    "plans": {
+      "vip": {
+        "features": [
+          "Custom /nick command",
+          "Access to VIP lounge",
+          "2x vote rewards",
+          "Colored chat prefix [VIP]"
+        ]
+      },
+      "elite": {
+        "features": [
+          "Everything in VIP",
+          "Fly in survival world",
+          "Custom join/leave messages",
+          "Priority queue"
+        ]
+      },
+      "legend": {
+        "features": [
+          "Everything in Elite",
+          "Custom particle effects",
+          "Access to creative world",
+          "Monthly mystery crate"
+        ]
+      }
+    },
+    "cta": {
+      "heading": "Ready to play?",
+      "subtitle": "Join thousands of players and start your adventure today. No downloads required — just your Minecraft client.",
+      "createAccount": "Create account"
+    }
+  },
+  "Shop": {
+    "title": "Item Shop",
+    "subtitle": "Buy weapons, armor, tools, food, and more — all delivered straight to your in-game inventory.",
+    "loading": "Loading items…",
+    "itemCount": "{count, plural, =1 {# item} other {# items}} in",
+    "sortAria": "Sort products",
+    "rarity": {
+      "common": "Common",
+      "uncommon": "Uncommon",
+      "rare": "Rare",
+      "epic": "Epic",
+      "legendary": "Legendary"
+    },
+    "categories": {
+      "all": "All",
+      "weapons": "Weapons",
+      "armor": "Armor",
+      "tools": "Tools",
+      "resources": "Resources",
+      "food": "Food",
+      "potions": "Potions"
+    },
+    "sort": {
+      "featured": "Featured",
+      "coinsAsc": "Coins: Low to High",
+      "coinsDesc": "Coins: High to Low",
+      "gemsAsc": "Gems: Low to High",
+      "gemsDesc": "Gems: High to Low",
+      "rarityDesc": "Rarity: High to Low",
+      "rarityAsc": "Rarity: Low to High"
+    },
+    "banner": {
+      "success": "Payment successful — your gems are on the way!",
+      "cancelled": "Checkout cancelled. No charge was made."
+    },
+    "pagination": {
+      "prev": "Prev",
+      "next": "Next"
+    },
+    "topup": {
+      "title": "Need more gems?",
+      "hint": "Buy gems with real money to unlock legendary gear.",
+      "redirecting": "Redirecting…"
+    },
+    "currency": {
+      "gems": "Gems",
+      "coins": "Coins"
+    },
+    "buy": {
+      "buying": "Buying…",
+      "owned": "Purchased ✓",
+      "buyNow": "Buy Now"
+    },
+    "errors": {
+      "loadFailed": "Failed to load shop",
+      "signInToBuyGems": "Sign in to buy gems",
+      "checkoutFailed": "Could not start checkout",
+      "sessionExpired": "Session expired — sign in again",
+      "purchaseFailed": "Purchase failed"
+    }
+  },
+  "Blog": {
+    "title": "Blog",
+    "subtitle": "Updates, events, guides, and community news.",
+    "readMore": "Read More",
+    "backToBlog": "Back to Blog"
+  },
+  "Wiki": {
+    "title": "Wiki",
+    "subtitle": "Everything you need to know about PureCraft.",
+    "searchPlaceholder": "Search articles...",
+    "all": "All"
+  },
+  "Account": {
+    "loading": "Loading your profile…",
+    "errorGeneric": "Something went wrong",
+    "online": "Online",
+    "joined": "Joined {date}",
+    "tabs": {
+      "overview": "Overview",
+      "bonuses": "Bonuses",
+      "referral": "Invite Friends",
+      "achievements": "Achievements",
+      "quests": "Quests"
+    },
+    "stats": {
+      "playtime": "Playtime",
+      "kills": "Kills",
+      "blocks": "Blocks",
+      "kd": "K/D Ratio"
+    },
+    "xp": {
+      "level": "Level {level}",
+      "toNext": "{pct}% to Level {level}"
+    },
+    "overview": {
+      "recentActivity": "Recent Activity",
+      "activePerks": "Active Perks"
+    },
+    "bonuses": {
+      "streak": "{days} Day Streak!",
+      "streakHint": "Log in tomorrow to keep your streak and claim Day 8 reward.",
+      "dailyRewards": "Daily Login Rewards",
+      "dayCount": "Day {day} / 14",
+      "today": "TODAY",
+      "day": "Day {day}",
+      "claimCta": "🎁 Claim Day 7 — Legend Crate",
+      "claimedNote": "Claimed! Come back tomorrow",
+      "coinRewards": "Coin Rewards"
+    },
+    "referral": {
+      "heroTitle": "Invite Friends, Earn Rewards",
+      "heroText": "For every friend who joins with your link, you both get <coins>200 Coins</coins> + a <key>Rare Key</key>.",
+      "yourLink": "Your Referral Link",
+      "copied": "Copied!",
+      "copy": "Copy",
+      "yourCode": "Your code:",
+      "progress": "Referral Progress",
+      "friendsCount": "{count} / {total} friends",
+      "friends": "{count, plural, =1 {# friend} other {# friends}}",
+      "referredFriends": "Referred Friends",
+      "joinedAgo": "Joined {when}",
+      "plusCoins": "+{count} coins",
+      "totalEarned": "Total earned from referrals",
+      "totalCoins": "{count} Coins",
+      "milestones": "Referral Milestones",
+      "milestoneText": "{count} friends invited"
+    },
+    "achievements": {
+      "unlocked": "{count} / {total} unlocked"
+    },
+    "quests": {
+      "resetIn": "Daily quests reset in <time>08:24:11</time>",
+      "doneCount": "{done}/{total} done",
+      "claim": "Claim Reward"
+    }
+  },
+  "Auth": {
+    "fields": {
+      "email": "Email",
+      "emailPlaceholder": "your@email.com",
+      "password": "Password",
+      "name": "Name",
+      "showPassword": "Show password",
+      "hidePassword": "Hide password"
+    },
+    "errors": {
+      "generic": "Something went wrong",
+      "loginFailed": "Login failed",
+      "registrationFailed": "Registration failed"
+    },
+    "modal": {
+      "close": "Close",
+      "title": "Player Account",
+      "subtitle": "Manage your PureCraft profile",
+      "loginTab": "Login",
+      "registerTab": "Register",
+      "or": "or",
+      "benefitsTitle": "ACCOUNT BENEFITS",
+      "benefits": [
+        "Track your stats & playtime",
+        "Manage your rank & purchases",
+        "Submit support tickets",
+        "Access exclusive member areas"
+      ]
+    },
+    "login": {
+      "passwordPlaceholder": "Your password",
+      "submitting": "Logging in…",
+      "submit": "Login",
+      "forgotPassword": "Forgot password?"
+    },
+    "forgot": {
+      "sent": "If that email is registered, we've sent a password reset link. Check your inbox.",
+      "backToLogin": "Back to login",
+      "sending": "Sending…",
+      "sendLink": "Send reset link"
+    },
+    "register": {
+      "namePlaceholder": "Your display name",
+      "passwordPlaceholder": "Create a strong password",
+      "submitting": "Creating account…",
+      "submit": "Create Account"
+    },
+    "reset": {
+      "missingToken": "This reset link is missing its token.",
+      "doneTitle": "Password updated",
+      "doneText": "Your password has been reset. You can now sign in with your new password.",
+      "backHome": "Back to home",
+      "title": "Reset your password",
+      "noTokenNotice": "This link is missing a reset token. Please use the link from your email.",
+      "newPassword": "New password",
+      "newPasswordPlaceholder": "At least 8 characters",
+      "submitting": "Updating…",
+      "submit": "Update password"
+    }
+  },
+  "Checkout": {
+    "title": "Thank you for your purchase!",
+    "text": "Your payment went through and your gems have been added to your account. Enjoy your loot!",
+    "gems": "{count, number} gems",
+    "backToShop": "Back to Shop",
+    "viewAccount": "View Account"
   }
 }

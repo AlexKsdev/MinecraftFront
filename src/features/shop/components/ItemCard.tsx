@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useTranslations } from "next-intl";
 import { Check } from "lucide-react";
 import { RARITY, type Rarity } from "../constants";
 import {
@@ -28,8 +29,13 @@ export function ItemCard({
   onError: (message: string) => void;
 }) {
   const [status, setStatus] = useState<Status>("idle");
+  const t = useTranslations("Shop");
 
-  const rarity = RARITY[(product.rarity as Rarity) in RARITY ? (product.rarity as Rarity) : FALLBACK_RARITY];
+  const rarityKey =
+    (product.rarity as Rarity) in RARITY
+      ? (product.rarity as Rarity)
+      : FALLBACK_RARITY;
+  const rarity = RARITY[rarityKey];
   const isGems = product.currency === "GEMS";
 
   async function buy() {
@@ -46,10 +52,10 @@ export function ItemCard({
       setStatus("idle");
       onError(
         err instanceof UnauthorizedError
-          ? "Session expired — sign in again"
+          ? t("errors.sessionExpired")
           : err instanceof Error
             ? err.message
-            : "Purchase failed",
+            : t("errors.purchaseFailed"),
       );
       if (err instanceof UnauthorizedError) openAuthModal();
     }
@@ -61,7 +67,9 @@ export function ItemCard({
 
       <div className={styles.topRow}>
         <span className={styles.emoji}>{product.emoji}</span>
-        <span className={styles.rarityBadge}>{rarity.label}</span>
+        <span className={styles.rarityBadge}>
+          {t(`rarity.${rarityKey.toLowerCase()}`)}
+        </span>
       </div>
 
       <h3 className={styles.name}>{product.name}</h3>
@@ -71,7 +79,9 @@ export function ItemCard({
         <span className={`${styles.priceValue} ${isGems ? styles.priceGems : ""}`}>
           {product.price.toLocaleString("en-US")}
         </span>
-        <span className={styles.priceLabel}>{isGems ? "Gems" : "Coins"}</span>
+        <span className={styles.priceLabel}>
+          {isGems ? t("currency.gems") : t("currency.coins")}
+        </span>
       </div>
 
       <ul className={styles.stats}>
@@ -90,10 +100,10 @@ export function ItemCard({
         disabled={status === "buying" || status === "owned"}
       >
         {status === "buying"
-          ? "Buying…"
+          ? t("buy.buying")
           : status === "owned"
-            ? "Purchased ✓"
-            : "Buy Now"}
+            ? t("buy.owned")
+            : t("buy.buyNow")}
       </button>
     </div>
   );

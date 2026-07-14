@@ -6,12 +6,13 @@ import {
 
 export type TabId = "overview" | "bonuses" | "referral" | "achievements" | "quests";
 
-export const TABS: { id: TabId; label: string; icon: LucideIcon }[] = [
-  { id: "overview", label: "Overview", icon: BarChart3 },
-  { id: "bonuses", label: "Bonuses", icon: Gift },
-  { id: "referral", label: "Invite Friends", icon: Users },
-  { id: "achievements", label: "Achievements", icon: Trophy },
-  { id: "quests", label: "Quests", icon: Target },
+// Tab labels live in the Account messages namespace (keyed by `id`).
+export const TABS: { id: TabId; icon: LucideIcon }[] = [
+  { id: "overview", icon: BarChart3 },
+  { id: "bonuses", icon: Gift },
+  { id: "referral", icon: Users },
+  { id: "achievements", icon: Trophy },
+  { id: "quests", icon: Target },
 ];
 
 /* ── Overview ── */

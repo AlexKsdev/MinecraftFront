@@ -1,3 +1,4 @@
+import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import { ChevronRight, Clock, User } from "lucide-react";
 import type { BlogPost } from "../constants";
@@ -5,6 +6,7 @@ import { PostTag } from "./PostTag";
 import styles from "./FeaturedPost.module.scss";
 
 export function FeaturedPost({ post }: { post: BlogPost }) {
+  const t = useTranslations("Blog");
   return (
     <Link href={`/blog/${post.slug}`} className={styles.post}>
       <div className={styles.imageWrap}>
@@ -27,7 +29,7 @@ export function FeaturedPost({ post }: { post: BlogPost }) {
           <span>{post.date}</span>
         </div>
         <span className={styles.readMore}>
-          Read More <ChevronRight size={12} />
+          {t("readMore")} <ChevronRight size={12} />
         </span>
       </div>
     </Link>

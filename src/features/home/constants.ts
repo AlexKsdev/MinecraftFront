@@ -18,66 +18,34 @@ import {
 export { SERVER_IP } from "@/constants";
 
 export const quickLinks = [
-  { icon: ShoppingBag, label: "Shop", href: "/shop", accent: "amber" as const },
-  { icon: BookOpen, label: "Blog", href: "/blog", accent: "sky" as const },
-  { icon: BookMarked, label: "Wiki", href: "/wiki", accent: "purple" as const },
-  { icon: MessageSquare, label: "Discord", href: "#", accent: "indigo" as const },
-  { icon: User, label: "Account", href: "/account", accent: "primary" as const },
-  { icon: Trophy, label: "Top Players", href: "/wiki", accent: "amber" as const },
+  { id: "shop", icon: ShoppingBag, href: "/shop", accent: "amber" as const },
+  { id: "blog", icon: BookOpen, href: "/blog", accent: "sky" as const },
+  { id: "wiki", icon: BookMarked, href: "/wiki", accent: "purple" as const },
+  { id: "discord", icon: MessageSquare, href: "#", accent: "indigo" as const },
+  { id: "account", icon: User, href: "/account", accent: "primary" as const },
+  { id: "topPlayers", icon: Trophy, href: "/wiki", accent: "amber" as const },
 ];
 
 export const stats = [
-  { value: "12K+", label: "Players" },
-  { value: "99.9%", label: "Uptime" },
-  { value: "3+", label: "Years online" },
-  { value: "24/7", label: "Support" },
+  { id: "players", value: "12K+" },
+  { id: "uptime", value: "99.9%" },
+  { id: "years", value: "3+" },
+  { id: "support", value: "24/7" },
 ];
 
 export const features = [
-  { icon: Pickaxe, title: "Survival mode", desc: "Classic hardcore survival with custom terrain generation and rare biomes.", accent: "amber" as const },
-  { icon: Shield, title: "Anti-cheat", desc: "Advanced protection system keeps the game fair for every player.", accent: "primary" as const },
-  { icon: Users, title: "Active community", desc: "Thousands of players online. Clans, events, and weekly tournaments.", accent: "sky" as const },
-  { icon: Zap, title: "Zero-lag gameplay", desc: "Dedicated high-performance servers with 99.9% uptime guarantee.", accent: "yellow" as const },
-  { icon: TreePine, title: "Custom world", desc: "Unique handcrafted world with hidden dungeons and secret locations.", accent: "green" as const },
-  { icon: Star, title: "Regular events", desc: "Weekly in-game events with exclusive rewards and rare items.", accent: "purple" as const },
+  { id: "survival", icon: Pickaxe, accent: "amber" as const },
+  { id: "anticheat", icon: Shield, accent: "primary" as const },
+  { id: "community", icon: Users, accent: "sky" as const },
+  { id: "performance", icon: Zap, accent: "yellow" as const },
+  { id: "world", icon: TreePine, accent: "green" as const },
+  { id: "events", icon: Star, accent: "purple" as const },
 ];
 
+// `name` and `price` are brand/pricing constants kept untranslated;
+// per-plan `features` bullets live in the Home messages namespace (keyed by `id`).
 export const plans = [
-  {
-    name: "VIP",
-    price: "$4.99",
-    icon: Shield,
-    accent: "amber" as const,
-    features: [
-      "Custom /nick command",
-      "Access to VIP lounge",
-      "2x vote rewards",
-      "Colored chat prefix [VIP]",
-    ],
-  },
-  {
-    name: "Elite",
-    price: "$9.99",
-    icon: Gem,
-    accent: "sky" as const,
-    featured: true,
-    features: [
-      "Everything in VIP",
-      "Fly in survival world",
-      "Custom join/leave messages",
-      "Priority queue",
-    ],
-  },
-  {
-    name: "Legend",
-    price: "$19.99",
-    icon: Crown,
-    accent: "purple" as const,
-    features: [
-      "Everything in Elite",
-      "Custom particle effects",
-      "Access to creative world",
-      "Monthly mystery crate",
-    ],
-  },
+  { id: "vip", name: "VIP", price: "$4.99", icon: Shield, accent: "amber" as const },
+  { id: "elite", name: "Elite", price: "$9.99", icon: Gem, accent: "sky" as const, featured: true },
+  { id: "legend", name: "Legend", price: "$19.99", icon: Crown, accent: "purple" as const },
 ];

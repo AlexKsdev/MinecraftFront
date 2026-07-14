@@ -1,3 +1,4 @@
+import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import { ArrowLeft, Clock, User } from "lucide-react";
 import type { BlogPost } from "../constants";
@@ -5,11 +6,12 @@ import { PostTag } from "./PostTag";
 import styles from "./PostDetail.module.scss";
 
 export function PostDetail({ post }: { post: BlogPost }) {
+  const t = useTranslations("Blog");
   return (
     <div className={styles.page}>
       <div className={styles.wrapper}>
         <Link href="/blog" className={styles.backLink}>
-          <ArrowLeft size={14} /> Back to Blog
+          <ArrowLeft size={14} /> {t("backToBlog")}
         </Link>
 
         <div className={styles.tag}>
