@@ -7,6 +7,7 @@ import { Menu, Moon, Sun, Sword, X } from "lucide-react";
 import { MobileNav } from "./MobileNav";
 import { UserMenu } from "./UserMenu";
 import { LocaleSwitcher } from "./LocaleSwitcher";
+import type { NavLink } from "./types";
 import { AuthModal } from "@/components/AuthModal/AuthModal";
 import { OPEN_AUTH_EVENT } from "@/lib/auth/api";
 import { useSession } from "@/lib/auth/useSession";
@@ -42,7 +43,7 @@ export function SiteHeader() {
   const theme = useSyncExternalStore(subscribeTheme, getThemeSnapshot, () => "dark");
   const t = useTranslations("Header");
 
-  const navLinks = NAV_KEYS.map((key) => ({
+  const navLinks: NavLink[] = NAV_KEYS.map((key) => ({
     href: NAV_HREFS[key],
     label: t(`nav.${key}`),
   }));

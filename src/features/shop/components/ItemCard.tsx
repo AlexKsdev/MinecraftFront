@@ -4,11 +4,8 @@ import { useState } from "react";
 import { useTranslations } from "next-intl";
 import { Check } from "lucide-react";
 import { RARITY, type Rarity } from "../constants";
-import {
-  purchaseProduct,
-  type Product,
-  type PurchaseResult,
-} from "@/lib/shop/api";
+import type { ItemCardProps } from "../types";
+import { purchaseProduct } from "@/lib/shop/api";
 import { openAuthModal } from "@/lib/auth/api";
 import { UnauthorizedError } from "@/lib/account/api";
 import styles from "./ItemCard.module.scss";
@@ -22,12 +19,7 @@ export function ItemCard({
   isAuthed,
   onPurchased,
   onError,
-}: {
-  product: Product;
-  isAuthed: boolean;
-  onPurchased: (result: PurchaseResult) => void;
-  onError: (message: string) => void;
-}) {
+}: ItemCardProps) {
   const [status, setStatus] = useState<Status>("idle");
   const t = useTranslations("Shop");
 
