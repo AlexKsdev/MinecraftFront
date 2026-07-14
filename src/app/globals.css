@@ -9,6 +9,18 @@
   --muted-foreground: #a0a0a0;
   --scrollbar-thumb: #3f3f46;
   color-scheme: dark;
+
+  /* Rarity/tag/feature accent colors. Pastel and bright here because they
+     sit on a near-black background — see the light override below for why
+     these can't be shared as-is across themes. */
+  --accent-amber: #fbbf24;
+  --accent-sky: #38bdf8;
+  --accent-purple: #a855f7;
+  --accent-indigo: #818cf8;
+  --accent-yellow: #facc15;
+  --accent-blue: #60a5fa;
+  --accent-green: #4ade80;
+  --accent-red: #f87171;
 }
 
 /* Soft, muted light theme — warm off-white paper, no harsh pure white */
@@ -23,6 +35,19 @@
   --muted-foreground: #6d685f;
   --scrollbar-thumb: #c2bdb2;
   color-scheme: light;
+
+  /* Same accent colors, deepened for the light background. Badges render
+     these as a solid fill with --background as the text color, so a pastel
+     tone here would mean pale text on a pale fill — these darker/more
+     saturated shades keep that pairing readable. */
+  --accent-amber: #92400e;
+  --accent-sky: #0369a1;
+  --accent-purple: #7e22ce;
+  --accent-indigo: #4338ca;
+  --accent-yellow: #854d0e;
+  --accent-blue: #1d4ed8;
+  --accent-green: #166534;
+  --accent-red: #b91c1c;
 }
 
 html,
