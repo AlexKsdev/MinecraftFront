@@ -1,20 +1,14 @@
 import { Link } from "@/i18n/navigation";
 import { Sword } from "lucide-react";
+import type { MobileNavProps } from "./types";
 import styles from "./MobileNav.module.scss";
-
-type NavLink = { href: string; label: string };
 
 export function MobileNav({
   links,
   pathname,
   onNavigate,
   onJoinClick,
-}: {
-  links: NavLink[];
-  pathname: string;
-  onNavigate: () => void;
-  onJoinClick: () => void;
-}) {
+}: MobileNavProps) {
   return (
     <div className={styles.panel}>
       {links.map((link) => (

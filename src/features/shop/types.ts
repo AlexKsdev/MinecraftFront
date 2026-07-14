@@ -1,4 +1,4 @@
-import type { ProductSort } from "@/lib/shop/api";
+import type { Product, ProductSort, PurchaseResult } from "@/lib/shop/api";
 
 /** State of the banner shown after a Stripe checkout redirect (?payment=…). */
 export type PaymentBanner = "success" | "cancelled" | null;
@@ -13,4 +13,11 @@ export interface SortOption {
 export interface Toast {
   text: string;
   ok: boolean;
+}
+
+export interface ItemCardProps {
+  product: Product;
+  isAuthed: boolean;
+  onPurchased: (result: PurchaseResult) => void;
+  onError: (message: string) => void;
 }
