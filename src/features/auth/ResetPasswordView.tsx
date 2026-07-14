@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useSearchParams } from "next/navigation";
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 import { Lock, CheckCircle2 } from "lucide-react";
 import { resetPassword } from "@/lib/auth/api";
 import formStyles from "@/components/AuthModal/AuthForm.module.scss";

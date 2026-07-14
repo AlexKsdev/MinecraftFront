@@ -1,4 +1,4 @@
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 import { Sword, Swords } from "lucide-react";
 import { CopyServerIp } from "@/components/CopyServerIp/CopyServerIp";
 import { SERVER_IP } from "../constants";

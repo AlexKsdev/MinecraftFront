@@ -1,4 +1,4 @@
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 import { ChevronRight, Clock, User } from "lucide-react";
 import type { BlogPost } from "../constants";
 import { PostTag } from "./PostTag";
