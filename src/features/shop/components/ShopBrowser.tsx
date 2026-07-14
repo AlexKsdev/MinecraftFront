@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useTranslations } from "next-intl";
 import { AlertCircle, Coins, Gem } from "lucide-react";
 import { getProfile, UnauthorizedError } from "@/lib/account/api";
 import { publishBalances } from "@/lib/account/balances";
@@ -20,15 +21,20 @@ import { ItemCard } from "./ItemCard";
 import styles from "./ShopBrowser.module.scss";
 
 const PAGE_SIZE = 6;
+// Products load fast enough locally that the skeleton can flash on and off
+// within a few dozen ms, which reads as flicker rather than "loading". This
+// floor makes the loading state visible for at least this long — but never
+// adds delay on top of a response that's already slower than it.
+const MIN_LOADING_MS = 400;
 
-const SORT_OPTIONS: { value: "" | ProductSort; label: string }[] = [
-  { value: "", label: "Featured" },
-  { value: "coins_asc", label: "Coins: Low to High" },
-  { value: "coins_desc", label: "Coins: High to Low" },
-  { value: "gems_asc", label: "Gems: Low to High" },
-  { value: "gems_desc", label: "Gems: High to Low" },
-  { value: "rarity_desc", label: "Rarity: High to Low" },
-  { value: "rarity_asc", label: "Rarity: Low to High" },
+const SORT_OPTIONS: { value: "" | ProductSort; id: string }[] = [
+  { value: "", id: "featured" },
+  { value: "coins_asc", id: "coinsAsc" },
+  { value: "coins_desc", id: "coinsDesc" },
+  { value: "gems_asc", id: "gemsAsc" },
+  { value: "gems_desc", id: "gemsDesc" },
+  { value: "rarity_desc", id: "rarityDesc" },
+  { value: "rarity_asc", id: "rarityAsc" },
 ];
 
 type PaymentBanner = "success" | "cancelled" | null;
@@ -56,8 +62,11 @@ export function ShopBrowser() {
 
   const session = useSession();
   const isAuthed = session !== null;
+  const t = useTranslations("Shop");
 
   const totalPages = Math.max(1, Math.ceil(total / PAGE_SIZE));
+  const activeCategoryId =
+    categories.find((c) => c.value === activeCategory)?.id ?? "all";
 
   // One-time: gem packs, balances, and the Stripe redirect banner.
   useEffect(() => {
@@ -84,9 +93,26 @@ export function ShopBrowser() {
   // Re-fetch the current page whenever the filter, sort, or page changes.
   useEffect(() => {
     let active = true;
+    let delayTimer: ReturnType<typeof setTimeout> | undefined;
+    const start = Date.now();
     // Show the loading state while the new page/filter/sort request is in flight.
     // eslint-disable-next-line react-hooks/set-state-in-effect
     setLoading(true);
+
+    // Applies the settled result, padding out to MIN_LOADING_MS if the
+    // response came back faster than that so the skeleton doesn't flicker.
+    function settle(apply: () => void) {
+      if (!active) return;
+      const remaining = MIN_LOADING_MS - (Date.now() - start);
+      if (remaining > 0) {
+        delayTimer = setTimeout(() => {
+          if (active) apply();
+        }, remaining);
+      } else {
+        apply();
+      }
+    }
+
     getProducts({
       page,
       limit: PAGE_SIZE,
@@ -94,21 +120,25 @@ export function ShopBrowser() {
       sort: sort || undefined,
     })
       .then((data) => {
-        if (!active) return;
-        setProducts(data.items);
-        setTotal(data.total);
-        setError(null);
+        settle(() => {
+          setProducts(data.items);
+          setTotal(data.total);
+          setError(null);
+          setLoading(false);
+        });
       })
-      .catch(
-        (err: unknown) =>
-          active &&
-          setError(err instanceof Error ? err.message : "Failed to load shop"),
-      )
-      .finally(() => active && setLoading(false));
+      .catch((err: unknown) => {
+        settle(() => {
+          setError(err instanceof Error ? err.message : t("errors.loadFailed"));
+          setLoading(false);
+        });
+      });
+
     return () => {
       active = false;
+      if (delayTimer) clearTimeout(delayTimer);
     };
-  }, [activeCategory, sort, page]);
+  }, [activeCategory, sort, page, t]);
 
   useEffect(() => {
     if (!toast) return;
@@ -149,10 +179,10 @@ export function ShopBrowser() {
       setBanner(null);
       setError(
         err instanceof UnauthorizedError
-          ? "Sign in to buy gems"
+          ? t("errors.signInToBuyGems")
           : err instanceof Error
             ? err.message
-            : "Could not start checkout",
+            : t("errors.checkoutFailed"),
       );
     }
   }
@@ -161,38 +191,40 @@ export function ShopBrowser() {
     <div className={styles.browser}>
       {banner === "success" && (
         <div className={`${styles.banner} ${styles.bannerOk}`}>
-          Payment successful — your gems are on the way!
+          {t("banner.success")}
         </div>
       )}
       {banner === "cancelled" && (
         <div className={`${styles.banner} ${styles.bannerWarn}`}>
-          Checkout cancelled. No charge was made.
+          {t("banner.cancelled")}
         </div>
       )}
 
       <div className={styles.categories}>
         {categories.map((category) => (
           <button
-            key={category}
-            onClick={() => selectCategory(category)}
-            className={`${styles.categoryButton} ${activeCategory === category ? styles.active : ""}`}
+            key={category.value}
+            onClick={() => selectCategory(category.value)}
+            className={`${styles.categoryButton} ${activeCategory === category.value ? styles.active : ""}`}
             type="button"
           >
-            {category}
+            {t(`categories.${category.id}`)}
           </button>
         ))}
       </div>
 
       <div className={styles.toolbar}>
         <p className={styles.count}>
-          {loading ? (
-            "Loading items…"
-          ) : error ? (
+          {error ? (
             error
+          ) : loading && products.length === 0 ? (
+            t("loading")
           ) : (
             <>
-              {total} item{total !== 1 ? "s" : ""} in{" "}
-              <span className={styles.countHighlight}>{activeCategory}</span>
+              {t("itemCount", { count: total })}{" "}
+              <span className={styles.countHighlight}>
+                {t(`categories.${activeCategoryId}`)}
+              </span>
             </>
           )}
         </p>
@@ -201,31 +233,48 @@ export function ShopBrowser() {
           className={styles.sort}
           value={sort}
           onChange={(e) => changeSort(e.target.value as "" | ProductSort)}
-          aria-label="Sort products"
+          aria-label={t("sortAria")}
         >
           {SORT_OPTIONS.map((option) => (
             <option key={option.value} value={option.value}>
-              {option.label}
+              {t(`sort.${option.id}`)}
             </option>
           ))}
         </select>
       </div>
 
-      {!loading && !error && (
+      {!error && (
         <>
           <div className={styles.grid}>
-            {products.map((item) => (
-              <ItemCard
-                key={item.id}
-                product={item}
-                isAuthed={isAuthed}
-                onPurchased={handlePurchased}
-                onError={handlePurchaseError}
-              />
-            ))}
+            {loading
+              ? Array.from({ length: PAGE_SIZE }, (_, i) => (
+                  <div key={i} className={styles.skeletonCard} aria-hidden="true">
+                    <div className={styles.skeletonTopRow}>
+                      <span className={styles.skeletonEmoji} />
+                      <span className={styles.skeletonBadge} />
+                    </div>
+                    <span className={styles.skeletonName} />
+                    <span className={styles.skeletonPrice} />
+                    <div className={styles.skeletonStats}>
+                      <span />
+                      <span />
+                      <span />
+                    </div>
+                    <span className={styles.skeletonButton} />
+                  </div>
+                ))
+              : products.map((item) => (
+                  <ItemCard
+                    key={item.id}
+                    product={item}
+                    isAuthed={isAuthed}
+                    onPurchased={handlePurchased}
+                    onError={handlePurchaseError}
+                  />
+                ))}
           </div>
 
-          {totalPages > 1 && (
+          {!loading && totalPages > 1 && (
             <div className={styles.pagination}>
               <button
                 className={styles.pageButton}
@@ -233,7 +282,7 @@ export function ShopBrowser() {
                 onClick={() => setPage((p) => Math.max(1, p - 1))}
                 disabled={page === 1}
               >
-                Prev
+                {t("pagination.prev")}
               </button>
               {Array.from({ length: totalPages }, (_, i) => i + 1).map((n) => (
                 <button
@@ -251,7 +300,7 @@ export function ShopBrowser() {
                 onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
                 disabled={page === totalPages}
               >
-                Next
+                {t("pagination.next")}
               </button>
             </div>
           )}
@@ -261,11 +310,9 @@ export function ShopBrowser() {
       {packs.length > 0 && (
         <section className={styles.topup}>
           <h2 className={styles.topupTitle}>
-            <Gem size={16} /> Need more gems?
+            <Gem size={16} /> {t("topup.title")}
           </h2>
-          <p className={styles.topupHint}>
-            Buy gems with real money to unlock legendary gear.
-          </p>
+          <p className={styles.topupHint}>{t("topup.hint")}</p>
           <div className={styles.packGrid}>
             {packs.map((pack) => (
               <div key={pack.id} className={styles.pack}>
@@ -281,7 +328,7 @@ export function ShopBrowser() {
                   disabled={checkoutPack !== null}
                 >
                   {checkoutPack === pack.id
-                    ? "Redirecting…"
+                    ? t("topup.redirecting")
                     : formatPrice(pack.priceCents)}
                 </button>
               </div>
