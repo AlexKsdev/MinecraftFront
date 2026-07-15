@@ -1,4 +1,5 @@
-import { API_URL, clearSession, getSession } from "../auth/api";
+import { clearSession, getSession } from "../auth/api";
+import { apiFetch } from "../http";
 
 export interface Profile {
   id: string;
@@ -34,9 +35,7 @@ export async function getProfile(): Promise<Profile> {
 
   let res: Response;
   try {
-    res = await fetch(`${API_URL}/users/me`, {
-      headers: { Authorization: `Bearer ${session.accessToken}` },
-    });
+    res = await apiFetch("/users/me");
   } catch {
     throw new Error("Cannot reach the server. Please try again.");
   }

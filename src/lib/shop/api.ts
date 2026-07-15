@@ -1,4 +1,5 @@
-import { API_URL, clearSession, getSession } from "../auth/api";
+import { clearSession, getSession } from "../auth/api";
+import { apiFetch } from "../http";
 import { UnauthorizedError } from "../account/api";
 
 export type Currency = "COINS" | "GEMS";
@@ -79,7 +80,7 @@ export async function getProducts(
 
   let res: Response;
   try {
-    res = await fetch(`${API_URL}/products?${params.toString()}`);
+    res = await apiFetch(`/products?${params.toString()}`);
   } catch {
     throw new Error("Cannot reach the server. Please try again.");
   }
@@ -94,10 +95,7 @@ export async function purchaseProduct(id: string): Promise<PurchaseResult> {
 
   let res: Response;
   try {
-    res = await fetch(`${API_URL}/products/${id}/purchase`, {
-      method: "POST",
-      headers: { Authorization: `Bearer ${session.accessToken}` },
-    });
+    res = await apiFetch(`/products/${id}/purchase`, { method: "POST" });
   } catch {
     throw new Error("Cannot reach the server. Please try again.");
   }
@@ -115,7 +113,7 @@ export async function purchaseProduct(id: string): Promise<PurchaseResult> {
 export async function getGemPacks(): Promise<GemPack[]> {
   let res: Response;
   try {
-    res = await fetch(`${API_URL}/payments/gem-packs`);
+    res = await apiFetch("/payments/gem-packs");
   } catch {
     throw new Error("Cannot reach the server. Please try again.");
   }
@@ -132,12 +130,9 @@ export async function createCheckout(
 
   let res: Response;
   try {
-    res = await fetch(`${API_URL}/payments/checkout`, {
+    res = await apiFetch("/payments/checkout", {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${session.accessToken}`,
-      },
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ packId }),
     });
   } catch {

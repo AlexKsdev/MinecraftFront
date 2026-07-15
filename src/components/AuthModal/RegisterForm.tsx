@@ -7,7 +7,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "@/i18n/navigation";
 import { User, Mail, Lock, Eye, EyeOff } from "lucide-react";
 import { registerSchema, type RegisterInput } from "@/lib/auth/schemas";
-import { registerUser, storeSession } from "@/lib/auth/api";
+import { registerUser, notifySignedIn } from "@/lib/auth/api";
 import styles from "./AuthForm.module.scss";
 
 export function RegisterForm({ onClose }: { onClose: () => void }) {
@@ -23,8 +23,8 @@ export function RegisterForm({ onClose }: { onClose: () => void }) {
 
   const onSubmit = handleSubmit(async (values) => {
     try {
-      const res = await registerUser(values);
-      storeSession(res);
+      await registerUser(values);
+      notifySignedIn();
       onClose();
       router.push("/account");
     } catch (err) {

@@ -7,7 +7,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "@/i18n/navigation";
 import { Mail, Lock, Eye, EyeOff } from "lucide-react";
 import { loginSchema, type LoginInput } from "@/lib/auth/schemas";
-import { login, storeSession, forgotPassword } from "@/lib/auth/api";
+import { login, notifySignedIn, forgotPassword } from "@/lib/auth/api";
 import styles from "./AuthForm.module.scss";
 
 function ForgotPasswordForm({ onBack }: { onBack: () => void }) {
@@ -85,8 +85,8 @@ export function LoginForm({ onClose }: { onClose: () => void }) {
 
   const onSubmit = handleSubmit(async (values) => {
     try {
-      const res = await login(values);
-      storeSession(res);
+      await login(values);
+      notifySignedIn();
       onClose();
       router.push("/account");
     } catch (err) {
