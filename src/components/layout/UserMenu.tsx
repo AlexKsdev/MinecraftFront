@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { Link, useRouter } from "@/i18n/navigation";
 import { Coins, Gem, LogOut, User as UserIcon } from "lucide-react";
-import { clearSession } from "@/lib/auth/api";
+import { logout } from "@/lib/auth/api";
 import {
   getProfile,
   avatarUrl,
@@ -64,8 +64,9 @@ export function UserMenu({ name }: { name: string }) {
     ? avatarUrl(profile)
     : `https://mc-heads.net/avatar/${encodeURIComponent(name)}/64`;
 
-  function logout() {
-    clearSession();
+  function handleLogout() {
+    // Fire-and-forget: only the server can clear the httpOnly session cookies.
+    void logout();
     clearBalances();
     setOpen(false);
     router.push("/");
@@ -128,7 +129,7 @@ export function UserMenu({ name }: { name: string }) {
           >
             <UserIcon size={14} /> Go to Account
           </Link>
-          <button className={styles.logoutBtn} type="button" onClick={logout}>
+          <button className={styles.logoutBtn} type="button" onClick={handleLogout}>
             <LogOut size={14} /> Log out
           </button>
         </div>

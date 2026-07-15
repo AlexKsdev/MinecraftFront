@@ -1,7 +1,8 @@
+import { apiFetch, readCookie } from "../http";
 import type { LoginInput, RegisterInput } from "./schemas";
 
-export const API_URL = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:3000";
-const SESSION_KEY = "pc-auth";
+/** Set by the server alongside the httpOnly token cookies. Display-only. */
+const USER_COOKIE = "pc_user";
 
 export interface AuthUser {
   id: string;
@@ -10,16 +11,18 @@ export interface AuthUser {
   role: string;
 }
 
+/**
+ * The session as the client can see it. Tokens are httpOnly cookies and are
+ * deliberately absent — there is nothing here for an XSS to steal.
+ */
 export interface AuthResponse {
-  accessToken: string;
-  refreshToken: string;
   user: AuthUser;
 }
 
 async function postAuth(path: string, body: unknown): Promise<AuthResponse> {
   let res: Response;
   try {
-    res = await fetch(`${API_URL}${path}`, {
+    res = await apiFetch(path, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(body),
@@ -58,10 +61,13 @@ export function registerUser(input: RegisterInput): Promise<AuthResponse> {
   return postAuth("/auth/register", input);
 }
 
-async function postJson(path: string, body: unknown): Promise<{ message: string }> {
+async function postJson(
+  path: string,
+  body: unknown,
+): Promise<{ message: string }> {
   let res: Response;
   try {
-    res = await fetch(`${API_URL}${path}`, {
+    res = await apiFetch(path, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(body),
@@ -86,7 +92,7 @@ export function resetPassword(
   return postJson("/auth/reset-password", { token, newPassword });
 }
 
-/** Fires (same-tab) whenever the stored session changes, so the UI can react. */
+/** Fires (same-tab) whenever the session changes, so the UI can react. */
 export const AUTH_EVENT = "pc-authchange";
 
 function notifyAuthChange(): void {
@@ -105,57 +111,57 @@ export function openAuthModal(): void {
   }
 }
 
-export function storeSession(res: AuthResponse): void {
+/**
+ * The server already set the session cookies on the login/register response —
+ * there is nothing for the client to persist. This just wakes the UI up.
+ */
+export function notifySignedIn(): void {
+  notifyAuthChange();
+}
+
+/** End the session: only the server can clear the httpOnly cookies. */
+export async function logout(): Promise<void> {
   try {
-    localStorage.setItem(SESSION_KEY, JSON.stringify(res));
+    await apiFetch("/auth/logout", { method: "POST" });
   } catch {
-    // ignore storage errors (private mode, quota)
+    // Even if the call fails, drop the local view of the session.
   }
+  notifyAuthChange();
+}
+
+/**
+ * Forget the session locally. Used when the server has already told us the
+ * session is dead (401) — the cookies are invalid at that point anyway.
+ */
+export function clearSession(): void {
   notifyAuthChange();
 }
 
 export function getSession(): AuthResponse | null {
-  try {
-    const raw = localStorage.getItem(SESSION_KEY);
-    return raw ? (JSON.parse(raw) as AuthResponse) : null;
-  } catch {
-    return null;
-  }
-}
-
-export function clearSession(): void {
-  try {
-    localStorage.removeItem(SESSION_KEY);
-  } catch {
-    // ignore
-  }
-  notifyAuthChange();
+  return getSessionSnapshot();
 }
 
 // Cached snapshot so useSyncExternalStore gets a stable reference unless the
-// stored value actually changes (re-parsing every call would loop forever).
+// cookie actually changes (re-parsing every call would loop forever).
 let cachedRaw: string | null = null;
 let cachedSession: AuthResponse | null = null;
 
 export function subscribeSession(callback: () => void): () => void {
   window.addEventListener(AUTH_EVENT, callback);
-  window.addEventListener("storage", callback);
   return () => {
     window.removeEventListener(AUTH_EVENT, callback);
-    window.removeEventListener("storage", callback);
   };
 }
 
 export function getSessionSnapshot(): AuthResponse | null {
-  let raw: string | null = null;
-  try {
-    raw = localStorage.getItem(SESSION_KEY);
-  } catch {
-    raw = null;
-  }
+  const raw = readCookie(USER_COOKIE);
   if (raw !== cachedRaw) {
     cachedRaw = raw;
-    cachedSession = raw ? (JSON.parse(raw) as AuthResponse) : null;
+    try {
+      cachedSession = raw ? { user: JSON.parse(raw) as AuthUser } : null;
+    } catch {
+      cachedSession = null;
+    }
   }
   return cachedSession;
 }
