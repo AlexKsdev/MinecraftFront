@@ -5,9 +5,15 @@ import { useTranslations } from "next-intl";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "@/i18n/navigation";
-import { Mail, Lock, Eye, EyeOff } from "lucide-react";
+import { Mail, Lock, Eye, EyeOff, ShieldCheck } from "lucide-react";
 import { loginSchema, type LoginInput } from "@/lib/auth/schemas";
-import { login, notifySignedIn, forgotPassword } from "@/lib/auth/api";
+import {
+  login,
+  notifySignedIn,
+  forgotPassword,
+  isTwoFactorRequired,
+  verifyTwoFactor,
+} from "@/lib/auth/api";
 import styles from "./AuthForm.module.scss";
 
 function ForgotPasswordForm({ onBack }: { onBack: () => void }) {
@@ -71,10 +77,72 @@ function ForgotPasswordForm({ onBack }: { onBack: () => void }) {
   );
 }
 
+/**
+ * Second login step. The password already checked out — the server is holding a
+ * short-lived pending cookie and will only issue a session once the code lands.
+ */
+function TwoFactorForm({ onVerified }: { onVerified: () => void }) {
+  const t = useTranslations("Auth");
+  const [code, setCode] = useState("");
+  const [submitting, setSubmitting] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  async function onSubmit(e: React.FormEvent) {
+    e.preventDefault();
+    setSubmitting(true);
+    setError(null);
+    try {
+      await verifyTwoFactor(code);
+      onVerified();
+    } catch (err) {
+      setSubmitting(false);
+      setCode("");
+      setError(err instanceof Error ? err.message : t("errors.generic"));
+    }
+  }
+
+  return (
+    <form className={styles.form} onSubmit={(e) => void onSubmit(e)} noValidate>
+      {error && <p className={styles.formError}>{error}</p>}
+      <p className={styles.label}>{t("twoFactor.prompt")}</p>
+      <div className={styles.field}>
+        <label className={styles.label} htmlFor="login-2fa-code">
+          {t("twoFactor.code")}
+        </label>
+        <div className={styles.inputWrap}>
+          <ShieldCheck size={15} className={styles.inputIcon} />
+          <input
+            className={styles.input}
+            id="login-2fa-code"
+            type="text"
+            inputMode="numeric"
+            autoComplete="one-time-code"
+            pattern="\d{6}"
+            maxLength={6}
+            placeholder={t("twoFactor.codePlaceholder")}
+            autoFocus
+            required
+            value={code}
+            onChange={(e) => setCode(e.target.value.replace(/\D/g, ""))}
+          />
+        </div>
+      </div>
+      <button
+        className={styles.submit}
+        type="submit"
+        disabled={submitting || code.length !== 6}
+      >
+        {submitting ? t("twoFactor.verifying") : t("twoFactor.verify")}
+      </button>
+    </form>
+  );
+}
+
 export function LoginForm({ onClose }: { onClose: () => void }) {
   const t = useTranslations("Auth");
   const [showPass, setShowPass] = useState(false);
   const [forgotMode, setForgotMode] = useState(false);
+  const [needsCode, setNeedsCode] = useState(false);
   const router = useRouter();
   const {
     register,
@@ -83,18 +151,32 @@ export function LoginForm({ onClose }: { onClose: () => void }) {
     formState: { errors, isSubmitting },
   } = useForm<LoginInput>({ resolver: zodResolver(loginSchema) });
 
+  function finishLogin() {
+    notifySignedIn();
+    onClose();
+    router.push("/account");
+  }
+
   const onSubmit = handleSubmit(async (values) => {
     try {
-      await login(values);
-      notifySignedIn();
-      onClose();
-      router.push("/account");
+      const result = await login(values);
+      // With 2FA on the password buys no session — hold the modal on the code
+      // step instead of pretending we're signed in.
+      if (isTwoFactorRequired(result)) {
+        setNeedsCode(true);
+        return;
+      }
+      finishLogin();
     } catch (err) {
       setError("root", {
         message: err instanceof Error ? err.message : t("errors.loginFailed"),
       });
     }
   });
+
+  if (needsCode) {
+    return <TwoFactorForm onVerified={finishLogin} />;
+  }
 
   if (forgotMode) {
     return <ForgotPasswordForm onBack={() => setForgotMode(false)} />;

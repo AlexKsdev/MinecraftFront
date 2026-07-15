@@ -200,7 +200,8 @@
       "bonuses": "Bonuses",
       "referral": "Invite Friends",
       "achievements": "Achievements",
-      "quests": "Quests"
+      "quests": "Quests",
+      "security": "Security"
     },
     "stats": {
       "playtime": "Playtime",
@@ -252,6 +253,26 @@
       "resetIn": "Daily quests reset in <time>08:24:11</time>",
       "doneCount": "{done}/{total} done",
       "claim": "Claim Reward"
+    },
+    "security": {
+      "twoFactorTitle": "Two-Factor Authentication",
+      "twoFactorText": "Ask for a code from your authenticator app on every login, so a stolen password isn't enough to get in.",
+      "on": "Enabled",
+      "off": "Disabled",
+      "enable": "Enable 2FA",
+      "preparing": "Preparing…",
+      "disable": "Disable 2FA",
+      "scanHint": "Scan this QR code with your authenticator app, then enter the 6-digit code it shows.",
+      "qrAlt": "QR code for your authenticator app",
+      "manualHint": "Can't scan? Enter this key manually:",
+      "codePlaceholder": "6-digit code",
+      "passwordPlaceholder": "Your password",
+      "confirmEnable": "Confirm & enable",
+      "confirming": "Confirming…",
+      "disableHint": "Confirm your password and a current code to turn 2FA off.",
+      "confirmDisable": "Confirm & disable",
+      "cancel": "Cancel",
+      "genericError": "Something went wrong. Please try again."
     }
   },
   "Auth": {
@@ -288,6 +309,13 @@
       "submitting": "Logging in…",
       "submit": "Login",
       "forgotPassword": "Forgot password?"
+    },
+    "twoFactor": {
+      "prompt": "Enter the 6-digit code from your authenticator app to finish signing in.",
+      "code": "Authentication code",
+      "codePlaceholder": "000000",
+      "verify": "Verify",
+      "verifying": "Verifying…"
     },
     "forgot": {
       "sent": "If that email is registered, we've sent a password reset link. Check your inbox.",

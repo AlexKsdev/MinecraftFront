@@ -13,6 +13,7 @@ import { BonusesTab } from "./components/BonusesTab";
 import { ReferralTab } from "./components/ReferralTab";
 import { AchievementsTab } from "./components/AchievementsTab";
 import { QuestsTab } from "./components/QuestsTab";
+import { SecurityTab } from "./components/SecurityTab";
 import styles from "./AccountView.module.scss";
 
 export function AccountView() {
@@ -79,6 +80,7 @@ export function AccountView() {
         {tab === "referral" && <ReferralTab />}
         {tab === "achievements" && <AchievementsTab />}
         {tab === "quests" && <QuestsTab />}
+        {tab === "security" && <SecurityTab player={profile} />}
       </div>
     </div>
   );

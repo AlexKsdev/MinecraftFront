@@ -9,6 +9,7 @@ export interface AuthUser {
   email: string;
   name: string;
   role: string;
+  totpEnabled: boolean;
 }
 
 /**
@@ -19,7 +20,23 @@ export interface AuthResponse {
   user: AuthUser;
 }
 
-async function postAuth(path: string, body: unknown): Promise<AuthResponse> {
+/**
+ * The password checked out but 2FA is on, so no session exists yet — only a
+ * short-lived pending cookie the server will redeem for one at /auth/2fa/verify.
+ */
+export interface TwoFactorRequired {
+  twoFactorRequired: true;
+}
+
+export type LoginResult = AuthResponse | TwoFactorRequired;
+
+export function isTwoFactorRequired(
+  result: LoginResult,
+): result is TwoFactorRequired {
+  return "twoFactorRequired" in result;
+}
+
+async function postAuth<T>(path: string, body: unknown): Promise<T> {
   let res: Response;
   try {
     res = await apiFetch(path, {
@@ -37,7 +54,7 @@ async function postAuth(path: string, body: unknown): Promise<AuthResponse> {
     throw new Error(extractError(data));
   }
 
-  return data as AuthResponse;
+  return data as T;
 }
 
 function extractError(data: unknown): string {
@@ -53,12 +70,59 @@ function extractError(data: unknown): string {
   return "Something went wrong. Please try again.";
 }
 
-export function login(input: LoginInput): Promise<AuthResponse> {
-  return postAuth("/auth/login", input);
+/**
+ * Either signs in outright or reports that a TOTP code is still owed. With 2FA
+ * on there is no session yet — only `verifyTwoFactor` can finish the login.
+ */
+export function login(input: LoginInput): Promise<LoginResult> {
+  return postAuth<LoginResult>("/auth/login", input);
 }
 
 export function registerUser(input: RegisterInput): Promise<AuthResponse> {
-  return postAuth("/auth/register", input);
+  return postAuth<AuthResponse>("/auth/register", input);
+}
+
+/** Second login step: redeems the pending 2FA cookie for a real session. */
+export function verifyTwoFactor(code: string): Promise<AuthResponse> {
+  return postAuth<AuthResponse>("/auth/2fa/verify", { code });
+}
+
+export interface TwoFactorSetup {
+  /** otpauth:// URI, for manual entry when the QR can't be scanned. */
+  otpauthUrl: string;
+  /** PNG data URL of the same URI. */
+  qrDataUrl: string;
+}
+
+/** Issues a secret + QR. 2FA stays off until `enableTwoFactor` proves a code. */
+export function setupTwoFactor(): Promise<TwoFactorSetup> {
+  return postAuth<TwoFactorSetup>("/auth/2fa/setup", {});
+}
+
+export function enableTwoFactor(code: string): Promise<void> {
+  return postNoContent("/auth/2fa/enable", { code });
+}
+
+/** Turning 2FA off is a downgrade, so the server re-proves both factors. */
+export function disableTwoFactor(password: string, code: string): Promise<void> {
+  return postNoContent("/auth/2fa/disable", { password, code });
+}
+
+/** For endpoints that answer 204 — there is no body to parse on success. */
+async function postNoContent(path: string, body: unknown): Promise<void> {
+  let res: Response;
+  try {
+    res = await apiFetch(path, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(body),
+    });
+  } catch {
+    throw new Error("Cannot reach the server. Please try again.");
+  }
+  if (!res.ok) {
+    throw new Error(extractError(await res.json().catch(() => null)));
+  }
 }
 
 async function postJson(
