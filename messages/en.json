@@ -287,7 +287,20 @@
     "errors": {
       "generic": "Something went wrong",
       "loginFailed": "Login failed",
-      "registrationFailed": "Registration failed"
+      "registrationFailed": "Registration failed",
+      "codes": {
+        "AUTH_INVALID_CREDENTIALS": "Wrong email or password.",
+        "AUTH_EMAIL_IN_USE": "That email is already registered.",
+        "AUTH_INVALID_CODE": "That code isn't right. Check your authenticator app and try again.",
+        "AUTH_2FA_SESSION_EXPIRED": "Your login attempt timed out. Please sign in again.",
+        "AUTH_2FA_SESSION_INVALID": "Your login attempt is no longer valid. Please sign in again.",
+        "AUTH_2FA_NOT_ENABLED": "Two-factor authentication isn't enabled on this account.",
+        "AUTH_2FA_ALREADY_ENABLED": "Two-factor authentication is already enabled. Disable it first.",
+        "AUTH_2FA_SETUP_MISSING": "Start the setup before enabling two-factor authentication.",
+        "AUTH_RESET_TOKEN_INVALID": "This reset link is invalid or has expired. Request a new one.",
+        "AUTH_USER_NOT_FOUND": "Account not found.",
+        "AUTH_ACCOUNT_DISABLED": "This account has been disabled."
+      }
     },
     "modal": {
       "close": "Close",

@@ -1,4 +1,5 @@
 import { apiFetch, readCookie } from "../http";
+import { ApiError } from "./errors";
 import type { LoginInput, RegisterInput } from "./schemas";
 
 /** Set by the server alongside the httpOnly token cookies. Display-only. */
@@ -51,23 +52,27 @@ async function postAuth<T>(path: string, body: unknown): Promise<T> {
   const data: unknown = await res.json().catch(() => null);
 
   if (!res.ok) {
-    throw new Error(extractError(data));
+    throw extractError(data);
   }
 
   return data as T;
 }
 
-function extractError(data: unknown): string {
-  if (data && typeof data === "object" && "message" in data) {
-    const message = (data as { message: unknown }).message;
-    if (Array.isArray(message)) {
-      return message.join(", ");
-    }
-    if (typeof message === "string" && message.length > 0) {
-      return message;
-    }
+/**
+ * Rebuilds the server's error as an ApiError, keeping its `code` so the UI can
+ * localize it. Validation failures arrive as an array of messages.
+ */
+function extractError(data: unknown): ApiError {
+  const body = (data ?? {}) as { message?: unknown; code?: unknown };
+  const code = typeof body.code === "string" ? body.code : undefined;
+
+  if (Array.isArray(body.message)) {
+    return new ApiError(body.message.join(", "), code);
   }
-  return "Something went wrong. Please try again.";
+  if (typeof body.message === "string" && body.message.length > 0) {
+    return new ApiError(body.message, code);
+  }
+  return new ApiError("Something went wrong. Please try again.", code);
 }
 
 /**
@@ -121,7 +126,7 @@ async function postNoContent(path: string, body: unknown): Promise<void> {
     throw new Error("Cannot reach the server. Please try again.");
   }
   if (!res.ok) {
-    throw new Error(extractError(await res.json().catch(() => null)));
+    throw extractError(await res.json().catch(() => null));
   }
 }
 
@@ -141,7 +146,7 @@ async function postJson(
   }
 
   const data: unknown = await res.json().catch(() => null);
-  if (!res.ok) throw new Error(extractError(data));
+  if (!res.ok) throw extractError(data);
   return data as { message: string };
 }
 
