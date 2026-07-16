@@ -14,10 +14,12 @@ import {
   isTwoFactorRequired,
   verifyTwoFactor,
 } from "@/lib/auth/api";
+import { useErrorText } from "@/lib/auth/errors";
 import styles from "./AuthForm.module.scss";
 
 function ForgotPasswordForm({ onBack }: { onBack: () => void }) {
   const t = useTranslations("Auth");
+  const errorText = useErrorText();
   const [email, setEmail] = useState("");
   const [status, setStatus] = useState<"idle" | "sending" | "sent">("idle");
   const [error, setError] = useState<string | null>(null);
@@ -31,7 +33,7 @@ function ForgotPasswordForm({ onBack }: { onBack: () => void }) {
       setStatus("sent");
     } catch (err) {
       setStatus("idle");
-      setError(err instanceof Error ? err.message : t("errors.generic"));
+      setError(errorText(err));
     }
   }
 
@@ -83,6 +85,7 @@ function ForgotPasswordForm({ onBack }: { onBack: () => void }) {
  */
 function TwoFactorForm({ onVerified }: { onVerified: () => void }) {
   const t = useTranslations("Auth");
+  const errorText = useErrorText();
   const [code, setCode] = useState("");
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -97,7 +100,7 @@ function TwoFactorForm({ onVerified }: { onVerified: () => void }) {
     } catch (err) {
       setSubmitting(false);
       setCode("");
-      setError(err instanceof Error ? err.message : t("errors.generic"));
+      setError(errorText(err));
     }
   }
 
@@ -143,6 +146,7 @@ export function LoginForm({ onClose }: { onClose: () => void }) {
   const [showPass, setShowPass] = useState(false);
   const [forgotMode, setForgotMode] = useState(false);
   const [needsCode, setNeedsCode] = useState(false);
+  const errorText = useErrorText();
   const router = useRouter();
   const {
     register,
@@ -168,9 +172,7 @@ export function LoginForm({ onClose }: { onClose: () => void }) {
       }
       finishLogin();
     } catch (err) {
-      setError("root", {
-        message: err instanceof Error ? err.message : t("errors.loginFailed"),
-      });
+      setError("root", { message: errorText(err, t("errors.loginFailed")) });
     }
   });
 

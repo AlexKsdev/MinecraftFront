@@ -10,6 +10,7 @@ import {
   setupTwoFactor,
   type TwoFactorSetup,
 } from "@/lib/auth/api";
+import { useErrorText } from "@/lib/auth/errors";
 import type { Profile } from "@/lib/account/api";
 import styles from "../AccountView.module.scss";
 
@@ -22,6 +23,7 @@ type Mode = "idle" | "enrolling" | "disabling";
  */
 export function SecurityTab({ player }: { player: Profile }) {
   const t = useTranslations("Account");
+  const errorText = useErrorText();
   const [enabled, setEnabled] = useState(player.totpEnabled);
   const [mode, setMode] = useState<Mode>("idle");
   const [setup, setSetup] = useState<TwoFactorSetup | null>(null);
@@ -46,7 +48,7 @@ export function SecurityTab({ player }: { player: Profile }) {
       setSetup(await setupTwoFactor());
       setMode("enrolling");
     } catch (err) {
-      setError(err instanceof Error ? err.message : t("security.genericError"));
+      setError(errorText(err, t("security.genericError")));
     } finally {
       setBusy(false);
     }
@@ -63,7 +65,7 @@ export function SecurityTab({ player }: { player: Profile }) {
     } catch (err) {
       setBusy(false);
       setCode("");
-      setError(err instanceof Error ? err.message : t("security.genericError"));
+      setError(errorText(err, t("security.genericError")));
     }
   }
 
@@ -78,7 +80,7 @@ export function SecurityTab({ player }: { player: Profile }) {
     } catch (err) {
       setBusy(false);
       setCode("");
-      setError(err instanceof Error ? err.message : t("security.genericError"));
+      setError(errorText(err, t("security.genericError")));
     }
   }
 
