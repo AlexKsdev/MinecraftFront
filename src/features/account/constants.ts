@@ -4,7 +4,7 @@ import {
   type LucideIcon,
 } from "lucide-react";
 
-export type TabId = "overview" | "bonuses" | "referral" | "achievements" | "quests";
+export type TabId = "overview" | "bonuses" | "referral" | "achievements" | "quests" | "security";
 
 // Tab labels live in the Account messages namespace (keyed by `id`).
 export const TABS: { id: TabId; icon: LucideIcon }[] = [
@@ -13,6 +13,7 @@ export const TABS: { id: TabId; icon: LucideIcon }[] = [
   { id: "referral", icon: Users },
   { id: "achievements", icon: Trophy },
   { id: "quests", icon: Target },
+  { id: "security", icon: Shield },
 ];
 
 /* ── Overview ── */
