@@ -379,6 +379,34 @@
       "user": "Користувач",
       "amount": "Сума",
       "status": "Статус"
+    },
+    "users": {
+      "title": "Гравці",
+      "count": "{count, plural, =0 {Гравців немає} one {# гравець} few {# гравці} many {# гравців} other {# гравця}}",
+      "none": "За цим пошуком нікого не знайдено.",
+      "search": "Шукати",
+      "searchPlaceholder": "Імʼя або пошта",
+      "searchLabel": "Пошук гравців за імʼям або поштою",
+      "pagination": "Сторінки",
+      "prev": "Назад",
+      "next": "Далі",
+      "pageOf": "Сторінка {page} з {total}",
+      "promote": "Зробити адміном",
+      "demote": "Зняти адміна",
+      "giveCoins": "+{count} монет",
+      "delete": "Видалити",
+      "confirmDelete": "Видалити {name}? Це незворотно.",
+      "cancel": "Скасувати",
+      "stepUpPlaceholder": "000000",
+      "stepUpLabel": "Код автентифікатора",
+      "stepUpConfirm": "Підтвердити",
+      "table": {
+        "name": "Імʼя",
+        "email": "Пошта",
+        "role": "Роль",
+        "balance": "Монети / Самоцвіти",
+        "actions": "Дії"
+      }
     }
   }
 }

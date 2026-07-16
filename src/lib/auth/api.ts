@@ -113,6 +113,18 @@ export function disableTwoFactor(password: string, code: string): Promise<void> 
   return postNoContent("/auth/2fa/disable", { password, code });
 }
 
+/**
+ * Re-proves a factor so the server will allow a destructive action for the next
+ * few minutes. Every admin has 2FA by policy, so a code is always available;
+ * the server accepts a password too.
+ */
+export function stepUp(factors: {
+  code?: string;
+  password?: string;
+}): Promise<void> {
+  return postNoContent("/auth/step-up", factors);
+}
+
 /** For endpoints that answer 204 — there is no body to parse on success. */
 async function postNoContent(path: string, body: unknown): Promise<void> {
   let res: Response;
