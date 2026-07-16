@@ -361,5 +361,24 @@
     "gems": "{count, number} gems",
     "backToShop": "Back to Shop",
     "viewAccount": "View Account"
+  },
+  "Admin": {
+    "title": "Admin Dashboard",
+    "subtitle": "Server overview at a glance.",
+    "loadFailed": "Could not load the dashboard stats.",
+    "recentPayments": "Recent Payments",
+    "noPayments": "No payments yet.",
+    "stats": {
+      "users": "Players",
+      "admins": "Admins",
+      "products": "Products",
+      "revenue": "Revenue"
+    },
+    "table": {
+      "date": "Date",
+      "user": "User",
+      "amount": "Amount",
+      "status": "Status"
+    }
   }
 }
