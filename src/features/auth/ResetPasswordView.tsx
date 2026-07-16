@@ -6,11 +6,13 @@ import { useSearchParams } from "next/navigation";
 import { Link } from "@/i18n/navigation";
 import { Lock, CheckCircle2 } from "lucide-react";
 import { resetPassword } from "@/lib/auth/api";
+import { useErrorText } from "@/lib/auth/errors";
 import formStyles from "@/components/AuthModal/AuthForm.module.scss";
 import styles from "./ResetPasswordView.module.scss";
 
 export function ResetPasswordView() {
   const t = useTranslations("Auth");
+  const errorText = useErrorText();
   const token = useSearchParams().get("token");
   const [password, setPassword] = useState("");
   const [status, setStatus] = useState<"idle" | "submitting" | "done">("idle");
@@ -29,7 +31,7 @@ export function ResetPasswordView() {
       setStatus("done");
     } catch (err) {
       setStatus("idle");
-      setError(err instanceof Error ? err.message : t("errors.generic"));
+      setError(errorText(err));
     }
   }
 

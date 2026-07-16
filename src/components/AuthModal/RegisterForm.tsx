@@ -8,10 +8,12 @@ import { useRouter } from "@/i18n/navigation";
 import { User, Mail, Lock, Eye, EyeOff } from "lucide-react";
 import { registerSchema, type RegisterInput } from "@/lib/auth/schemas";
 import { registerUser, notifySignedIn } from "@/lib/auth/api";
+import { useErrorText } from "@/lib/auth/errors";
 import styles from "./AuthForm.module.scss";
 
 export function RegisterForm({ onClose }: { onClose: () => void }) {
   const t = useTranslations("Auth");
+  const errorText = useErrorText();
   const [showPass, setShowPass] = useState(false);
   const router = useRouter();
   const {
@@ -29,7 +31,7 @@ export function RegisterForm({ onClose }: { onClose: () => void }) {
       router.push("/account");
     } catch (err) {
       setError("root", {
-        message: err instanceof Error ? err.message : t("errors.registrationFailed"),
+        message: errorText(err, t("errors.registrationFailed")),
       });
     }
   });
