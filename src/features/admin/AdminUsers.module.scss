@@ -254,3 +254,8 @@
   color: colors.$color-muted-foreground;
   padding: 2rem 0;
 }
+
+/* A deactivated product still belongs in the table, just quieter. */
+.dim {
+  opacity: 0.5;
+}

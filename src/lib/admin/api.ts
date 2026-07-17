@@ -32,35 +32,93 @@ export class StepUpRequiredError extends Error {
   }
 }
 
-async function patch(path: string, body: unknown): Promise<void> {
+/**
+ * Every admin mutation goes through here: they all sit behind StepUpGuard and
+ * so all answer 403 the same way when the proof is missing or stale.
+ *
+ * That 403 is unambiguous on these pages — the route group is already
+ * admin-gated server-side, so a refusal means the proof, not the privilege.
+ * It's raised as its own error type so the caller can collect a code and retry
+ * rather than show a dead end.
+ */
+async function send<T>(
+  method: "POST" | "PATCH" | "DELETE",
+  path: string,
+  body?: unknown,
+): Promise<T> {
   let res: Response;
   try {
     res = await apiFetch(path, {
-      method: "PATCH",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(body),
+      method,
+      ...(body === undefined
+        ? {}
+        : {
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(body),
+          }),
     });
   } catch {
     throw new Error("Cannot reach the server. Please try again.");
   }
-  if (res.ok) return;
 
-  // StepUpGuard answers 403 for a missing or stale proof. AdminGuard uses the
-  // same status, but this page is only reachable by admins, so a 403 here means
-  // the proof — not the privilege.
   if (res.status === 403) throw new StepUpRequiredError();
 
   const data = (await res.json().catch(() => null)) as {
     message?: unknown;
     code?: unknown;
   } | null;
-  const message =
-    typeof data?.message === "string" ? data.message : "Something went wrong.";
-  throw new ApiError(message, typeof data?.code === "string" ? data.code : undefined);
+
+  if (!res.ok) {
+    const message =
+      typeof data?.message === "string" ? data.message : "Something went wrong.";
+    throw new ApiError(
+      message,
+      typeof data?.code === "string" ? data.code : undefined,
+    );
+  }
+  return data as T;
 }
 
+export interface AdminProduct {
+  id: string;
+  slug: string;
+  category: string;
+  name: string;
+  emoji: string;
+  rarity: string;
+  rarityRank: number;
+  currency: "COINS" | "GEMS";
+  price: number;
+  badge: string | null;
+  stats: string[];
+  active: boolean;
+}
+
+export interface PaginatedProducts {
+  items: AdminProduct[];
+  total: number;
+  page: number;
+  limit: number;
+}
+
+/** The shape the create/edit form collects. */
+export interface ProductInput {
+  slug: string;
+  category: string;
+  name: string;
+  emoji: string;
+  rarity: string;
+  rarityRank: number;
+  currency: "COINS" | "GEMS";
+  price: number;
+  badge?: string;
+  stats?: string[];
+}
+
+/* ── Users ── */
+
 export function changeRole(userId: string, role: string): Promise<void> {
-  return patch(`/users/${userId}/role`, { role });
+  return send("PATCH", `/users/${userId}/role`, { role });
 }
 
 /** Deltas, not totals — the server increments what it is given. */
@@ -68,17 +126,36 @@ export function adjustBalance(
   userId: string,
   delta: { coins?: number; gems?: number },
 ): Promise<void> {
-  return patch(`/users/${userId}/balance`, delta);
+  return send("PATCH", `/users/${userId}/balance`, delta);
 }
 
-export async function deleteUser(userId: string): Promise<void> {
-  let res: Response;
-  try {
-    res = await apiFetch(`/users/${userId}`, { method: "DELETE" });
-  } catch {
-    throw new Error("Cannot reach the server. Please try again.");
-  }
-  if (res.ok) return;
-  if (res.status === 403) throw new StepUpRequiredError();
-  throw new Error("Could not delete the user.");
+export function deleteUser(userId: string): Promise<void> {
+  return send("DELETE", `/users/${userId}`);
+}
+
+/* ── Products ── */
+
+export function createProduct(input: ProductInput): Promise<AdminProduct> {
+  return send("POST", "/products", input);
+}
+
+export function updateProduct(
+  id: string,
+  input: Partial<ProductInput>,
+): Promise<AdminProduct> {
+  return send("PATCH", `/products/${id}`, input);
+}
+
+/**
+ * Takes the product off the shop. The server deactivates rather than deletes —
+ * purchase history has to keep pointing at what was bought — so this is
+ * reversible.
+ */
+export function deactivateProduct(id: string): Promise<AdminProduct> {
+  return send("DELETE", `/products/${id}`);
+}
+
+/** The way back from deactivation. */
+export function activateProduct(id: string): Promise<AdminProduct> {
+  return send("POST", `/products/${id}/activate`);
 }
