@@ -379,6 +379,34 @@
       "user": "User",
       "amount": "Amount",
       "status": "Status"
+    },
+    "users": {
+      "title": "Players",
+      "count": "{count, plural, =0 {No players} one {# player} other {# players}}",
+      "none": "No players match that search.",
+      "search": "Search",
+      "searchPlaceholder": "Name or email",
+      "searchLabel": "Search players by name or email",
+      "pagination": "Pagination",
+      "prev": "Previous",
+      "next": "Next",
+      "pageOf": "Page {page} of {total}",
+      "promote": "Make admin",
+      "demote": "Remove admin",
+      "giveCoins": "+{count} coins",
+      "delete": "Delete",
+      "confirmDelete": "Delete {name}? This cannot be undone.",
+      "cancel": "Cancel",
+      "stepUpPlaceholder": "000000",
+      "stepUpLabel": "Authenticator code",
+      "stepUpConfirm": "Confirm",
+      "table": {
+        "name": "Name",
+        "email": "Email",
+        "role": "Role",
+        "balance": "Coins / Gems",
+        "actions": "Actions"
+      }
     }
   }
 }
