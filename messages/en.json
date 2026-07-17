@@ -407,6 +407,44 @@
         "balance": "Coins / Gems",
         "actions": "Actions"
       }
+    },
+    "products": {
+      "title": "Products",
+      "count": "{count, plural, =0 {No products} one {# product} other {# products}}",
+      "new": "New product",
+      "create": "Create",
+      "save": "Save",
+      "saving": "Saving…",
+      "edit": "Edit",
+      "deactivate": "Take off shop",
+      "activate": "Put back",
+      "confirmDeactivate": "Take {name} off the shop? Players won't see it, but it can be put back.",
+      "active": "On shop",
+      "inactive": "Off shop",
+      "coins": "coins",
+      "gems": "gems",
+      "table": {
+        "item": "Item",
+        "category": "Category",
+        "price": "Price",
+        "status": "Status",
+        "actions": "Actions"
+      },
+      "form": {
+        "name": "Name",
+        "slug": "Slug",
+        "slugHint": "Lowercase, words joined by hyphens — it becomes the shop URL.",
+        "category": "Category",
+        "emoji": "Emoji",
+        "rarity": "Rarity",
+        "rarityRank": "Rarity rank",
+        "rankHint": "0–5. Common=1 … Legendary=5. Drives the shop's rarity sort.",
+        "currency": "Currency",
+        "price": "Price",
+        "badge": "Badge",
+        "stats": "Stats",
+        "statsHint": "Comma-separated, e.g. +5 damage, +2 speed"
+      }
     }
   }
 }
