@@ -4,7 +4,8 @@
       "home": "Home",
       "shop": "Shop",
       "blog": "Blog",
-      "wiki": "Wiki"
+      "wiki": "Wiki",
+      "admin": "Admin"
     },
     "joinNow": "Join Now",
     "toggleTheme": "Toggle theme",
@@ -472,6 +473,13 @@
         "status": "Status",
         "actions": "Actions"
       }
+    },
+    "nav": {
+      "label": "Admin sections",
+      "dashboard": "Dashboard",
+      "players": "Players",
+      "products": "Products",
+      "orders": "Orders"
     }
   }
 }

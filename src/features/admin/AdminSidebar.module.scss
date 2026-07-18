@@ -1,0 +1,80 @@
+@use "abstracts/colors" as colors;
+@use "abstracts/breakpoints" as bp;
+@use "abstracts/typography" as typo;
+
+/* The panel shell: sidebar stacked above content on mobile, beside it ≥md. */
+.shell {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background: colors.$color-background;
+
+  @include bp.respond-to(md) {
+    flex-direction: row;
+    align-items: flex-start;
+  }
+}
+
+.main {
+  flex: 1;
+  min-width: 0;
+}
+
+/* Mobile-first: a horizontal strip that scrolls sideways under the header. */
+.sidebar {
+  display: flex;
+  flex-direction: row;
+  gap: 0.25rem;
+  overflow-x: auto;
+  padding: 4.75rem 1rem 0.5rem;
+  border-bottom: 1px solid colors.$color-border;
+  background: colors.$color-card;
+
+  @include bp.respond-to(md) {
+    position: sticky;
+    top: 0;
+    align-self: flex-start;
+    flex-direction: column;
+    gap: 0.35rem;
+    width: 13rem;
+    height: 100vh;
+    padding: 5.5rem 0.75rem 2rem;
+    border-bottom: none;
+    border-right: 1px solid colors.$color-border;
+    overflow-x: visible;
+    overflow-y: auto;
+  }
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  flex-shrink: 0;
+  padding: 0.5rem 0.75rem;
+  border-radius: 0.5rem;
+  border: 1px solid transparent;
+  font-size: 0.8rem;
+  color: colors.$color-muted-foreground;
+  text-decoration: none;
+  white-space: nowrap;
+
+  &:hover {
+    color: colors.$color-foreground;
+    background: colors.$color-secondary;
+  }
+}
+
+.active {
+  color: colors.$color-primary;
+  border-color: color-mix(in oklab, colors.$color-primary 40%, transparent);
+  background: color-mix(in oklab, colors.$color-primary 12%, transparent);
+
+  &:hover {
+    color: colors.$color-primary;
+  }
+}
+
+.icon {
+  flex-shrink: 0;
+}

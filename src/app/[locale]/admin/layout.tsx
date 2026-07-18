@@ -1,5 +1,7 @@
 import { notFound } from "next/navigation";
 import { serverFetch } from "@/lib/server/api";
+import { AdminSidebar } from "@/features/admin/AdminSidebar";
+import styles from "@/features/admin/AdminSidebar.module.scss";
 
 /**
  * Gates the whole /admin route group on the server, so the shell is never sent
@@ -23,5 +25,10 @@ export default async function AdminLayout({
   const me = (await res.json()) as { role?: string };
   if (me.role !== "ADMIN") notFound();
 
-  return <>{children}</>;
+  return (
+    <div className={styles.shell}>
+      <AdminSidebar />
+      <div className={styles.main}>{children}</div>
+    </div>
+  );
 }
