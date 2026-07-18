@@ -6,7 +6,7 @@ import type { StepUpAction } from "./useStepUpAction";
 import styles from "./AdminUsers.module.scss";
 
 /**
- * Replaces a row's controls while a factor is owed. Shared by the user and
+ * Replaces a row's controls while the password is owed. Shared by the user and
  * product tables so the prompt reads the same wherever the guard fires.
  */
 export function StepUpPrompt({ action }: { action: StepUpAction }) {
@@ -23,20 +23,18 @@ export function StepUpPrompt({ action }: { action: StepUpAction }) {
       <ShieldCheck size={13} className={styles.stepUpIcon} />
       <input
         className={styles.stepUpInput}
-        type="text"
-        inputMode="numeric"
-        autoComplete="one-time-code"
-        maxLength={6}
+        type="password"
+        autoComplete="current-password"
         autoFocus
-        value={action.code}
-        onChange={(e) => action.setCode(e.target.value.replace(/\D/g, ""))}
+        value={action.password}
+        onChange={(e) => action.setPassword(e.target.value)}
         placeholder={t("users.stepUpPlaceholder")}
         aria-label={t("users.stepUpLabel")}
       />
       <button
         className={styles.actionBtn}
         type="submit"
-        disabled={action.busy || action.code.length !== 6}
+        disabled={action.busy || action.password.length === 0}
       >
         {t("users.stepUpConfirm")}
       </button>

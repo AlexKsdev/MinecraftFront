@@ -6,7 +6,7 @@ export interface Profile {
   email: string;
   name: string;
   role: string;
-  totpEnabled: boolean;
+  twoFactorEnabled: boolean;
   rank: string;
   avatar: string | null;
   level: number;

@@ -22,7 +22,7 @@ export function OrderRowActions({ order }: { order: AdminPayment }) {
   const action = useStepUpAction();
   const [status, setStatus] = useState<PaymentStatus>(order.status);
 
-  if (action.awaitingCode) return <StepUpPrompt action={action} />;
+  if (action.awaitingPassword) return <StepUpPrompt action={action} />;
 
   return (
     <div className={styles.actions}>
