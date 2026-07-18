@@ -1,6 +1,6 @@
 import { Link } from "@/i18n/navigation";
 import { Sword } from "lucide-react";
-import type { MobileNavProps } from "./types";
+import { isNavLinkActive, type MobileNavProps } from "./types";
 import styles from "./MobileNav.module.scss";
 
 export function MobileNav({
@@ -16,7 +16,7 @@ export function MobileNav({
           key={link.href}
           href={link.href}
           onClick={onNavigate}
-          className={`${styles.link} ${pathname === link.href ? styles.active : ""}`}
+          className={`${styles.link} ${isNavLinkActive(pathname, link) ? styles.active : ""}`}
         >
           {link.label}
         </Link>

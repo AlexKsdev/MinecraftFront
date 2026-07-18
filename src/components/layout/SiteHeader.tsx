@@ -7,7 +7,7 @@ import { Menu, Moon, Sun, Sword, X } from "lucide-react";
 import { MobileNav } from "./MobileNav";
 import { UserMenu } from "./UserMenu";
 import { LocaleSwitcher } from "./LocaleSwitcher";
-import type { NavLink } from "./types";
+import { isNavLinkActive, type NavLink } from "./types";
 import { AuthModal } from "@/components/AuthModal/AuthModal";
 import { OPEN_AUTH_EVENT } from "@/lib/auth/api";
 import { useSession } from "@/lib/auth/useSession";
@@ -47,6 +47,12 @@ export function SiteHeader() {
     href: NAV_HREFS[key],
     label: t(`nav.${key}`),
   }));
+  // Admins get one extra entry into the panel. The link is gated on the readable
+  // pc_user role only for display — every /admin route is still gated server-side
+  // (404 + AdminGuard), so a tampered cookie buys a dead link, nothing more.
+  if (session?.user.role === "ADMIN") {
+    navLinks.push({ href: "/admin", label: t("nav.admin"), matchPrefix: true });
+  }
 
   useEffect(() => {
     const onScroll = () => {
@@ -94,7 +100,7 @@ export function SiteHeader() {
             <Link
               key={link.href}
               href={link.href}
-              className={`${styles.link} ${pathname === link.href ? styles.active : ""}`}
+              className={`${styles.link} ${isNavLinkActive(pathname, link) ? styles.active : ""}`}
             >
               {link.label}
             </Link>
