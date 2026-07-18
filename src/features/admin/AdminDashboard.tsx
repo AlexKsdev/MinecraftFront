@@ -7,7 +7,7 @@ interface RecentPayment {
   amount: number;
   status: string;
   createdAt: string;
-  userId: string;
+  userName: string;
 }
 
 interface AdminStats {
@@ -87,7 +87,7 @@ export async function AdminDashboard() {
                   {stats.recentPayments.map((payment) => (
                     <tr key={payment.id}>
                       <td>{new Date(payment.createdAt).toLocaleDateString("en-GB")}</td>
-                      <td className={styles.mono}>{payment.userId}</td>
+                      <td>{payment.userName}</td>
                       <td>{formatMoney(payment.amount)}</td>
                       <td>
                         <span
