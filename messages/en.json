@@ -445,6 +445,33 @@
         "stats": "Stats",
         "statsHint": "Comma-separated, e.g. +5 damage, +2 speed"
       }
+    },
+    "orders": {
+      "title": "Orders",
+      "count": "{count, plural, =0 {No orders} one {# order} other {# orders}}",
+      "none": "No orders match that filter.",
+      "filterLabel": "Filter orders by status",
+      "allStatuses": "All statuses",
+      "setStatusLabel": "Set order status",
+      "apply": "Apply",
+      "pagination": "Pagination",
+      "prev": "Previous",
+      "next": "Next",
+      "pageOf": "Page {page} of {total}",
+      "status": {
+        "PENDING": "Pending",
+        "SUCCEEDED": "Succeeded",
+        "FAILED": "Failed",
+        "REFUNDED": "Refunded"
+      },
+      "table": {
+        "date": "Date",
+        "buyer": "Buyer",
+        "amount": "Amount",
+        "gems": "Gems",
+        "status": "Status",
+        "actions": "Actions"
+      }
     }
   }
 }

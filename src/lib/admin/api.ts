@@ -159,3 +159,48 @@ export function deactivateProduct(id: string): Promise<AdminProduct> {
 export function activateProduct(id: string): Promise<AdminProduct> {
   return send("POST", `/products/${id}/activate`);
 }
+
+/* ── Payments ── */
+
+export type PaymentStatus = "PENDING" | "SUCCEEDED" | "FAILED" | "REFUNDED";
+
+export const PAYMENT_STATUSES: PaymentStatus[] = [
+  "PENDING",
+  "SUCCEEDED",
+  "FAILED",
+  "REFUNDED",
+];
+
+/** The buyer, trimmed to what an orders row needs to identify them. */
+export interface PaymentBuyer {
+  id: string;
+  name: string;
+  email: string;
+}
+
+export interface AdminPayment {
+  id: string;
+  userId: string;
+  amount: number;
+  gems: number;
+  description: string | null;
+  status: PaymentStatus;
+  stripePaymentId: string | null;
+  createdAt: string;
+  user: PaymentBuyer;
+}
+
+export interface PaginatedPayments {
+  items: AdminPayment[];
+  total: number;
+  page: number;
+  limit: number;
+}
+
+/** Behind StepUpGuard + audited on the server — it moves money. */
+export function updatePaymentStatus(
+  id: string,
+  status: PaymentStatus,
+): Promise<AdminPayment> {
+  return send("PATCH", `/payments/${id}/status`, { status });
+}
