@@ -15,7 +15,7 @@ export function ProductCreate() {
   const [open, setOpen] = useState(false);
   const action = useStepUpAction(() => setOpen(false));
 
-  if (action.awaitingCode) {
+  if (action.awaitingPassword) {
     return (
       <section className={styles.createCard}>
         <StepUpPrompt action={action} />

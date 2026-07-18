@@ -20,7 +20,7 @@ export function UserRowActions({ user }: { user: AdminUser }) {
   const t = useTranslations("Admin");
   const action = useStepUpAction();
 
-  if (action.awaitingCode) return <StepUpPrompt action={action} />;
+  if (action.awaitingPassword) return <StepUpPrompt action={action} />;
 
   const nextRole = user.role === "ADMIN" ? "USER" : "ADMIN";
 

@@ -10,7 +10,7 @@ export interface AuthUser {
   email: string;
   name: string;
   role: string;
-  totpEnabled: boolean;
+  twoFactorEnabled: boolean;
 }
 
 /**
@@ -92,20 +92,23 @@ export function verifyTwoFactor(code: string): Promise<AuthResponse> {
   return postAuth<AuthResponse>("/auth/2fa/verify", { code });
 }
 
-export interface TwoFactorSetup {
-  /** otpauth:// URI, for manual entry when the QR can't be scanned. */
-  otpauthUrl: string;
-  /** PNG data URL of the same URI. */
-  qrDataUrl: string;
+/** Re-sends the emailed login code during the pending 2FA step. */
+export function resendTwoFactor(): Promise<void> {
+  return postNoContent("/auth/2fa/resend", {});
 }
 
-/** Issues a secret + QR. 2FA stays off until `enableTwoFactor` proves a code. */
-export function setupTwoFactor(): Promise<TwoFactorSetup> {
-  return postAuth<TwoFactorSetup>("/auth/2fa/setup", {});
+/** Emails a confirmation code; 2FA stays off until `enableTwoFactor` proves it. */
+export function setupTwoFactor(): Promise<void> {
+  return postNoContent("/auth/2fa/setup", {});
 }
 
 export function enableTwoFactor(code: string): Promise<void> {
   return postNoContent("/auth/2fa/enable", { code });
+}
+
+/** Emails the code needed to turn 2FA off (paired with the password). */
+export function requestDisableCode(): Promise<void> {
+  return postNoContent("/auth/2fa/disable/request", {});
 }
 
 /** Turning 2FA off is a downgrade, so the server re-proves both factors. */
@@ -114,15 +117,11 @@ export function disableTwoFactor(password: string, code: string): Promise<void> 
 }
 
 /**
- * Re-proves a factor so the server will allow a destructive action for the next
- * few minutes. Every admin has 2FA by policy, so a code is always available;
- * the server accepts a password too.
+ * Re-proves the password so the server will allow a destructive action for the
+ * next few minutes. With authenticator codes gone, the password is the factor.
  */
-export function stepUp(factors: {
-  code?: string;
-  password?: string;
-}): Promise<void> {
-  return postNoContent("/auth/step-up", factors);
+export function stepUp(password: string): Promise<void> {
+  return postNoContent("/auth/step-up", { password });
 }
 
 /** For endpoints that answer 204 — there is no body to parse on success. */

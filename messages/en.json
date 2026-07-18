@@ -257,23 +257,21 @@
     },
     "security": {
       "twoFactorTitle": "Two-Factor Authentication",
-      "twoFactorText": "Ask for a code from your authenticator app on every login, so a stolen password isn't enough to get in.",
+      "twoFactorText": "Ask for a code emailed to you on every login, so a stolen password isn't enough to get in.",
       "on": "Enabled",
       "off": "Disabled",
       "enable": "Enable 2FA",
-      "preparing": "Preparing…",
       "disable": "Disable 2FA",
-      "scanHint": "Scan this QR code with your authenticator app, then enter the 6-digit code it shows.",
-      "qrAlt": "QR code for your authenticator app",
-      "manualHint": "Can't scan? Enter this key manually:",
       "codePlaceholder": "6-digit code",
       "passwordPlaceholder": "Your password",
       "confirmEnable": "Confirm & enable",
       "confirming": "Confirming…",
-      "disableHint": "Confirm your password and a current code to turn 2FA off.",
+      "disableHint": "Enter your password and the code we just emailed to turn 2FA off.",
       "confirmDisable": "Confirm & disable",
       "cancel": "Cancel",
-      "genericError": "Something went wrong. Please try again."
+      "genericError": "Something went wrong. Please try again.",
+      "sending": "Sending…",
+      "codeSentHint": "We've emailed you a 6-digit code. Enter it below."
     }
   },
   "Auth": {
@@ -325,11 +323,13 @@
       "forgotPassword": "Forgot password?"
     },
     "twoFactor": {
-      "prompt": "Enter the 6-digit code from your authenticator app to finish signing in.",
-      "code": "Authentication code",
+      "prompt": "Enter the 6-digit code we emailed you to finish signing in.",
+      "code": "Email code",
       "codePlaceholder": "000000",
       "verify": "Verify",
-      "verifying": "Verifying…"
+      "verifying": "Verifying…",
+      "resend": "Resend code",
+      "resent": "Code sent"
     },
     "forgot": {
       "sent": "If that email is registered, we've sent a password reset link. Check your inbox.",
@@ -398,8 +398,8 @@
       "delete": "Delete",
       "confirmDelete": "Delete {name}? This cannot be undone.",
       "cancel": "Cancel",
-      "stepUpPlaceholder": "000000",
-      "stepUpLabel": "Authenticator code",
+      "stepUpPlaceholder": "Your password",
+      "stepUpLabel": "Password",
       "stepUpConfirm": "Confirm",
       "table": {
         "name": "Name",

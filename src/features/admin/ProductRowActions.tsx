@@ -23,7 +23,7 @@ export function ProductRowActions({ product }: { product: AdminProduct }) {
   const [editing, setEditing] = useState(false);
   const action = useStepUpAction(() => setEditing(false));
 
-  if (action.awaitingCode) return <StepUpPrompt action={action} />;
+  if (action.awaitingPassword) return <StepUpPrompt action={action} />;
 
   if (editing) {
     return (

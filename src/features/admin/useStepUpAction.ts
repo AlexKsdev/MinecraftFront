@@ -9,10 +9,10 @@ import { useErrorText } from "@/lib/auth/errors";
 export interface StepUpAction {
   /** Run an admin mutation, parking it for replay if the server wants a factor. */
   run: (action: () => Promise<unknown>) => Promise<void>;
-  /** True while a code is owed — render the prompt instead of the buttons. */
-  awaitingCode: boolean;
-  code: string;
-  setCode: (code: string) => void;
+  /** True while the password is owed — render the prompt instead of the buttons. */
+  awaitingPassword: boolean;
+  password: string;
+  setPassword: (password: string) => void;
   confirm: () => Promise<void>;
   cancel: () => void;
   busy: boolean;
@@ -21,9 +21,10 @@ export interface StepUpAction {
 
 /**
  * Every admin mutation sits behind StepUpGuard, so any of them can come back
- * demanding a freshly proved factor. Rather than surfacing that as a failure the
- * admin has to recover from by hand, the action is parked and replayed once the
- * code checks out: one prompt, and the original intent still happens.
+ * demanding the password freshly re-entered. Rather than surfacing that as a
+ * failure the admin has to recover from by hand, the action is parked and
+ * replayed once the password checks out: one prompt, and the original intent
+ * still happens.
  *
  * Shared by the user and product tables — the dance is identical, and a second
  * copy would be a second place to get it wrong.
@@ -34,7 +35,7 @@ export function useStepUpAction(onDone?: () => void): StepUpAction {
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [pending, setPending] = useState<(() => Promise<unknown>) | null>(null);
-  const [code, setCode] = useState("");
+  const [password, setPassword] = useState("");
 
   function finish() {
     router.refresh();
@@ -65,13 +66,13 @@ export function useStepUpAction(onDone?: () => void): StepUpAction {
     setBusy(true);
     setError(null);
     try {
-      await stepUp({ code });
+      await stepUp(password);
       await pending();
       setPending(null);
-      setCode("");
+      setPassword("");
       finish();
     } catch (err) {
-      setCode("");
+      setPassword("");
       setError(errorText(err));
     } finally {
       setBusy(false);
@@ -80,15 +81,15 @@ export function useStepUpAction(onDone?: () => void): StepUpAction {
 
   function cancel() {
     setPending(null);
-    setCode("");
+    setPassword("");
     setError(null);
   }
 
   return {
     run,
-    awaitingCode: pending !== null,
-    code,
-    setCode,
+    awaitingPassword: pending !== null,
+    password,
+    setPassword,
     confirm,
     cancel,
     busy,

@@ -2,13 +2,12 @@
 
 import { useState } from "react";
 import { useTranslations } from "next-intl";
-import Image from "next/image";
 import { ShieldCheck, ShieldOff } from "lucide-react";
 import {
   disableTwoFactor,
   enableTwoFactor,
+  requestDisableCode,
   setupTwoFactor,
-  type TwoFactorSetup,
 } from "@/lib/auth/api";
 import { useErrorText } from "@/lib/auth/errors";
 import type { Profile } from "@/lib/account/api";
@@ -19,14 +18,14 @@ type Mode = "idle" | "enrolling" | "disabling";
 /**
  * 2FA management. `enabled` starts from the server's view of the account
  * (/users/me) and only moves once the server has confirmed the change, so a
- * reload never disagrees with what's shown here.
+ * reload never disagrees with what's shown here. The second factor is a code
+ * emailed at login — enabling and disabling both confirm an emailed code.
  */
 export function SecurityTab({ player }: { player: Profile }) {
   const t = useTranslations("Account");
   const errorText = useErrorText();
-  const [enabled, setEnabled] = useState(player.totpEnabled);
+  const [enabled, setEnabled] = useState(player.twoFactorEnabled);
   const [mode, setMode] = useState<Mode>("idle");
-  const [setup, setSetup] = useState<TwoFactorSetup | null>(null);
   const [code, setCode] = useState("");
   const [password, setPassword] = useState("");
   const [busy, setBusy] = useState(false);
@@ -34,19 +33,20 @@ export function SecurityTab({ player }: { player: Profile }) {
 
   function reset() {
     setMode("idle");
-    setSetup(null);
     setCode("");
     setPassword("");
     setError(null);
     setBusy(false);
   }
 
-  async function startEnrolment() {
+  // Both flows start by asking the server to email a code, then switch to the
+  // form that collects it.
+  async function sendCode(kind: "enrolling" | "disabling") {
     setBusy(true);
     setError(null);
     try {
-      setSetup(await setupTwoFactor());
-      setMode("enrolling");
+      await (kind === "enrolling" ? setupTwoFactor() : requestDisableCode());
+      setMode(kind);
     } catch (err) {
       setError(errorText(err, t("security.genericError")));
     } finally {
@@ -102,10 +102,10 @@ export function SecurityTab({ player }: { player: Profile }) {
           <button
             className={styles.primaryBtn}
             type="button"
-            onClick={() => void startEnrolment()}
+            onClick={() => void sendCode("enrolling")}
             disabled={busy}
           >
-            {busy ? t("security.preparing") : t("security.enable")}
+            {busy ? t("security.sending") : t("security.enable")}
           </button>
         )}
 
@@ -113,25 +113,16 @@ export function SecurityTab({ player }: { player: Profile }) {
           <button
             className={styles.primaryBtn}
             type="button"
-            onClick={() => setMode("disabling")}
+            onClick={() => void sendCode("disabling")}
+            disabled={busy}
           >
-            {t("security.disable")}
+            {busy ? t("security.sending") : t("security.disable")}
           </button>
         )}
 
-        {mode === "enrolling" && setup && (
+        {mode === "enrolling" && (
           <form onSubmit={(e) => void confirmEnable(e)} noValidate>
-            <p className={styles.muted}>{t("security.scanHint")}</p>
-            <Image
-              src={setup.qrDataUrl}
-              alt={t("security.qrAlt")}
-              width={180}
-              height={180}
-              className={styles.qr}
-              unoptimized
-            />
-            <p className={styles.tiny}>{t("security.manualHint")}</p>
-            <div className={styles.linkBox}>{setup.otpauthUrl}</div>
+            <p className={styles.muted}>{t("security.codeSentHint")}</p>
             <input
               className={styles.codeInput}
               type="text"

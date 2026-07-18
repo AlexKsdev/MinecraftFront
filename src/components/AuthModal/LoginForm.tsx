@@ -13,6 +13,7 @@ import {
   forgotPassword,
   isTwoFactorRequired,
   verifyTwoFactor,
+  resendTwoFactor,
 } from "@/lib/auth/api";
 import { useErrorText } from "@/lib/auth/errors";
 import styles from "./AuthForm.module.scss";
@@ -88,6 +89,7 @@ function TwoFactorForm({ onVerified }: { onVerified: () => void }) {
   const errorText = useErrorText();
   const [code, setCode] = useState("");
   const [submitting, setSubmitting] = useState(false);
+  const [resent, setResent] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   async function onSubmit(e: React.FormEvent) {
@@ -100,6 +102,17 @@ function TwoFactorForm({ onVerified }: { onVerified: () => void }) {
     } catch (err) {
       setSubmitting(false);
       setCode("");
+      setError(errorText(err));
+    }
+  }
+
+  async function resend() {
+    setError(null);
+    setResent(false);
+    try {
+      await resendTwoFactor();
+      setResent(true);
+    } catch (err) {
       setError(errorText(err));
     }
   }
@@ -136,6 +149,9 @@ function TwoFactorForm({ onVerified }: { onVerified: () => void }) {
         disabled={submitting || code.length !== 6}
       >
         {submitting ? t("twoFactor.verifying") : t("twoFactor.verify")}
+      </button>
+      <button className={styles.forgot} type="button" onClick={() => void resend()}>
+        {resent ? t("twoFactor.resent") : t("twoFactor.resend")}
       </button>
     </form>
   );
