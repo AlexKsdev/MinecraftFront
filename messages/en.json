@@ -251,9 +251,32 @@
       "unlocked": "{count} / {total} unlocked"
     },
     "quests": {
-      "resetIn": "Daily quests reset in <time>08:24:11</time>",
+      "resetIn": "Daily quests reset in",
       "doneCount": "{done}/{total} done",
-      "claim": "Claim Reward"
+      "claim": "Claim Reward",
+      "claimed": "Claimed",
+      "claiming": "Claiming…",
+      "loading": "Loading quests…",
+      "loadFailed": "Couldn't load quests.",
+      "claimFailed": "Couldn't claim the reward.",
+      "rewardCoins": "{amount} Coins",
+      "rewardGems": "{amount} Gems",
+      "items": {
+        "kill_players": "Kill 10 players",
+        "mine_ores": "Mine 200 ores",
+        "trade_players": "Trade with 3 players",
+        "login_streak": "Log in 7 days",
+        "place_blocks": "Place 500 blocks",
+        "craft_items": "Craft 25 items",
+        "travel_blocks": "Travel 1000 blocks",
+        "fish_catch": "Catch 15 fish",
+        "tame_animals": "Tame 3 animals",
+        "brew_potions": "Brew 5 potions",
+        "enchant_gear": "Enchant 4 items",
+        "defeat_boss": "Defeat a boss",
+        "harvest_crops": "Harvest 64 crops",
+        "complete_dungeon": "Complete 2 dungeons"
+      }
     },
     "security": {
       "twoFactorTitle": "Two-Factor Authentication",
