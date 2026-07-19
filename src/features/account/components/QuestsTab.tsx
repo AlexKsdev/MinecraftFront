@@ -109,7 +109,7 @@ export function QuestsTab() {
         return (
           <div
             key={q.key}
-            className={`${styles.card} ${q.completed ? styles.achieveDone : ""}`}
+            className={`${styles.card} ${q.completed ? styles.achieveDone : ""} ${q.claimed ? styles.questClaimed : ""}`}
           >
             <div className={styles.questRow}>
               <span
@@ -136,7 +136,7 @@ export function QuestsTab() {
             </div>
             {q.completed && (
               <button
-                className={styles.primaryBtn}
+                className={`${styles.primaryBtn} ${q.claimed ? styles.claimedBtn : ""}`}
                 type="button"
                 disabled={q.claimed || claiming === q.key}
                 onClick={() => void onClaim(q.key)}
