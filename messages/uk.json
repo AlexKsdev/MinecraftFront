@@ -251,9 +251,32 @@
       "unlocked": "Розблоковано {count} / {total}"
     },
     "quests": {
-      "resetIn": "Щоденні завдання оновляться через <time>08:24:11</time>",
+      "resetIn": "Щоденні завдання оновляться через",
       "doneCount": "{done}/{total} виконано",
-      "claim": "Отримати нагороду"
+      "claim": "Отримати нагороду",
+      "claimed": "Отримано",
+      "claiming": "Отримання…",
+      "loading": "Завантаження завдань…",
+      "loadFailed": "Не вдалося завантажити завдання.",
+      "claimFailed": "Не вдалося отримати нагороду.",
+      "rewardCoins": "{amount} монет",
+      "rewardGems": "{amount} гемів",
+      "items": {
+        "kill_players": "Вбити 10 гравців",
+        "mine_ores": "Видобути 200 руди",
+        "trade_players": "Обміняти з 3 гравцями",
+        "login_streak": "Заходити 7 днів",
+        "place_blocks": "Поставити 500 блоків",
+        "craft_items": "Скрафтити 25 предметів",
+        "travel_blocks": "Пройти 1000 блоків",
+        "fish_catch": "Зловити 15 риб",
+        "tame_animals": "Приручити 3 тварин",
+        "brew_potions": "Зварити 5 зіль",
+        "enchant_gear": "Зачарувати 4 предмети",
+        "defeat_boss": "Перемогти боса",
+        "harvest_crops": "Зібрати 64 врожаю",
+        "complete_dungeon": "Пройти 2 підземелля"
+      }
     },
     "security": {
       "twoFactorTitle": "Двофакторна автентифікація",

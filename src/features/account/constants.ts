@@ -1,6 +1,8 @@
 import {
   Sword, Map, Coins, Star, Zap, Gem, Crown, Shield,
   Gift, Award, Target, Users, Calendar, Flame, Trophy, BarChart3,
+  Pickaxe, Box, Hammer, Footprints, Fish, PawPrint, FlaskConical,
+  Sparkles, Skull, Wheat, DoorOpen,
   type LucideIcon,
 } from "lucide-react";
 
@@ -81,9 +83,23 @@ export const ACHIEVEMENTS: {
 ];
 
 /* ── Quests ── */
-export const QUESTS: { title: string; reward: string; icon: LucideIcon; color: string; progress: number; total: number }[] = [
-  { title: "Kill 10 players", reward: "500 Coins", icon: Sword, color: "#f87171", progress: 7, total: 10 },
-  { title: "Mine 200 ores", reward: "300 Coins", icon: Target, color: "#fbbf24", progress: 200, total: 200 },
-  { title: "Trade with 3 players", reward: "1 Rare Key", icon: Users, color: "#38bdf8", progress: 1, total: 3 },
-  { title: "Log in 7 days", reward: "Legend Crate", icon: Calendar, color: "#a855f7", progress: 7, total: 7 },
-];
+// Presentation for each quest, keyed by the backend's stable `key`. Titles are
+// localized (Account.quests.items.<key>); mechanics come from the API.
+export const QUEST_META: Record<string, { icon: LucideIcon; color: string }> = {
+  kill_players: { icon: Sword, color: "#f87171" },
+  mine_ores: { icon: Pickaxe, color: "#fbbf24" },
+  trade_players: { icon: Users, color: "#38bdf8" },
+  login_streak: { icon: Calendar, color: "#a855f7" },
+  place_blocks: { icon: Box, color: "#34d399" },
+  craft_items: { icon: Hammer, color: "#f59e0b" },
+  travel_blocks: { icon: Footprints, color: "#60a5fa" },
+  fish_catch: { icon: Fish, color: "#22d3ee" },
+  tame_animals: { icon: PawPrint, color: "#fb923c" },
+  brew_potions: { icon: FlaskConical, color: "#c084fc" },
+  enchant_gear: { icon: Sparkles, color: "#e879f9" },
+  defeat_boss: { icon: Skull, color: "#ef4444" },
+  harvest_crops: { icon: Wheat, color: "#eab308" },
+  complete_dungeon: { icon: DoorOpen, color: "#94a3b8" },
+};
+
+export const QUEST_FALLBACK_META = { icon: Target, color: "#94a3b8" };
