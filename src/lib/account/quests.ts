@@ -9,6 +9,11 @@ export interface QuestReward {
 
 export interface Quest {
   key: string;
+  /** Base title from the catalogue; built-in keys are localized client-side. */
+  title: string;
+  /** Icon name the client maps to a component. */
+  icon: string;
+  color: string;
   target: number;
   progress: number;
   reward: QuestReward;

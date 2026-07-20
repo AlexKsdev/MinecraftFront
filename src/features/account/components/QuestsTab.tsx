@@ -4,7 +4,11 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { useTranslations } from "next-intl";
 import { claimQuest, getQuests, type Quest } from "@/lib/account/quests";
 import { publishBalances } from "@/lib/account/balances";
-import { QUEST_FALLBACK_META, QUEST_META } from "../constants";
+import {
+  BUILT_IN_QUEST_KEYS,
+  QUEST_FALLBACK_ICON,
+  QUEST_ICON_MAP,
+} from "../constants";
 import styles from "../AccountView.module.scss";
 
 function formatCountdown(ms: number): string {
@@ -99,8 +103,12 @@ export function QuestsTab() {
       {error && <p className={styles.securityError}>{error}</p>}
 
       {quests.map((q) => {
-        const meta = QUEST_META[q.key] ?? QUEST_FALLBACK_META;
-        const Icon = meta.icon;
+        const Icon = QUEST_ICON_MAP[q.icon] ?? QUEST_FALLBACK_ICON;
+        // Built-in quests have translated titles; admin-added ones use the
+        // title stored on the row.
+        const title = BUILT_IN_QUEST_KEYS.has(q.key)
+          ? t(`quests.items.${q.key}`)
+          : q.title;
         const pct = Math.min(100, Math.round((q.progress / q.target) * 100));
         const reward =
           q.reward.type === "GEMS"
@@ -114,13 +122,13 @@ export function QuestsTab() {
             <div className={styles.questRow}>
               <span
                 className={styles.achieveIcon}
-                style={{ color: q.completed ? "var(--primary)" : meta.color }}
+                style={{ color: q.completed ? "var(--primary)" : q.color }}
               >
                 <Icon size={18} />
               </span>
               <div className={styles.questMeta}>
                 <div className={styles.rowBetween}>
-                  <p className={styles.questTitle}>{t(`quests.items.${q.key}`)}</p>
+                  <p className={styles.questTitle}>{title}</p>
                   <span className={styles.accentAmber}>{reward}</span>
                 </div>
                 <p className={styles.muted}>

@@ -83,23 +83,25 @@ export const ACHIEVEMENTS: {
 ];
 
 /* ── Quests ── */
-// Presentation for each quest, keyed by the backend's stable `key`. Titles are
-// localized (Account.quests.items.<key>); mechanics come from the API.
-export const QUEST_META: Record<string, { icon: LucideIcon; color: string }> = {
-  kill_players: { icon: Sword, color: "#f87171" },
-  mine_ores: { icon: Pickaxe, color: "#fbbf24" },
-  trade_players: { icon: Users, color: "#38bdf8" },
-  login_streak: { icon: Calendar, color: "#a855f7" },
-  place_blocks: { icon: Box, color: "#34d399" },
-  craft_items: { icon: Hammer, color: "#f59e0b" },
-  travel_blocks: { icon: Footprints, color: "#60a5fa" },
-  fish_catch: { icon: Fish, color: "#22d3ee" },
-  tame_animals: { icon: PawPrint, color: "#fb923c" },
-  brew_potions: { icon: FlaskConical, color: "#c084fc" },
-  enchant_gear: { icon: Sparkles, color: "#e879f9" },
-  defeat_boss: { icon: Skull, color: "#ef4444" },
-  harvest_crops: { icon: Wheat, color: "#eab308" },
-  complete_dungeon: { icon: DoorOpen, color: "#94a3b8" },
+// The quest catalogue lives in the database now: the API sends an icon *name*
+// and a colour, and this maps the name to a component. Keep in step with
+// QUEST_ICONS in the backend's quests.config.ts.
+export const QUEST_ICON_MAP: Record<string, LucideIcon> = {
+  Sword, Pickaxe, Users, Calendar, Box, Hammer, Footprints, Fish,
+  PawPrint, FlaskConical, Sparkles, Skull, Wheat, DoorOpen,
+  Target, Trophy, Gem, Coins, Flame, Star,
 };
 
-export const QUEST_FALLBACK_META = { icon: Target, color: "#94a3b8" };
+export const QUEST_FALLBACK_ICON: LucideIcon = Target;
+
+/**
+ * Quests that shipped with the app and therefore have translated titles
+ * (Account.quests.items.<key>). Anything an admin adds later falls back to the
+ * title stored on the row.
+ */
+export const BUILT_IN_QUEST_KEYS = new Set([
+  "kill_players", "mine_ores", "trade_players", "login_streak",
+  "place_blocks", "craft_items", "travel_blocks", "fish_catch",
+  "tame_animals", "brew_potions", "enchant_gear", "defeat_boss",
+  "harvest_crops", "complete_dungeon",
+]);
