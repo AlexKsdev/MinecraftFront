@@ -2,7 +2,7 @@
 
 import { useTranslations } from "next-intl";
 import { Link, usePathname } from "@/i18n/navigation";
-import { LayoutDashboard, Package, Receipt, Users } from "lucide-react";
+import { LayoutDashboard, Package, Receipt, Target, Users } from "lucide-react";
 import styles from "./AdminSidebar.module.scss";
 
 const ITEMS = [
@@ -10,6 +10,7 @@ const ITEMS = [
   { href: "/admin/users", key: "players", Icon: Users, exact: false },
   { href: "/admin/products", key: "products", Icon: Package, exact: false },
   { href: "/admin/orders", key: "orders", Icon: Receipt, exact: false },
+  { href: "/admin/quests", key: "quests", Icon: Target, exact: false },
 ] as const;
 
 /**

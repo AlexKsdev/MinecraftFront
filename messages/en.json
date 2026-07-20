@@ -502,7 +502,39 @@
       "dashboard": "Dashboard",
       "players": "Players",
       "products": "Products",
-      "orders": "Orders"
+      "orders": "Orders",
+      "quests": "Quests"
+    },
+    "quests": {
+      "title": "Quests",
+      "count": "{count, plural, =0 {No quests} one {# quest} other {# quests}}",
+      "new": "New quest",
+      "create": "Create",
+      "save": "Save",
+      "edit": "Edit",
+      "activate": "Put back",
+      "deactivate": "Take out",
+      "confirmDeactivate": "Take {name} out of the daily set? Players won't see it, but it can be put back.",
+      "active": "In rotation",
+      "inactive": "Out",
+      "table": {
+        "quest": "Quest",
+        "target": "Target",
+        "reward": "Reward",
+        "status": "Status",
+        "actions": "Actions"
+      },
+      "form": {
+        "key": "Key",
+        "keyHint": "Lowercase letters, digits and underscores — the stable id.",
+        "title": "Title",
+        "target": "Target",
+        "rewardType": "Reward type",
+        "rewardAmount": "Reward amount",
+        "icon": "Icon",
+        "color": "Colour",
+        "sortOrder": "Sort order"
+      }
     }
   }
 }

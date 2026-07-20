@@ -160,6 +160,43 @@ export function activateProduct(id: string): Promise<AdminProduct> {
   return send("POST", `/products/${id}/activate`);
 }
 
+/* ── Quests (catalogue) ── */
+
+export interface AdminQuest {
+  id: string;
+  key: string;
+  title: string;
+  target: number;
+  rewardType: "COINS" | "GEMS";
+  rewardAmount: number;
+  icon: string;
+  color: string;
+  active: boolean;
+  sortOrder: number;
+}
+
+export type QuestInput = Omit<AdminQuest, "id" | "active">;
+
+export function createQuest(input: QuestInput): Promise<AdminQuest> {
+  return send("POST", "/quests", input);
+}
+
+export function updateQuest(
+  id: string,
+  input: Partial<QuestInput>,
+): Promise<AdminQuest> {
+  return send("PATCH", `/quests/${id}`, input);
+}
+
+export function activateQuest(id: string): Promise<AdminQuest> {
+  return send("POST", `/quests/${id}/activate`);
+}
+
+/** Removal from the daily set is a deactivation — claims must keep meaning. */
+export function deactivateQuest(id: string): Promise<AdminQuest> {
+  return send("DELETE", `/quests/${id}`);
+}
+
 /* ── Payments ── */
 
 export type PaymentStatus = "PENDING" | "SUCCEEDED" | "FAILED" | "REFUNDED";
