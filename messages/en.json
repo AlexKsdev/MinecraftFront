@@ -183,7 +183,9 @@
     "title": "Blog",
     "subtitle": "Updates, events, guides, and community news.",
     "readMore": "Read More",
-    "backToBlog": "Back to Blog"
+    "backToBlog": "Back to Blog",
+    "readTime": "{minutes} min",
+    "empty": "No posts yet. Check back soon."
   },
   "Wiki": {
     "title": "Wiki",

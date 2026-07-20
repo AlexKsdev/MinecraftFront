@@ -1,9 +1,12 @@
 import { notFound } from "next/navigation";
-import { posts } from "./constants";
+import { getLocale } from "next-intl/server";
+import { fetchPost } from "./api";
 import { PostDetail } from "./components/PostDetail";
+import type { PostLocale } from "./types";
 
-export function BlogPostView({ slug }: { slug: string }) {
-  const post = posts.find((p) => p.slug === slug);
+export async function BlogPostView({ slug }: { slug: string }) {
+  const locale = (await getLocale()) as PostLocale;
+  const post = await fetchPost(slug, locale);
 
   if (!post) {
     notFound();
