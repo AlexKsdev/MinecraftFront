@@ -175,10 +175,30 @@ export function resetPassword(
 /** Fires (same-tab) whenever the session changes, so the UI can react. */
 export const AUTH_EVENT = "pc-authchange";
 
-function notifyAuthChange(): void {
-  if (typeof window !== "undefined") {
-    window.dispatchEvent(new Event(AUTH_EVENT));
+/**
+ * Cross-tab counterpart of AUTH_EVENT. The session lives in cookies now, and a
+ * cookie write fires no `storage` event, so sibling tabs have to be told.
+ */
+const AUTH_CHANNEL = "pc-authchange";
+
+let authChannel: BroadcastChannel | null | undefined;
+
+function getAuthChannel(): BroadcastChannel | null {
+  if (authChannel === undefined) {
+    authChannel =
+      typeof BroadcastChannel === "function"
+        ? new BroadcastChannel(AUTH_CHANNEL)
+        : null;
   }
+  return authChannel;
+}
+
+function notifyAuthChange(): void {
+  if (typeof window === "undefined") return;
+  window.dispatchEvent(new Event(AUTH_EVENT));
+  // BroadcastChannel never echoes back to the sender, so this reaches the
+  // other tabs only — no double notification here.
+  getAuthChannel()?.postMessage(AUTH_EVENT);
 }
 
 /** Fires when any component wants the login/register modal opened. */
@@ -227,9 +247,12 @@ let cachedRaw: string | null = null;
 let cachedSession: AuthResponse | null = null;
 
 export function subscribeSession(callback: () => void): () => void {
+  const channel = getAuthChannel();
   window.addEventListener(AUTH_EVENT, callback);
+  channel?.addEventListener("message", callback);
   return () => {
     window.removeEventListener(AUTH_EVENT, callback);
+    channel?.removeEventListener("message", callback);
   };
 }
 
