@@ -505,7 +505,8 @@
       "players": "Players",
       "products": "Products",
       "orders": "Orders",
-      "quests": "Quests"
+      "quests": "Quests",
+      "blog": "Blog"
     },
     "quests": {
       "title": "Quests",
@@ -536,6 +537,39 @@
         "icon": "Icon",
         "color": "Colour",
         "sortOrder": "Sort order"
+      }
+    },
+    "blog": {
+      "title": "Blog",
+      "count": "{count, plural, =0 {No posts} one {# post} other {# posts}}",
+      "new": "New post",
+      "create": "Create",
+      "save": "Save",
+      "edit": "Edit",
+      "publish": "Publish",
+      "unpublish": "Unpublish",
+      "confirmUnpublish": "Take {name} off the blog? Readers won't see it, but it can be published again.",
+      "published": "Published",
+      "draft": "Draft",
+      "table": {
+        "post": "Post",
+        "languages": "Languages",
+        "published": "Published",
+        "status": "Status",
+        "actions": "Actions"
+      },
+      "form": {
+        "slug": "Slug",
+        "slugHint": "Lowercase words separated by hyphens — this is the blog URL.",
+        "author": "Author",
+        "image": "Image URL",
+        "tagAccent": "Tag colour",
+        "language": "Language",
+        "title": "Title",
+        "tag": "Tag",
+        "excerpt": "Excerpt",
+        "body": "Body",
+        "bodyHint": "Markdown. Raw HTML is not rendered."
       }
     }
   }
