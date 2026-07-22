@@ -197,6 +197,69 @@ export function deactivateQuest(id: string): Promise<AdminQuest> {
   return send("DELETE", `/quests/${id}`);
 }
 
+/* ── Blog posts ── */
+
+/**
+ * Re-exported as a type only. The list itself lives in features/admin/constants
+ * because this module is `"use client"` — a Server Component importing a value
+ * from here gets a client reference rather than the array.
+ */
+export type { PostLocale } from "@/features/admin/constants";
+
+import type { PostLocale } from "@/features/admin/constants";
+
+export interface AdminPostTranslation {
+  locale: PostLocale;
+  title: string;
+  excerpt: string;
+  /** The tag chip's wording — display text, so it is per-language. */
+  tag: string;
+  /** Markdown. */
+  body: string;
+}
+
+export interface AdminPost {
+  id: string;
+  slug: string;
+  image: string;
+  /** The chip's colour, which is the same in every language. */
+  tagAccent: string;
+  author: string;
+  published: boolean;
+  publishedAt: string | null;
+  createdAt: string;
+  translations: AdminPostTranslation[];
+}
+
+export type PostInput = Omit<
+  AdminPost,
+  "id" | "published" | "publishedAt" | "createdAt"
+>;
+
+export function createPost(input: PostInput): Promise<AdminPost> {
+  return send("POST", "/posts", input);
+}
+
+/**
+ * Translations left out of `input` keep whatever they had, so saving the
+ * English copy cannot wipe the Ukrainian one.
+ */
+export function updatePost(
+  id: string,
+  input: Partial<PostInput>,
+): Promise<AdminPost> {
+  return send("PATCH", `/posts/${id}`, input);
+}
+
+export function publishPost(id: string): Promise<AdminPost> {
+  return send("POST", `/posts/${id}/publish`);
+}
+
+/** Not a delete: taking a post off the blog is reversible. */
+export function unpublishPost(id: string): Promise<AdminPost> {
+  return send("DELETE", `/posts/${id}`);
+}
+
 /* ── Payments ── */
 
 export type PaymentStatus = "PENDING" | "SUCCEEDED" | "FAILED" | "REFUNDED";

@@ -123,3 +123,32 @@
   font-size: 0.8rem;
   color: #f87171;
 }
+
+/* Language tabs on the post form — the shared fields sit above them, the
+   per-language ones below. */
+.localeTabs {
+  display: flex;
+  gap: 0.25rem;
+  margin: 1rem 0 0.75rem;
+  border-bottom: 1px solid colors.$color-border;
+}
+
+.localeTab {
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+  padding: 0.4rem 0.75rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: colors.$color-muted-foreground;
+  cursor: pointer;
+
+  &:hover {
+    color: colors.$color-foreground;
+  }
+}
+
+.localeTabActive {
+  color: colors.$color-foreground;
+  border-bottom-color: colors.$color-primary;
+}

@@ -2,7 +2,14 @@
 
 import { useTranslations } from "next-intl";
 import { Link, usePathname } from "@/i18n/navigation";
-import { LayoutDashboard, Package, Receipt, Target, Users } from "lucide-react";
+import {
+  BookOpen,
+  LayoutDashboard,
+  Package,
+  Receipt,
+  Target,
+  Users,
+} from "lucide-react";
 import styles from "./AdminSidebar.module.scss";
 
 const ITEMS = [
@@ -11,6 +18,7 @@ const ITEMS = [
   { href: "/admin/products", key: "products", Icon: Package, exact: false },
   { href: "/admin/orders", key: "orders", Icon: Receipt, exact: false },
   { href: "/admin/quests", key: "quests", Icon: Target, exact: false },
+  { href: "/admin/blog", key: "blog", Icon: BookOpen, exact: false },
 ] as const;
 
 /**

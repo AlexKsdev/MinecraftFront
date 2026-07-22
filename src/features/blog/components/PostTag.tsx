@@ -1,4 +1,4 @@
-import type { TagAccent } from "../constants";
+import type { TagAccent } from "../types";
 import styles from "./PostTag.module.scss";
 
 export function PostTag({ label, accent }: { label: string; accent: TagAccent }) {
