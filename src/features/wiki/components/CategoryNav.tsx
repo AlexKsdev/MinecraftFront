@@ -1,13 +1,17 @@
+"use client";
+
 import { useTranslations } from "next-intl";
-import { categories } from "../constants";
+import type { WikiCategory } from "../types";
 import styles from "./CategoryNav.module.scss";
 
 export function CategoryNav({
+  categories,
   activeCategory,
   onSelect,
 }: {
+  categories: WikiCategory[];
   activeCategory: string | null;
-  onSelect: (id: string | null) => void;
+  onSelect: (key: string | null) => void;
 }) {
   const t = useTranslations("Wiki");
   return (
@@ -21,11 +25,11 @@ export function CategoryNav({
       </button>
       {categories.map((category) => (
         <button
-          key={category.id}
+          key={category.key}
           onClick={() =>
-            onSelect(activeCategory === category.id ? null : category.id)
+            onSelect(activeCategory === category.key ? null : category.key)
           }
-          className={`${styles.button} ${activeCategory === category.id ? styles.active : ""}`}
+          className={`${styles.button} ${activeCategory === category.key ? styles.active : ""}`}
           type="button"
         >
           {category.title}
