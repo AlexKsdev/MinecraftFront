@@ -5,3 +5,9 @@
   background: colors.$color-background;
   color: colors.$color-foreground;
 }
+
+.empty {
+  padding: 3rem 1.5rem 6rem;
+  color: colors.$color-muted-foreground;
+  text-align: center;
+}

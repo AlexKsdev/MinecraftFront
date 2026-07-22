@@ -191,7 +191,10 @@
     "title": "Wiki",
     "subtitle": "Everything you need to know about PureCraft.",
     "searchPlaceholder": "Search articles...",
-    "all": "All"
+    "all": "All",
+    "backToWiki": "Back to Wiki",
+    "empty": "The wiki is empty for now.",
+    "noResults": "Nothing found for “{q}”."
   },
   "Account": {
     "loading": "Loading your profile…",
