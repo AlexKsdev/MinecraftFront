@@ -27,7 +27,15 @@ export async function WikiArticleView({ slug }: { slug: string }) {
 
         <p className={styles.category}>{article.categoryTitle}</p>
         <h1 className={styles.title}>{article.title}</h1>
-        <p className={styles.summary}>{article.summary}</p>
+
+        {/*
+          An article whose body is still just its summary has not been written
+          yet — printing the same sentence twice reads as a bug, so the lede is
+          dropped until the two actually differ.
+        */}
+        {article.body.trim() !== article.summary.trim() && (
+          <p className={styles.summary}>{article.summary}</p>
+        )}
 
         {/*
           Raw HTML stays disabled — rehype-raw is deliberately not added, so
