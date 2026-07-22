@@ -326,7 +326,8 @@
         "AUTH_2FA_SETUP_MISSING": "Start the setup before enabling two-factor authentication.",
         "AUTH_RESET_TOKEN_INVALID": "This reset link is invalid or has expired. Request a new one.",
         "AUTH_USER_NOT_FOUND": "Account not found.",
-        "AUTH_ACCOUNT_DISABLED": "This account has been disabled."
+        "AUTH_ACCOUNT_DISABLED": "This account has been disabled.",
+        "AUTH_EMAIL_DELIVERY_FAILED": "We couldn't send the email just now. Please try again in a moment."
       }
     },
     "modal": {
