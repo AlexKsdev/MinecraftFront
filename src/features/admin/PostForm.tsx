@@ -2,14 +2,12 @@
 
 import { useState } from "react";
 import { useTranslations } from "next-intl";
-import {
-  POST_LOCALES,
-  type AdminPost,
-  type AdminPostTranslation,
-  type PostInput,
-  type PostLocale,
+import type {
+  AdminPost,
+  AdminPostTranslation,
+  PostInput,
 } from "@/lib/admin/api";
-import { POST_TAG_ACCENTS } from "./constants";
+import { POST_LOCALES, POST_TAG_ACCENTS, type PostLocale } from "./constants";
 import styles from "./AdminProducts.module.scss";
 
 /** Mirrors the server's slug rule, so a typo is caught before the round trip. */

@@ -199,10 +199,14 @@ export function deactivateQuest(id: string): Promise<AdminQuest> {
 
 /* ── Blog posts ── */
 
-export type PostLocale = "EN" | "UK";
+/**
+ * Re-exported as a type only. The list itself lives in features/admin/constants
+ * because this module is `"use client"` — a Server Component importing a value
+ * from here gets a client reference rather than the array.
+ */
+export type { PostLocale } from "@/features/admin/constants";
 
-/** The languages a post can be written in, in the order the form shows them. */
-export const POST_LOCALES: PostLocale[] = ["EN", "UK"];
+import type { PostLocale } from "@/features/admin/constants";
 
 export interface AdminPostTranslation {
   locale: PostLocale;

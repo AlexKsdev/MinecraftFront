@@ -1,7 +1,8 @@
 import { getFormatter, getTranslations } from "next-intl/server";
 import { serverFetch } from "@/lib/server/api";
-import { POST_LOCALES, type AdminPost } from "@/lib/admin/api";
+import type { AdminPost } from "@/lib/admin/api";
 import { POST_DATE_FORMAT } from "@/features/blog/constants";
+import { POST_LOCALES } from "./constants";
 import { PostCreate } from "./PostCreate";
 import { PostRowActions } from "./PostRowActions";
 import styles from "./AdminUsers.module.scss";
