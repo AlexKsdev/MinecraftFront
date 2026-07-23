@@ -1,0 +1,83 @@
+@use "colors";
+
+// Styles the elements react-markdown emits. Both the blog and the wiki render
+// authored markdown through the same component, so the description lives here
+// rather than in two stylesheets that would drift.
+//
+// Include it inside the block that wraps the rendered output:
+//
+//   .body {
+//     @include markdown.body;
+//   }
+@mixin body {
+  color: colors.$color-muted-foreground;
+  font-size: 1rem;
+  line-height: 1.8;
+
+  h2,
+  h3 {
+    color: colors.$color-foreground;
+    line-height: 1.4;
+    margin: 2rem 0 0.75rem;
+  }
+
+  h2 {
+    font-size: 1.1rem;
+  }
+
+  h3 {
+    font-size: 1rem;
+  }
+
+  p {
+    margin-bottom: 1rem;
+  }
+
+  // `revert` rather than a value: the global reset drops list markers, and
+  // inside prose they carry meaning.
+  ul,
+  ol {
+    margin: 0 0 1rem 1.25rem;
+    list-style: revert;
+  }
+
+  li {
+    margin-bottom: 0.4rem;
+  }
+
+  a {
+    color: colors.$color-primary;
+    text-decoration: underline;
+  }
+
+  code {
+    background: colors.$color-secondary;
+    border-radius: 0.25rem;
+    padding: 0.1rem 0.35rem;
+    font-size: 0.9em;
+  }
+
+  pre {
+    background: colors.$color-secondary;
+    border-radius: 0.5rem;
+    padding: 1rem;
+    overflow-x: auto;
+    margin-bottom: 1rem;
+
+    code {
+      padding: 0;
+      background: none;
+    }
+  }
+
+  blockquote {
+    border-left: 3px solid colors.$color-border;
+    padding-left: 1rem;
+    margin: 0 0 1rem;
+  }
+
+  img {
+    max-width: 100%;
+    height: auto;
+  }
+}
