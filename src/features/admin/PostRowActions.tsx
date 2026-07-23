@@ -1,13 +1,14 @@
 "use client";
 
 import { useState } from "react";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import {
   publishPost,
   unpublishPost,
   updatePost,
   type AdminPost,
 } from "@/lib/admin/api";
+import { localizedTitle } from "./constants";
 import { PostForm } from "./PostForm";
 import { StepUpPrompt } from "./StepUpPrompt";
 import { useStepUpAction } from "./useStepUpAction";
@@ -19,6 +20,7 @@ import styles from "./AdminUsers.module.scss";
  */
 export function PostRowActions({ post }: { post: AdminPost }) {
   const t = useTranslations("Admin");
+  const locale = useLocale();
   const [editing, setEditing] = useState(false);
   const action = useStepUpAction(() => setEditing(false));
 
@@ -37,7 +39,7 @@ export function PostRowActions({ post }: { post: AdminPost }) {
     );
   }
 
-  const title = post.translations[0]?.title ?? post.slug;
+  const title = localizedTitle(post.translations, locale, post.slug);
 
   return (
     <div className={styles.actions}>
