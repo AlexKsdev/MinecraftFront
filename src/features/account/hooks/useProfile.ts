@@ -4,10 +4,26 @@ import { useEffect, useState } from "react";
 import { useTranslations } from "next-intl";
 import { useRouter } from "@/i18n/navigation";
 import { getProfile, UnauthorizedError, type Profile } from "@/lib/account/api";
+import { API_ERROR_CODES } from "@/lib/api-error-codes";
+import { ApiError } from "@/lib/auth/errors";
 
 interface UseProfileResult {
   profile: Profile | null;
   error: string | null;
+}
+
+/**
+ * Localizes a failure by the code the API layer tagged it with. An unmapped
+ * error keeps its own message rather than a generic line, so something new
+ * reads as untranslated English instead of hiding what went wrong.
+ */
+function errorText(err: unknown, t: (key: string) => string): string {
+  if (err instanceof ApiError) {
+    if (err.code === API_ERROR_CODES.network) return t("errors.network");
+    if (err.code === API_ERROR_CODES.loadFailed) return t("errors.loadFailed");
+  }
+  if (err instanceof Error && err.message) return err.message;
+  return t("errorGeneric");
 }
 
 /**
@@ -32,7 +48,7 @@ export function useProfile(): UseProfileResult {
           router.replace("/");
           return;
         }
-        setError(err instanceof Error ? err.message : t("errorGeneric"));
+        setError(errorText(err, t));
       });
     return () => {
       active = false;

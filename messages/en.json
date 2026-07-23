@@ -176,7 +176,8 @@
       "signInToBuyGems": "Sign in to buy gems",
       "checkoutFailed": "Could not start checkout",
       "sessionExpired": "Session expired — sign in again",
-      "purchaseFailed": "Purchase failed"
+      "purchaseFailed": "Purchase failed",
+      "network": "Cannot reach the server. Please try again."
     }
   },
   "Blog": {
@@ -300,6 +301,10 @@
       "genericError": "Something went wrong. Please try again.",
       "sending": "Sending…",
       "codeSentHint": "We've emailed you a 6-digit code. Enter it below."
+    },
+    "errors": {
+      "network": "Cannot reach the server. Please try again.",
+      "loadFailed": "Couldn't load your profile."
     }
   },
   "Auth": {

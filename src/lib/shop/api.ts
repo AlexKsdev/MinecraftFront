@@ -1,5 +1,7 @@
 import { clearSession, getSession } from "../auth/api";
 import { apiFetch } from "../http";
+import { API_ERROR_CODES } from "../api-error-codes";
+import { ApiError } from "../auth/errors";
 import { UnauthorizedError } from "../account/api";
 
 export type Currency = "COINS" | "GEMS";
@@ -82,9 +84,13 @@ export async function getProducts(
   try {
     res = await apiFetch(`/products?${params.toString()}`);
   } catch {
-    throw new Error("Cannot reach the server. Please try again.");
+    throw new ApiError(
+      "Cannot reach the server. Please try again.",
+      API_ERROR_CODES.network,
+    );
   }
-  if (!res.ok) throw new Error("Failed to load the shop");
+  if (!res.ok)
+    throw new ApiError("Failed to load the shop", API_ERROR_CODES.loadFailed);
   return res.json() as Promise<PaginatedProducts>;
 }
 
@@ -97,7 +103,10 @@ export async function purchaseProduct(id: string): Promise<PurchaseResult> {
   try {
     res = await apiFetch(`/products/${id}/purchase`, { method: "POST" });
   } catch {
-    throw new Error("Cannot reach the server. Please try again.");
+    throw new ApiError(
+      "Cannot reach the server. Please try again.",
+      API_ERROR_CODES.network,
+    );
   }
 
   if (res.status === 401) {
@@ -105,7 +114,11 @@ export async function purchaseProduct(id: string): Promise<PurchaseResult> {
     throw new UnauthorizedError();
   }
   const data: unknown = await res.json().catch(() => null);
-  if (!res.ok) throw new Error(extractError(data, "Purchase failed"));
+  if (!res.ok)
+    throw new ApiError(
+      extractError(data, "Purchase failed"),
+      API_ERROR_CODES.purchaseFailed,
+    );
   return data as PurchaseResult;
 }
 
@@ -115,9 +128,16 @@ export async function getGemPacks(): Promise<GemPack[]> {
   try {
     res = await apiFetch("/payments/gem-packs");
   } catch {
-    throw new Error("Cannot reach the server. Please try again.");
+    throw new ApiError(
+      "Cannot reach the server. Please try again.",
+      API_ERROR_CODES.network,
+    );
   }
-  if (!res.ok) throw new Error("Failed to load gem packs");
+  if (!res.ok)
+    throw new ApiError(
+      "Failed to load gem packs",
+      API_ERROR_CODES.loadFailed,
+    );
   return res.json() as Promise<GemPack[]>;
 }
 
@@ -136,7 +156,10 @@ export async function createCheckout(
       body: JSON.stringify({ packId }),
     });
   } catch {
-    throw new Error("Cannot reach the server. Please try again.");
+    throw new ApiError(
+      "Cannot reach the server. Please try again.",
+      API_ERROR_CODES.network,
+    );
   }
 
   if (res.status === 401) {
@@ -144,7 +167,11 @@ export async function createCheckout(
     throw new UnauthorizedError();
   }
   const data: unknown = await res.json().catch(() => null);
-  if (!res.ok) throw new Error(extractError(data, "Could not start checkout"));
+  if (!res.ok)
+    throw new ApiError(
+      extractError(data, "Could not start checkout"),
+      API_ERROR_CODES.checkoutFailed,
+    );
   return data as { url: string; paymentId: string };
 }
 
