@@ -1,15 +1,19 @@
 "use client";
 
 import { useState } from "react";
+import { useTranslations } from "next-intl";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useRouter } from "next/navigation";
+import { useRouter } from "@/i18n/navigation";
 import { User, Mail, Lock, Eye, EyeOff } from "lucide-react";
 import { registerSchema, type RegisterInput } from "@/lib/auth/schemas";
-import { registerUser, storeSession } from "@/lib/auth/api";
+import { registerUser, notifySignedIn } from "@/lib/auth/api";
+import { useErrorText } from "@/lib/auth/errors";
 import styles from "./AuthForm.module.scss";
 
 export function RegisterForm({ onClose }: { onClose: () => void }) {
+  const t = useTranslations("Auth");
+  const errorText = useErrorText();
   const [showPass, setShowPass] = useState(false);
   const router = useRouter();
   const {
@@ -21,13 +25,13 @@ export function RegisterForm({ onClose }: { onClose: () => void }) {
 
   const onSubmit = handleSubmit(async (values) => {
     try {
-      const res = await registerUser(values);
-      storeSession(res);
+      await registerUser(values);
+      notifySignedIn();
       onClose();
       router.push("/account");
     } catch (err) {
       setError("root", {
-        message: err instanceof Error ? err.message : "Registration failed",
+        message: errorText(err, t("errors.registrationFailed")),
       });
     }
   });
@@ -38,7 +42,7 @@ export function RegisterForm({ onClose }: { onClose: () => void }) {
 
       <div className={styles.field}>
         <label className={styles.label} htmlFor="register-name">
-          Name
+          {t("fields.name")}
         </label>
         <div className={styles.inputWrap}>
           <User size={15} className={styles.inputIcon} />
@@ -46,7 +50,7 @@ export function RegisterForm({ onClose }: { onClose: () => void }) {
             className={styles.input}
             id="register-name"
             type="text"
-            placeholder="Your display name"
+            placeholder={t("register.namePlaceholder")}
             autoComplete="name"
             {...register("name")}
           />
@@ -56,7 +60,7 @@ export function RegisterForm({ onClose }: { onClose: () => void }) {
 
       <div className={styles.field}>
         <label className={styles.label} htmlFor="register-email">
-          Email
+          {t("fields.email")}
         </label>
         <div className={styles.inputWrap}>
           <Mail size={15} className={styles.inputIcon} />
@@ -64,7 +68,7 @@ export function RegisterForm({ onClose }: { onClose: () => void }) {
             className={styles.input}
             id="register-email"
             type="email"
-            placeholder="your@email.com"
+            placeholder={t("fields.emailPlaceholder")}
             autoComplete="email"
             {...register("email")}
           />
@@ -74,7 +78,7 @@ export function RegisterForm({ onClose }: { onClose: () => void }) {
 
       <div className={styles.field}>
         <label className={styles.label} htmlFor="register-password">
-          Password
+          {t("fields.password")}
         </label>
         <div className={styles.inputWrap}>
           <Lock size={15} className={styles.inputIcon} />
@@ -82,7 +86,7 @@ export function RegisterForm({ onClose }: { onClose: () => void }) {
             className={styles.input}
             id="register-password"
             type={showPass ? "text" : "password"}
-            placeholder="Create a strong password"
+            placeholder={t("register.passwordPlaceholder")}
             autoComplete="new-password"
             {...register("password")}
           />
@@ -90,7 +94,7 @@ export function RegisterForm({ onClose }: { onClose: () => void }) {
             className={styles.toggle}
             type="button"
             onClick={() => setShowPass((v) => !v)}
-            aria-label={showPass ? "Hide password" : "Show password"}
+            aria-label={showPass ? t("fields.hidePassword") : t("fields.showPassword")}
           >
             {showPass ? <EyeOff size={15} /> : <Eye size={15} />}
           </button>
@@ -99,7 +103,7 @@ export function RegisterForm({ onClose }: { onClose: () => void }) {
       </div>
 
       <button className={styles.submit} type="submit" disabled={isSubmitting}>
-        {isSubmitting ? "Creating account…" : "Create Account"}
+        {isSubmitting ? t("register.submitting") : t("register.submit")}
       </button>
     </form>
   );

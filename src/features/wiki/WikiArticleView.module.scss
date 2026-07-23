@@ -1,0 +1,57 @@
+@use "abstracts/colors" as colors;
+@use "abstracts/markdown";
+@use "abstracts/typography" as typo;
+
+.page {
+  min-height: 100vh;
+  background: colors.$color-background;
+  color: colors.$color-foreground;
+}
+
+.wrapper {
+  max-width: 48rem;
+  margin: 0 auto;
+  padding: 7rem 1.5rem 4rem;
+}
+
+.backLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.85rem;
+  color: colors.$color-muted-foreground;
+  text-decoration: none;
+  margin-bottom: 1.5rem;
+
+  &:hover {
+    color: colors.$color-primary;
+  }
+}
+
+.category {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: colors.$color-primary;
+  margin-bottom: 0.75rem;
+}
+
+.title {
+  font-family: typo.$font-pixel;
+  font-size: 1.25rem;
+  line-height: 1.6;
+  color: colors.$color-foreground;
+  margin-bottom: 1rem;
+}
+
+.summary {
+  font-size: 1rem;
+  color: colors.$color-muted-foreground;
+  padding-bottom: 1.5rem;
+  margin-bottom: 2rem;
+  border-bottom: 1px solid colors.$color-border;
+}
+
+.body {
+  @include markdown.body;
+}

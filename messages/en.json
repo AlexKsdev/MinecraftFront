@@ -1,0 +1,620 @@
+{
+  "Header": {
+    "nav": {
+      "home": "Home",
+      "shop": "Shop",
+      "blog": "Blog",
+      "wiki": "Wiki",
+      "admin": "Admin"
+    },
+    "joinNow": "Join Now",
+    "toggleTheme": "Toggle theme",
+    "toggleMenu": "Toggle menu",
+    "accountMenu": "Account menu",
+    "goToAccount": "Go to Account",
+    "logout": "Log out"
+  },
+  "Footer": {
+    "tagline": "The ultimate Minecraft survival experience. Build, explore, and conquer with friends.",
+    "navigationHeading": "Navigation",
+    "communityHeading": "Community",
+    "nav": {
+      "home": "Home",
+      "shop": "Shop",
+      "blog": "Blog",
+      "wiki": "Wiki"
+    },
+    "community": {
+      "account": "Account",
+      "rules": "Rules"
+    },
+    "copyright": "© 2026 PureCraft. Not affiliated with Mojang.",
+    "madeWith": "Made with ♥ for the community"
+  },
+  "Home": {
+    "hero": {
+      "badge": "Survival · PvP · Economy",
+      "subtitle": "The ultimate Minecraft survival experience. Forge your legend, build your empire, and conquer the world.",
+      "playNow": "Play now"
+    },
+    "quickLinks": {
+      "shop": "Shop",
+      "blog": "Blog",
+      "wiki": "Wiki",
+      "discord": "Discord",
+      "account": "Account",
+      "topPlayers": "Top Players"
+    },
+    "stats": {
+      "players": "Players",
+      "uptime": "Uptime",
+      "years": "Years online",
+      "support": "Support"
+    },
+    "features": {
+      "heading": "Why PureCraft?",
+      "subtitle": "We've built the perfect Minecraft experience — balanced, exciting, and always improving.",
+      "survival": {
+        "title": "Survival mode",
+        "desc": "Classic hardcore survival with custom terrain generation and rare biomes."
+      },
+      "anticheat": {
+        "title": "Anti-cheat",
+        "desc": "Advanced protection system keeps the game fair for every player."
+      },
+      "community": {
+        "title": "Active community",
+        "desc": "Thousands of players online. Clans, events, and weekly tournaments."
+      },
+      "performance": {
+        "title": "Zero-lag gameplay",
+        "desc": "Dedicated high-performance servers with 99.9% uptime guarantee."
+      },
+      "world": {
+        "title": "Custom world",
+        "desc": "Unique handcrafted world with hidden dungeons and secret locations."
+      },
+      "events": {
+        "title": "Regular events",
+        "desc": "Weekly in-game events with exclusive rewards and rare items."
+      }
+    },
+    "pricing": {
+      "heading": "Premium ranks",
+      "subtitle": "Upgrade your gameplay with exclusive perks, cosmetics, and privileges.",
+      "popular": "POPULAR",
+      "perMonth": "/mo",
+      "getPlan": "Get {plan}"
+    },
+    "plans": {
+      "vip": {
+        "features": [
+          "Custom /nick command",
+          "Access to VIP lounge",
+          "2x vote rewards",
+          "Colored chat prefix [VIP]"
+        ]
+      },
+      "elite": {
+        "features": [
+          "Everything in VIP",
+          "Fly in survival world",
+          "Custom join/leave messages",
+          "Priority queue"
+        ]
+      },
+      "legend": {
+        "features": [
+          "Everything in Elite",
+          "Custom particle effects",
+          "Access to creative world",
+          "Monthly mystery crate"
+        ]
+      }
+    },
+    "cta": {
+      "heading": "Ready to play?",
+      "subtitle": "Join thousands of players and start your adventure today. No downloads required — just your Minecraft client.",
+      "createAccount": "Create account"
+    }
+  },
+  "Shop": {
+    "title": "Item Shop",
+    "subtitle": "Buy weapons, armor, tools, food, and more — all delivered straight to your in-game inventory.",
+    "loading": "Loading items…",
+    "itemCount": "{count, plural, =1 {# item} other {# items}} in",
+    "sortAria": "Sort products",
+    "rarity": {
+      "common": "Common",
+      "uncommon": "Uncommon",
+      "rare": "Rare",
+      "epic": "Epic",
+      "legendary": "Legendary"
+    },
+    "categories": {
+      "all": "All",
+      "weapons": "Weapons",
+      "armor": "Armor",
+      "tools": "Tools",
+      "resources": "Resources",
+      "food": "Food",
+      "potions": "Potions"
+    },
+    "sort": {
+      "featured": "Featured",
+      "coinsAsc": "Coins: Low to High",
+      "coinsDesc": "Coins: High to Low",
+      "gemsAsc": "Gems: Low to High",
+      "gemsDesc": "Gems: High to Low",
+      "rarityDesc": "Rarity: High to Low",
+      "rarityAsc": "Rarity: Low to High"
+    },
+    "banner": {
+      "success": "Payment successful — your gems are on the way!",
+      "cancelled": "Checkout cancelled. No charge was made."
+    },
+    "pagination": {
+      "prev": "Prev",
+      "next": "Next"
+    },
+    "topup": {
+      "title": "Need more gems?",
+      "hint": "Buy gems with real money to unlock legendary gear.",
+      "redirecting": "Redirecting…"
+    },
+    "currency": {
+      "gems": "Gems",
+      "coins": "Coins"
+    },
+    "buy": {
+      "buying": "Buying…",
+      "owned": "Purchased ✓",
+      "buyNow": "Buy Now"
+    },
+    "errors": {
+      "loadFailed": "Failed to load shop",
+      "signInToBuyGems": "Sign in to buy gems",
+      "checkoutFailed": "Could not start checkout",
+      "sessionExpired": "Session expired — sign in again",
+      "purchaseFailed": "Purchase failed"
+    }
+  },
+  "Blog": {
+    "title": "Blog",
+    "subtitle": "Updates, events, guides, and community news.",
+    "readMore": "Read More",
+    "backToBlog": "Back to Blog",
+    "readTime": "{minutes} min",
+    "empty": "No posts yet. Check back soon."
+  },
+  "Wiki": {
+    "title": "Wiki",
+    "subtitle": "Everything you need to know about PureCraft.",
+    "searchPlaceholder": "Search articles...",
+    "all": "All",
+    "backToWiki": "Back to Wiki",
+    "empty": "The wiki is empty for now.",
+    "noResults": "Nothing found for “{q}”."
+  },
+  "Account": {
+    "loading": "Loading your profile…",
+    "errorGeneric": "Something went wrong",
+    "online": "Online",
+    "joined": "Joined {date}",
+    "tabs": {
+      "overview": "Overview",
+      "bonuses": "Bonuses",
+      "referral": "Invite Friends",
+      "achievements": "Achievements",
+      "quests": "Quests",
+      "security": "Security"
+    },
+    "stats": {
+      "playtime": "Playtime",
+      "kills": "Kills",
+      "blocks": "Blocks",
+      "kd": "K/D Ratio"
+    },
+    "xp": {
+      "level": "Level {level}",
+      "toNext": "{pct}% to Level {level}"
+    },
+    "overview": {
+      "recentActivity": "Recent Activity",
+      "activePerks": "Active Perks"
+    },
+    "bonuses": {
+      "streak": "{days} Day Streak!",
+      "streakHint": "Log in tomorrow to keep your streak and claim Day 8 reward.",
+      "dailyRewards": "Daily Login Rewards",
+      "dayCount": "Day {day} / 14",
+      "today": "TODAY",
+      "day": "Day {day}",
+      "claimCta": "🎁 Claim Day 7 — Legend Crate",
+      "claimedNote": "Claimed! Come back tomorrow",
+      "coinRewards": "Coin Rewards"
+    },
+    "referral": {
+      "heroTitle": "Invite Friends, Earn Rewards",
+      "heroText": "For every friend who joins with your link, you both get <coins>200 Coins</coins> + a <key>Rare Key</key>.",
+      "yourLink": "Your Referral Link",
+      "copied": "Copied!",
+      "copy": "Copy",
+      "yourCode": "Your code:",
+      "progress": "Referral Progress",
+      "friendsCount": "{count} / {total} friends",
+      "friends": "{count, plural, =1 {# friend} other {# friends}}",
+      "referredFriends": "Referred Friends",
+      "joinedAgo": "Joined {when}",
+      "plusCoins": "+{count} coins",
+      "totalEarned": "Total earned from referrals",
+      "totalCoins": "{count} Coins",
+      "milestones": "Referral Milestones",
+      "milestoneText": "{count} friends invited"
+    },
+    "achievements": {
+      "unlocked": "{count} / {total} unlocked"
+    },
+    "quests": {
+      "resetIn": "Daily quests reset in",
+      "doneCount": "{done}/{total} done",
+      "claim": "Claim Reward",
+      "claimed": "Claimed",
+      "claiming": "Claiming…",
+      "loading": "Loading quests…",
+      "loadFailed": "Couldn't load quests.",
+      "claimFailed": "Couldn't claim the reward.",
+      "rewardCoins": "{amount} Coins",
+      "rewardGems": "{amount} Gems",
+      "items": {
+        "kill_players": "Kill 10 players",
+        "mine_ores": "Mine 200 ores",
+        "trade_players": "Trade with 3 players",
+        "login_streak": "Log in 7 days",
+        "place_blocks": "Place 500 blocks",
+        "craft_items": "Craft 25 items",
+        "travel_blocks": "Travel 1000 blocks",
+        "fish_catch": "Catch 15 fish",
+        "tame_animals": "Tame 3 animals",
+        "brew_potions": "Brew 5 potions",
+        "enchant_gear": "Enchant 4 items",
+        "defeat_boss": "Defeat a boss",
+        "harvest_crops": "Harvest 64 crops",
+        "complete_dungeon": "Complete 2 dungeons"
+      }
+    },
+    "security": {
+      "twoFactorTitle": "Two-Factor Authentication",
+      "twoFactorText": "Ask for a code emailed to you on every login, so a stolen password isn't enough to get in.",
+      "on": "Enabled",
+      "off": "Disabled",
+      "enable": "Enable 2FA",
+      "disable": "Disable 2FA",
+      "codePlaceholder": "6-digit code",
+      "passwordPlaceholder": "Your password",
+      "confirmEnable": "Confirm & enable",
+      "confirming": "Confirming…",
+      "disableHint": "Enter your password and the code we just emailed to turn 2FA off.",
+      "confirmDisable": "Confirm & disable",
+      "cancel": "Cancel",
+      "genericError": "Something went wrong. Please try again.",
+      "sending": "Sending…",
+      "codeSentHint": "We've emailed you a 6-digit code. Enter it below."
+    }
+  },
+  "Auth": {
+    "fields": {
+      "email": "Email",
+      "emailPlaceholder": "your@email.com",
+      "password": "Password",
+      "name": "Name",
+      "showPassword": "Show password",
+      "hidePassword": "Hide password"
+    },
+    "errors": {
+      "generic": "Something went wrong",
+      "loginFailed": "Login failed",
+      "registrationFailed": "Registration failed",
+      "codes": {
+        "AUTH_INVALID_CREDENTIALS": "Wrong email or password.",
+        "AUTH_EMAIL_IN_USE": "That email is already registered.",
+        "AUTH_INVALID_CODE": "That code isn't right. Check your authenticator app and try again.",
+        "AUTH_2FA_SESSION_EXPIRED": "Your login attempt timed out. Please sign in again.",
+        "AUTH_2FA_SESSION_INVALID": "Your login attempt is no longer valid. Please sign in again.",
+        "AUTH_2FA_NOT_ENABLED": "Two-factor authentication isn't enabled on this account.",
+        "AUTH_2FA_ALREADY_ENABLED": "Two-factor authentication is already enabled. Disable it first.",
+        "AUTH_2FA_SETUP_MISSING": "Start the setup before enabling two-factor authentication.",
+        "AUTH_RESET_TOKEN_INVALID": "This reset link is invalid or has expired. Request a new one.",
+        "AUTH_USER_NOT_FOUND": "Account not found.",
+        "AUTH_ACCOUNT_DISABLED": "This account has been disabled.",
+        "AUTH_EMAIL_DELIVERY_FAILED": "We couldn't send the email just now. Please try again in a moment."
+      }
+    },
+    "modal": {
+      "close": "Close",
+      "title": "Player Account",
+      "subtitle": "Manage your PureCraft profile",
+      "loginTab": "Login",
+      "registerTab": "Register",
+      "or": "or",
+      "benefitsTitle": "ACCOUNT BENEFITS",
+      "benefits": [
+        "Track your stats & playtime",
+        "Manage your rank & purchases",
+        "Submit support tickets",
+        "Access exclusive member areas"
+      ]
+    },
+    "login": {
+      "passwordPlaceholder": "Your password",
+      "submitting": "Logging in…",
+      "submit": "Login",
+      "forgotPassword": "Forgot password?"
+    },
+    "twoFactor": {
+      "prompt": "Enter the 6-digit code we emailed you to finish signing in.",
+      "code": "Email code",
+      "codePlaceholder": "000000",
+      "verify": "Verify",
+      "verifying": "Verifying…",
+      "resend": "Resend code",
+      "resent": "Code sent"
+    },
+    "forgot": {
+      "sent": "If that email is registered, we've sent a password reset link. Check your inbox.",
+      "backToLogin": "Back to login",
+      "sending": "Sending…",
+      "sendLink": "Send reset link"
+    },
+    "register": {
+      "namePlaceholder": "Your display name",
+      "passwordPlaceholder": "Create a strong password",
+      "submitting": "Creating account…",
+      "submit": "Create Account"
+    },
+    "reset": {
+      "missingToken": "This reset link is missing its token.",
+      "doneTitle": "Password updated",
+      "doneText": "Your password has been reset. You can now sign in with your new password.",
+      "backHome": "Back to home",
+      "title": "Reset your password",
+      "noTokenNotice": "This link is missing a reset token. Please use the link from your email.",
+      "newPassword": "New password",
+      "newPasswordPlaceholder": "At least 8 characters",
+      "submitting": "Updating…",
+      "submit": "Update password"
+    }
+  },
+  "Checkout": {
+    "title": "Thank you for your purchase!",
+    "text": "Your payment went through and your gems have been added to your account. Enjoy your loot!",
+    "gems": "{count, number} gems",
+    "backToShop": "Back to Shop",
+    "viewAccount": "View Account"
+  },
+  "Admin": {
+    "title": "Admin Dashboard",
+    "subtitle": "Server overview at a glance.",
+    "loadFailed": "Could not load the dashboard stats.",
+    "recentPayments": "Recent Payments",
+    "noPayments": "No payments yet.",
+    "stats": {
+      "users": "Players",
+      "admins": "Admins",
+      "products": "Products",
+      "revenue": "Revenue"
+    },
+    "table": {
+      "date": "Date",
+      "user": "User",
+      "amount": "Amount",
+      "status": "Status"
+    },
+    "users": {
+      "title": "Players",
+      "count": "{count, plural, =0 {No players} one {# player} other {# players}}",
+      "none": "No players match that search.",
+      "search": "Search",
+      "searchPlaceholder": "Name or email",
+      "searchLabel": "Search players by name or email",
+      "pagination": "Pagination",
+      "prev": "Previous",
+      "next": "Next",
+      "pageOf": "Page {page} of {total}",
+      "promote": "Make admin",
+      "demote": "Remove admin",
+      "giveCoins": "+{count} coins",
+      "delete": "Delete",
+      "confirmDelete": "Delete {name}? This cannot be undone.",
+      "cancel": "Cancel",
+      "stepUpPlaceholder": "Your password",
+      "stepUpLabel": "Password",
+      "stepUpConfirm": "Confirm",
+      "table": {
+        "name": "Name",
+        "email": "Email",
+        "role": "Role",
+        "balance": "Coins / Gems",
+        "actions": "Actions"
+      }
+    },
+    "products": {
+      "title": "Products",
+      "count": "{count, plural, =0 {No products} one {# product} other {# products}}",
+      "new": "New product",
+      "create": "Create",
+      "save": "Save",
+      "saving": "Saving…",
+      "edit": "Edit",
+      "deactivate": "Take off shop",
+      "activate": "Put back",
+      "confirmDeactivate": "Take {name} off the shop? Players won't see it, but it can be put back.",
+      "active": "On shop",
+      "inactive": "Off shop",
+      "coins": "coins",
+      "gems": "gems",
+      "table": {
+        "item": "Item",
+        "category": "Category",
+        "price": "Price",
+        "status": "Status",
+        "actions": "Actions"
+      },
+      "form": {
+        "name": "Name",
+        "slug": "Slug",
+        "slugHint": "Lowercase, words joined by hyphens — it becomes the shop URL.",
+        "category": "Category",
+        "emoji": "Emoji",
+        "rarity": "Rarity",
+        "rarityRank": "Rarity rank",
+        "rankHint": "0–5. Common=1 … Legendary=5. Drives the shop's rarity sort.",
+        "currency": "Currency",
+        "price": "Price",
+        "badge": "Badge",
+        "stats": "Stats",
+        "statsHint": "Comma-separated, e.g. +5 damage, +2 speed"
+      }
+    },
+    "orders": {
+      "title": "Orders",
+      "count": "{count, plural, =0 {No orders} one {# order} other {# orders}}",
+      "none": "No orders match that filter.",
+      "filterLabel": "Filter orders by status",
+      "allStatuses": "All statuses",
+      "setStatusLabel": "Set order status",
+      "apply": "Apply",
+      "pagination": "Pagination",
+      "prev": "Previous",
+      "next": "Next",
+      "pageOf": "Page {page} of {total}",
+      "status": {
+        "PENDING": "Pending",
+        "SUCCEEDED": "Succeeded",
+        "FAILED": "Failed",
+        "REFUNDED": "Refunded"
+      },
+      "table": {
+        "date": "Date",
+        "buyer": "Buyer",
+        "amount": "Amount",
+        "gems": "Gems",
+        "status": "Status",
+        "actions": "Actions"
+      }
+    },
+    "nav": {
+      "label": "Admin sections",
+      "dashboard": "Dashboard",
+      "players": "Players",
+      "products": "Products",
+      "orders": "Orders",
+      "quests": "Quests",
+      "blog": "Blog",
+      "wiki": "Wiki"
+    },
+    "quests": {
+      "title": "Quests",
+      "count": "{count, plural, =0 {No quests} one {# quest} other {# quests}}",
+      "new": "New quest",
+      "create": "Create",
+      "save": "Save",
+      "edit": "Edit",
+      "activate": "Put back",
+      "deactivate": "Take out",
+      "confirmDeactivate": "Take {name} out of the daily set? Players won't see it, but it can be put back.",
+      "active": "In rotation",
+      "inactive": "Out",
+      "table": {
+        "quest": "Quest",
+        "target": "Target",
+        "reward": "Reward",
+        "status": "Status",
+        "actions": "Actions"
+      },
+      "form": {
+        "key": "Key",
+        "keyHint": "Lowercase letters, digits and underscores — the stable id.",
+        "title": "Title",
+        "target": "Target",
+        "rewardType": "Reward type",
+        "rewardAmount": "Reward amount",
+        "icon": "Icon",
+        "color": "Colour",
+        "sortOrder": "Sort order"
+      }
+    },
+    "blog": {
+      "title": "Blog",
+      "count": "{count, plural, =0 {No posts} one {# post} other {# posts}}",
+      "new": "New post",
+      "create": "Create",
+      "save": "Save",
+      "edit": "Edit",
+      "publish": "Publish",
+      "unpublish": "Unpublish",
+      "confirmUnpublish": "Take {name} off the blog? Readers won't see it, but it can be published again.",
+      "published": "Published",
+      "draft": "Draft",
+      "table": {
+        "post": "Post",
+        "languages": "Languages",
+        "published": "Published",
+        "status": "Status",
+        "actions": "Actions"
+      },
+      "form": {
+        "slug": "Slug",
+        "slugHint": "Lowercase words separated by hyphens — this is the blog URL.",
+        "author": "Author",
+        "image": "Image URL",
+        "tagAccent": "Tag colour",
+        "language": "Language",
+        "title": "Title",
+        "tag": "Tag",
+        "excerpt": "Excerpt",
+        "body": "Body",
+        "bodyHint": "Markdown. Raw HTML is not rendered."
+      }
+    },
+    "wiki": {
+      "title": "Wiki",
+      "count": "{categories, plural, one {# category} other {# categories}}, {articles, plural, =0 {no articles} one {# article} other {# articles}}",
+      "newCategory": "New category",
+      "newArticle": "New article",
+      "editCategory": "Edit category",
+      "create": "Create",
+      "save": "Save",
+      "edit": "Edit",
+      "publish": "Publish",
+      "unpublish": "Unpublish",
+      "confirmUnpublish": "Take {name} off the wiki? Readers won't see it, but it can be published again.",
+      "published": "Published",
+      "draft": "Draft",
+      "noCategories": "No categories yet. Create one to start the wiki.",
+      "noArticles": "No articles in this category yet.",
+      "table": {
+        "article": "Article",
+        "languages": "Languages",
+        "status": "Status",
+        "actions": "Actions"
+      },
+      "form": {
+        "key": "Key",
+        "keyHint": "Lowercase words separated by hyphens — the stable id, not shown to readers.",
+        "slug": "Slug",
+        "slugHint": "Lowercase words separated by hyphens — this is the article URL.",
+        "category": "Category",
+        "icon": "Icon",
+        "accent": "Accent",
+        "sortOrder": "Sort order",
+        "language": "Language",
+        "title": "Title",
+        "summary": "Summary",
+        "summaryHint": "The one line shown under the title in the category card.",
+        "body": "Body",
+        "bodyHint": "Markdown. Raw HTML is not rendered."
+      }
+    }
+  }
+}

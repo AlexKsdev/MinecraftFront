@@ -1,45 +1,24 @@
 import {
-  Clock, Sword, Map, TrendingUp, Coins, Star, Zap, Gem, Crown, Shield,
+  Sword, Map, Coins, Star, Zap, Gem, Crown, Shield,
   Gift, Award, Target, Users, Calendar, Flame, Trophy, BarChart3,
+  Pickaxe, Box, Hammer, Footprints, Fish, PawPrint, FlaskConical,
+  Sparkles, Skull, Wheat, DoorOpen,
   type LucideIcon,
 } from "lucide-react";
 
-export type TabId = "overview" | "bonuses" | "referral" | "achievements" | "quests";
+export type TabId = "overview" | "bonuses" | "referral" | "achievements" | "quests" | "security";
 
-export const PLAYER = {
-  name: "Steve_PureCraft",
-  email: "steve@purecraft.net",
-  rank: "Elite",
-  avatar: "https://mc-heads.net/avatar/Steve/128",
-  level: 47,
-  xp: 7340,
-  xpNext: 10000,
-  coins: 4820,
-  gems: 38,
-  joinDate: "Mar 2022",
-  playtime: "142h",
-  kills: 382,
-  deaths: 94,
-  blocksPlaced: "1.2M",
-  streak: 7,
-};
-
-export const TABS: { id: TabId; label: string; icon: LucideIcon }[] = [
-  { id: "overview", label: "Overview", icon: BarChart3 },
-  { id: "bonuses", label: "Bonuses", icon: Gift },
-  { id: "referral", label: "Invite Friends", icon: Users },
-  { id: "achievements", label: "Achievements", icon: Trophy },
-  { id: "quests", label: "Quests", icon: Target },
+// Tab labels live in the Account messages namespace (keyed by `id`).
+export const TABS: { id: TabId; icon: LucideIcon }[] = [
+  { id: "overview", icon: BarChart3 },
+  { id: "bonuses", icon: Gift },
+  { id: "referral", icon: Users },
+  { id: "achievements", icon: Trophy },
+  { id: "quests", icon: Target },
+  { id: "security", icon: Shield },
 ];
 
 /* ── Overview ── */
-export const STATS: { label: string; value: string; icon: LucideIcon; accent: string }[] = [
-  { label: "Playtime", value: PLAYER.playtime, icon: Clock, accent: "var(--primary)" },
-  { label: "Kills", value: String(PLAYER.kills), icon: Sword, accent: "#f87171" },
-  { label: "Blocks", value: PLAYER.blocksPlaced, icon: Map, accent: "#fbbf24" },
-  { label: "K/D Ratio", value: (PLAYER.kills / PLAYER.deaths).toFixed(2), icon: TrendingUp, accent: "#38bdf8" },
-];
-
 export const RECENT_ACTIVITY: { action: string; time: string; color: string }[] = [
   { action: "Won Arena Battle vs DiamondGirl", time: "1h ago", color: "#f87171" },
   { action: "Opened Rare Crate — got Diamond Sword", time: "3h ago", color: "#60a5fa" },
@@ -104,9 +83,25 @@ export const ACHIEVEMENTS: {
 ];
 
 /* ── Quests ── */
-export const QUESTS: { title: string; reward: string; icon: LucideIcon; color: string; progress: number; total: number }[] = [
-  { title: "Kill 10 players", reward: "500 Coins", icon: Sword, color: "#f87171", progress: 7, total: 10 },
-  { title: "Mine 200 ores", reward: "300 Coins", icon: Target, color: "#fbbf24", progress: 200, total: 200 },
-  { title: "Trade with 3 players", reward: "1 Rare Key", icon: Users, color: "#38bdf8", progress: 1, total: 3 },
-  { title: "Log in 7 days", reward: "Legend Crate", icon: Calendar, color: "#a855f7", progress: 7, total: 7 },
-];
+// The quest catalogue lives in the database now: the API sends an icon *name*
+// and a colour, and this maps the name to a component. Keep in step with
+// QUEST_ICONS in the backend's quests.config.ts.
+export const QUEST_ICON_MAP: Record<string, LucideIcon> = {
+  Sword, Pickaxe, Users, Calendar, Box, Hammer, Footprints, Fish,
+  PawPrint, FlaskConical, Sparkles, Skull, Wheat, DoorOpen,
+  Target, Trophy, Gem, Coins, Flame, Star,
+};
+
+export const QUEST_FALLBACK_ICON: LucideIcon = Target;
+
+/**
+ * Quests that shipped with the app and therefore have translated titles
+ * (Account.quests.items.<key>). Anything an admin adds later falls back to the
+ * title stored on the row.
+ */
+export const BUILT_IN_QUEST_KEYS = new Set([
+  "kill_players", "mine_ores", "trade_players", "login_streak",
+  "place_blocks", "craft_items", "travel_blocks", "fish_catch",
+  "tame_animals", "brew_potions", "enchant_gear", "defeat_boss",
+  "harvest_crops", "complete_dungeon",
+]);

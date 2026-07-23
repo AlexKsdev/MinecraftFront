@@ -4,6 +4,17 @@
 
 @include rarity.modifiers;
 
+@keyframes card-appear {
+  from {
+    opacity: 0;
+    transform: translateY(10px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
 .card {
   position: relative;
   display: flex;
@@ -12,6 +23,7 @@
   background: color-mix(in oklab, var(--rarity) 5%, transparent);
   border-radius: 0.75rem;
   padding: 1.25rem;
+  animation: card-appear 0.5s ease both;
   transition:
     transform 0.2s ease,
     box-shadow 0.2s ease;
@@ -19,6 +31,14 @@
   &:hover {
     transform: translateY(-4px);
     box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35);
+  }
+}
+
+// Stagger the appear animation so a freshly loaded page fades in card by
+// card instead of all at once.
+@for $i from 1 through 8 {
+  .card:nth-child(#{$i}) {
+    animation-delay: #{($i - 1) * 65}ms;
   }
 }
 
@@ -76,6 +96,10 @@
   color: colors.$color-accent-amber;
 }
 
+.priceGems {
+  color: #c084fc;
+}
+
 .priceLabel {
   font-size: 0.7rem;
   color: colors.$color-muted-foreground;
@@ -118,5 +142,10 @@
 
   &:hover {
     background: rgba(255, 255, 255, 0.05);
+  }
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: default;
   }
 }

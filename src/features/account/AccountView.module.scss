@@ -92,6 +92,28 @@
   &:hover {
     background: color-mix(in oklab, colors.$color-primary 90%, transparent);
   }
+
+  &:disabled {
+    opacity: 0.7;
+    cursor: default;
+  }
+}
+
+/* A claimed quest reads as spent: the card is dimmed and its button greys out
+ * so it's plainly done and can't be pressed again. */
+.questClaimed {
+  opacity: 0.5;
+}
+.claimedBtn {
+  background: colors.$color-secondary;
+  color: colors.$color-muted-foreground;
+  cursor: not-allowed;
+
+  &:hover,
+  &:disabled {
+    background: colors.$color-secondary;
+    opacity: 1;
+  }
 }
 
 .track {
@@ -120,16 +142,26 @@
 }
 
 /* ── Profile header ── */
+/* Profile card + tabs pinned under the fixed 4rem site header while scrolling.
+ * A solid background masks the quest list sliding underneath. */
+.stickyHead {
+  position: sticky;
+  top: 4rem;
+  z-index: 40;
+  background: colors.$color-background;
+  padding-top: 0.75rem;
+  margin-bottom: 1.25rem;
+}
 .profile {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: 1.25rem;
+  gap: 1rem;
   background: colors.$color-card;
   border: 1px solid colors.$color-border;
   border-radius: 0.75rem;
-  padding: 1.5rem;
-  margin-bottom: 1.5rem;
+  padding: 1.1rem 1.25rem;
+  margin-bottom: 0.75rem;
 
   @include bp.respond-to(sm) {
     flex-direction: row;
@@ -243,7 +275,6 @@
 .tabs {
   display: flex;
   gap: 0.25rem;
-  margin-bottom: 1.5rem;
   overflow-x: auto;
   padding-bottom: 0.25rem;
 }
@@ -696,4 +727,53 @@
   font-size: 0.9rem;
   font-weight: 500;
   color: colors.$color-foreground;
+}
+
+/* ── Security ── */
+.qr {
+  display: block;
+  margin: 0.75rem 0;
+  border-radius: 0.5rem;
+  background: #fff;
+  padding: 0.5rem;
+}
+
+.codeInput {
+  width: 100%;
+  margin-top: 0.75rem;
+  background: colors.$color-secondary;
+  border: 1px solid colors.$color-border;
+  border-radius: 0.375rem;
+  padding: 0.6rem 0.75rem;
+  font-size: 0.9rem;
+  color: colors.$color-foreground;
+
+  &::placeholder {
+    color: colors.$color-muted-foreground;
+  }
+
+  &:focus-visible {
+    outline: 2px solid colors.$color-primary;
+    outline-offset: 1px;
+  }
+}
+
+.linkBtn {
+  width: 100%;
+  margin-top: 0.5rem;
+  background: none;
+  border: none;
+  font-size: 0.75rem;
+  color: colors.$color-muted-foreground;
+  cursor: pointer;
+
+  &:hover {
+    color: colors.$color-foreground;
+  }
+}
+
+.securityError {
+  margin-top: 0.75rem;
+  font-size: 0.8rem;
+  color: #f87171;
 }

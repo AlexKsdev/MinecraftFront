@@ -1,20 +1,14 @@
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 import { Sword } from "lucide-react";
+import { isNavLinkActive, type MobileNavProps } from "./types";
 import styles from "./MobileNav.module.scss";
-
-type NavLink = { href: string; label: string };
 
 export function MobileNav({
   links,
   pathname,
   onNavigate,
   onJoinClick,
-}: {
-  links: NavLink[];
-  pathname: string;
-  onNavigate: () => void;
-  onJoinClick: () => void;
-}) {
+}: MobileNavProps) {
   return (
     <div className={styles.panel}>
       {links.map((link) => (
@@ -22,7 +16,7 @@ export function MobileNav({
           key={link.href}
           href={link.href}
           onClick={onNavigate}
-          className={`${styles.link} ${pathname === link.href ? styles.active : ""}`}
+          className={`${styles.link} ${isNavLinkActive(pathname, link) ? styles.active : ""}`}
         >
           {link.label}
         </Link>

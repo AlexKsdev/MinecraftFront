@@ -1,22 +1,24 @@
 "use client";
 
-import Link from "next/link";
+import { useTranslations } from "next-intl";
+import { Link } from "@/i18n/navigation";
 import { quickLinks } from "../constants";
 import styles from "./QuickLinks.module.scss";
 
 export function QuickLinks() {
+  const t = useTranslations("Home");
   return (
     <section className={styles.section}>
       <div className={styles.grid}>
         {quickLinks.map((link) => (
           <Link
-            key={link.label}
+            key={link.id}
             href={link.href}
             onClick={link.href === "#" ? (e) => e.preventDefault() : undefined}
             className={`${styles.link} ${styles[link.accent]}`}
           >
             <link.icon className={styles.icon} size={24} />
-            <span className={styles.label}>{link.label}</span>
+            <span className={styles.label}>{t(`quickLinks.${link.id}`)}</span>
           </Link>
         ))}
       </div>

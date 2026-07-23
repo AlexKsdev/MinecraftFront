@@ -1,9 +1,9 @@
-import { posts } from "../constants";
+import type { PostListItem } from "../types";
 import { FeaturedPost } from "./FeaturedPost";
 import { PostCard } from "./PostCard";
 import styles from "./BlogGrid.module.scss";
 
-export function BlogGrid() {
+export function BlogGrid({ posts }: { posts: PostListItem[] }) {
   const [featured, ...rest] = posts;
 
   return (
@@ -11,7 +11,7 @@ export function BlogGrid() {
       <FeaturedPost post={featured} />
       <div className={styles.grid}>
         {rest.map((post) => (
-          <PostCard key={post.id} post={post} />
+          <PostCard key={post.slug} post={post} />
         ))}
       </div>
     </div>
