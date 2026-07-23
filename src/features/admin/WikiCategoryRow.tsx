@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { Plus } from "lucide-react";
 import {
   createWikiArticle,
@@ -12,7 +12,7 @@ import {
   type AdminWikiArticle,
   type AdminWikiCategory,
 } from "@/lib/admin/api";
-import { CONTENT_LOCALES } from "./constants";
+import { CONTENT_LOCALES, localizedTitle } from "./constants";
 import { StepUpPrompt } from "./StepUpPrompt";
 import { WikiArticleForm } from "./WikiArticleForm";
 import { WikiCategoryForm } from "./WikiCategoryForm";
@@ -43,7 +43,8 @@ export function WikiCategoryRow({
     setEditingArticle(null);
   });
 
-  const title = category.translations[0]?.title ?? category.key;
+  const locale = useLocale();
+  const title = localizedTitle(category.translations, locale, category.key);
 
   if (action.awaitingPassword) {
     return (
@@ -150,9 +151,10 @@ function ArticleRow({
   action: ReturnType<typeof useStepUpAction>;
 }) {
   const t = useTranslations("Admin");
-  const title = article.translations[0]?.title ?? article.slug;
-  const written = CONTENT_LOCALES.filter((locale) =>
-    article.translations.some((tr) => tr.locale === locale),
+  const locale = useLocale();
+  const title = localizedTitle(article.translations, locale, article.slug);
+  const written = CONTENT_LOCALES.filter((code) =>
+    article.translations.some((tr) => tr.locale === code),
   );
 
   if (editing) {

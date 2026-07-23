@@ -1,14 +1,18 @@
 "use client";
 
 import { useState } from "react";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import type {
   AdminWikiArticle,
   AdminWikiArticleTranslation,
   AdminWikiCategory,
   WikiArticleInput,
 } from "@/lib/admin/api";
-import { CONTENT_LOCALES, type ContentLocale } from "./constants";
+import {
+  CONTENT_LOCALES,
+  localizedTitle,
+  type ContentLocale,
+} from "./constants";
 import styles from "./AdminProducts.module.scss";
 
 /** Mirrors the server's slug rule, so a typo is caught before the round trip. */
@@ -45,6 +49,7 @@ export function WikiArticleForm({
   onCancel: () => void;
 }) {
   const t = useTranslations("Admin");
+  const locale = useLocale();
   const [tab, setTab] = useState<ContentLocale>(CONTENT_LOCALES[0]);
   const [form, setForm] = useState<WikiArticleInput>(
     initial
@@ -53,9 +58,9 @@ export function WikiArticleForm({
           categoryId: initial.categoryId,
           sortOrder: initial.sortOrder,
           translations: CONTENT_LOCALES.map(
-            (locale) =>
-              initial.translations.find((tr) => tr.locale === locale) ??
-              emptyTranslation(locale),
+            (code) =>
+              initial.translations.find((tr) => tr.locale === code) ??
+              emptyTranslation(code),
           ),
         }
       : {
@@ -120,7 +125,7 @@ export function WikiArticleForm({
           >
             {categories.map((category) => (
               <option key={category.id} value={category.id}>
-                {category.translations[0]?.title ?? category.key}
+                {localizedTitle(category.translations, locale, category.key)}
               </option>
             ))}
           </select>
@@ -143,16 +148,16 @@ export function WikiArticleForm({
         role="tablist"
         aria-label={t("wiki.form.language")}
       >
-        {CONTENT_LOCALES.map((locale) => (
+        {CONTENT_LOCALES.map((code) => (
           <button
-            key={locale}
+            key={code}
             type="button"
             role="tab"
-            aria-selected={locale === tab}
-            className={`${styles.localeTab} ${locale === tab ? styles.localeTabActive : ""}`}
-            onClick={() => setTab(locale)}
+            aria-selected={code === tab}
+            className={`${styles.localeTab} ${code === tab ? styles.localeTabActive : ""}`}
+            onClick={() => setTab(code)}
           >
-            {locale}
+            {code}
           </button>
         ))}
       </div>

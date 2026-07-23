@@ -49,3 +49,23 @@ export const WIKI_ACCENTS = [
   "purple",
   "yellow",
 ] as const;
+
+/**
+ * The title to show in an admin list. Rows arrive in whatever order the
+ * database returned them, so picking `translations[0]` made the displayed
+ * language depend on insertion order — a category could read English while the
+ * article under it read Ukrainian. Falls back to English, then to the caller's
+ * own label (a key or slug) when nothing is written yet.
+ */
+export function localizedTitle(
+  translations: readonly { locale: string; title: string }[],
+  locale: string,
+  fallback: string,
+): string {
+  const wanted = locale.toUpperCase();
+  return (
+    translations.find((t) => t.locale === wanted)?.title ??
+    translations.find((t) => t.locale === "EN")?.title ??
+    fallback
+  );
+}
