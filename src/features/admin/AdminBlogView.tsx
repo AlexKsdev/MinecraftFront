@@ -2,7 +2,7 @@ import { getFormatter, getTranslations } from "next-intl/server";
 import { serverFetch } from "@/lib/server/api";
 import type { AdminPost } from "@/lib/admin/api";
 import { POST_DATE_FORMAT } from "@/features/blog/constants";
-import { POST_LOCALES } from "./constants";
+import { CONTENT_LOCALES } from "./constants";
 import { PostCreate } from "./PostCreate";
 import { PostRowActions } from "./PostRowActions";
 import styles from "./AdminUsers.module.scss";
@@ -54,7 +54,7 @@ export async function AdminBlogView() {
             </thead>
             <tbody>
               {posts.map((post) => {
-                const written = POST_LOCALES.filter((locale) =>
+                const written = CONTENT_LOCALES.filter((locale) =>
                   post.translations.some((tr) => tr.locale === locale),
                 );
                 return (

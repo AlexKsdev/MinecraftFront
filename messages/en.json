@@ -510,7 +510,8 @@
       "products": "Products",
       "orders": "Orders",
       "quests": "Quests",
-      "blog": "Blog"
+      "blog": "Blog",
+      "wiki": "Wiki"
     },
     "quests": {
       "title": "Quests",
@@ -572,6 +573,45 @@
         "title": "Title",
         "tag": "Tag",
         "excerpt": "Excerpt",
+        "body": "Body",
+        "bodyHint": "Markdown. Raw HTML is not rendered."
+      }
+    },
+    "wiki": {
+      "title": "Wiki",
+      "count": "{categories, plural, one {# category} other {# categories}}, {articles, plural, =0 {no articles} one {# article} other {# articles}}",
+      "newCategory": "New category",
+      "newArticle": "New article",
+      "editCategory": "Edit category",
+      "create": "Create",
+      "save": "Save",
+      "edit": "Edit",
+      "publish": "Publish",
+      "unpublish": "Unpublish",
+      "confirmUnpublish": "Take {name} off the wiki? Readers won't see it, but it can be published again.",
+      "published": "Published",
+      "draft": "Draft",
+      "noCategories": "No categories yet. Create one to start the wiki.",
+      "noArticles": "No articles in this category yet.",
+      "table": {
+        "article": "Article",
+        "languages": "Languages",
+        "status": "Status",
+        "actions": "Actions"
+      },
+      "form": {
+        "key": "Key",
+        "keyHint": "Lowercase words separated by hyphens — the stable id, not shown to readers.",
+        "slug": "Slug",
+        "slugHint": "Lowercase words separated by hyphens — this is the article URL.",
+        "category": "Category",
+        "icon": "Icon",
+        "accent": "Accent",
+        "sortOrder": "Sort order",
+        "language": "Language",
+        "title": "Title",
+        "summary": "Summary",
+        "summaryHint": "The one line shown under the title in the category card.",
         "body": "Body",
         "bodyHint": "Markdown. Raw HTML is not rendered."
       }

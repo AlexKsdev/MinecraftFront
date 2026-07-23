@@ -3,6 +3,7 @@
 import { useTranslations } from "next-intl";
 import { Link, usePathname } from "@/i18n/navigation";
 import {
+  BookMarked,
   BookOpen,
   LayoutDashboard,
   Package,
@@ -19,6 +20,7 @@ const ITEMS = [
   { href: "/admin/orders", key: "orders", Icon: Receipt, exact: false },
   { href: "/admin/quests", key: "quests", Icon: Target, exact: false },
   { href: "/admin/blog", key: "blog", Icon: BookOpen, exact: false },
+  { href: "/admin/wiki", key: "wiki", Icon: BookMarked, exact: false },
 ] as const;
 
 /**
