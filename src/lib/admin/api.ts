@@ -204,12 +204,12 @@ export function deactivateQuest(id: string): Promise<AdminQuest> {
  * because this module is `"use client"` — a Server Component importing a value
  * from here gets a client reference rather than the array.
  */
-export type { PostLocale } from "@/features/admin/constants";
+export type { ContentLocale } from "@/features/admin/constants";
 
-import type { PostLocale } from "@/features/admin/constants";
+import type { ContentLocale } from "@/features/admin/constants";
 
 export interface AdminPostTranslation {
-  locale: PostLocale;
+  locale: ContentLocale;
   title: string;
   excerpt: string;
   /** The tag chip's wording — display text, so it is per-language. */
@@ -258,6 +258,87 @@ export function publishPost(id: string): Promise<AdminPost> {
 /** Not a delete: taking a post off the blog is reversible. */
 export function unpublishPost(id: string): Promise<AdminPost> {
   return send("DELETE", `/posts/${id}`);
+}
+
+/* ── Wiki ── */
+
+export interface AdminWikiCategoryTranslation {
+  locale: ContentLocale;
+  title: string;
+}
+
+export interface AdminWikiArticleTranslation {
+  locale: ContentLocale;
+  title: string;
+  summary: string;
+  /** Markdown. */
+  body: string;
+}
+
+export interface AdminWikiArticle {
+  id: string;
+  slug: string;
+  categoryId: string;
+  published: boolean;
+  sortOrder: number;
+  createdAt: string;
+  translations: AdminWikiArticleTranslation[];
+}
+
+export interface AdminWikiCategory {
+  id: string;
+  key: string;
+  icon: string;
+  accent: string;
+  sortOrder: number;
+  translations: AdminWikiCategoryTranslation[];
+  articles: AdminWikiArticle[];
+}
+
+export type WikiCategoryInput = Omit<
+  AdminWikiCategory,
+  "id" | "articles" | "sortOrder"
+> & { sortOrder?: number };
+
+export type WikiArticleInput = Omit<
+  AdminWikiArticle,
+  "id" | "published" | "createdAt" | "sortOrder"
+> & { sortOrder?: number };
+
+export function createWikiCategory(
+  input: WikiCategoryInput,
+): Promise<AdminWikiCategory> {
+  return send("POST", "/wiki/categories", input);
+}
+
+/** Translations left out keep whatever they had, as with posts. */
+export function updateWikiCategory(
+  id: string,
+  input: Partial<WikiCategoryInput>,
+): Promise<AdminWikiCategory> {
+  return send("PATCH", `/wiki/categories/${id}`, input);
+}
+
+export function createWikiArticle(
+  input: WikiArticleInput,
+): Promise<AdminWikiArticle> {
+  return send("POST", "/wiki/articles", input);
+}
+
+export function updateWikiArticle(
+  id: string,
+  input: Partial<WikiArticleInput>,
+): Promise<AdminWikiArticle> {
+  return send("PATCH", `/wiki/articles/${id}`, input);
+}
+
+export function publishWikiArticle(id: string): Promise<AdminWikiArticle> {
+  return send("POST", `/wiki/articles/${id}/publish`);
+}
+
+/** Not a delete: taking an article off the wiki is reversible. */
+export function unpublishWikiArticle(id: string): Promise<AdminWikiArticle> {
+  return send("DELETE", `/wiki/articles/${id}`);
 }
 
 /* ── Payments ── */

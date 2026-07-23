@@ -7,13 +7,13 @@ import type {
   AdminPostTranslation,
   PostInput,
 } from "@/lib/admin/api";
-import { POST_LOCALES, POST_TAG_ACCENTS, type PostLocale } from "./constants";
+import { CONTENT_LOCALES, POST_TAG_ACCENTS, type ContentLocale } from "./constants";
 import styles from "./AdminProducts.module.scss";
 
 /** Mirrors the server's slug rule, so a typo is caught before the round trip. */
 const SLUG_PATTERN = "^[a-z0-9]+(?:-[a-z0-9]+)*$";
 
-function emptyTranslation(locale: PostLocale): AdminPostTranslation {
+function emptyTranslation(locale: ContentLocale): AdminPostTranslation {
   return { locale, title: "", excerpt: "", tag: "", body: "" };
 }
 
@@ -22,7 +22,7 @@ const EMPTY: PostInput = {
   image: "",
   tagAccent: POST_TAG_ACCENTS[0],
   author: "",
-  translations: POST_LOCALES.map(emptyTranslation),
+  translations: CONTENT_LOCALES.map(emptyTranslation),
 };
 
 /**
@@ -50,7 +50,7 @@ export function PostForm({
   onCancel: () => void;
 }) {
   const t = useTranslations("Admin");
-  const [tab, setTab] = useState<PostLocale>(POST_LOCALES[0]);
+  const [tab, setTab] = useState<ContentLocale>(CONTENT_LOCALES[0]);
   const [form, setForm] = useState<PostInput>(
     initial
       ? {
@@ -60,7 +60,7 @@ export function PostForm({
           author: initial.author,
           // A post may have only one translation so far; the missing one opens
           // blank rather than being absent from the form.
-          translations: POST_LOCALES.map(
+          translations: CONTENT_LOCALES.map(
             (locale) =>
               initial.translations.find((tr) => tr.locale === locale) ??
               emptyTranslation(locale),
@@ -74,7 +74,7 @@ export function PostForm({
   }
 
   function setText<K extends keyof AdminPostTranslation>(
-    locale: PostLocale,
+    locale: ContentLocale,
     key: K,
     value: AdminPostTranslation[K],
   ) {
@@ -153,7 +153,7 @@ export function PostForm({
         role="tablist"
         aria-label={t("blog.form.language")}
       >
-        {POST_LOCALES.map((locale) => (
+        {CONTENT_LOCALES.map((locale) => (
           <button
             key={locale}
             type="button"
