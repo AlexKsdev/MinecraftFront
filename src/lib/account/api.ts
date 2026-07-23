@@ -1,5 +1,7 @@
 import { clearSession, getSession } from "../auth/api";
 import { apiFetch } from "../http";
+import { API_ERROR_CODES } from "../api-error-codes";
+import { ApiError } from "../auth/errors";
 
 export interface Profile {
   id: string;
@@ -38,14 +40,18 @@ export async function getProfile(): Promise<Profile> {
   try {
     res = await apiFetch("/users/me");
   } catch {
-    throw new Error("Cannot reach the server. Please try again.");
+    throw new ApiError(
+      "Cannot reach the server. Please try again.",
+      API_ERROR_CODES.network,
+    );
   }
 
   if (res.status === 401) {
     clearSession();
     throw new UnauthorizedError();
   }
-  if (!res.ok) throw new Error("Failed to load profile");
+  if (!res.ok)
+    throw new ApiError("Failed to load profile", API_ERROR_CODES.loadFailed);
 
   return res.json() as Promise<Profile>;
 }

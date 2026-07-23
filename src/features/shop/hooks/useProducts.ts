@@ -3,7 +3,27 @@
 import { useEffect, useState } from "react";
 import { useTranslations } from "next-intl";
 import { getProducts, type Product, type ProductSort } from "@/lib/shop/api";
+import { API_ERROR_CODES } from "@/lib/api-error-codes";
+import { ApiError } from "@/lib/auth/errors";
 import { categories, PAGE_SIZE, MIN_LOADING_MS } from "../constants";
+
+/**
+ * Localizes a failure by the code the API layer tagged it with. An unmapped
+ * error keeps its own message rather than a generic line, so something new
+ * reads as untranslated English instead of hiding what went wrong.
+ */
+function errorText(err: unknown, t: (key: string) => string): string {
+  if (err instanceof ApiError) {
+    if (err.code === API_ERROR_CODES.network) return t("errors.network");
+    if (err.code === API_ERROR_CODES.purchaseFailed)
+      return t("errors.purchaseFailed");
+    if (err.code === API_ERROR_CODES.checkoutFailed)
+      return t("errors.checkoutFailed");
+    if (err.code === API_ERROR_CODES.loadFailed) return t("errors.loadFailed");
+  }
+  if (err instanceof Error && err.message) return err.message;
+  return t("errors.loadFailed");
+}
 
 /**
  * Owns the product listing: paginated fetch driven by category/sort/page, with
@@ -65,7 +85,7 @@ export function useProducts() {
       })
       .catch((err: unknown) => {
         settle(() => {
-          setError(err instanceof Error ? err.message : t("errors.loadFailed"));
+          setError(errorText(err, t));
           setLoading(false);
         });
       });
