@@ -1,8 +1,8 @@
-import { getFormatter, getTranslations } from "next-intl/server";
+import { getFormatter, getLocale, getTranslations } from "next-intl/server";
 import { serverFetch } from "@/lib/server/api";
 import type { AdminPost } from "@/lib/admin/api";
 import { POST_DATE_FORMAT } from "@/features/blog/constants";
-import { CONTENT_LOCALES } from "./constants";
+import { CONTENT_LOCALES, localizedTitle } from "./constants";
 import { PostCreate } from "./PostCreate";
 import { PostRowActions } from "./PostRowActions";
 import styles from "./AdminUsers.module.scss";
@@ -13,9 +13,10 @@ import styles from "./AdminUsers.module.scss";
  * there is no pager.
  */
 export async function AdminBlogView() {
-  const [t, format, res] = await Promise.all([
+  const [t, format, locale, res] = await Promise.all([
     getTranslations("Admin"),
     getFormatter(),
+    getLocale(),
     serverFetch("/posts/manage"),
   ]);
 
@@ -63,7 +64,9 @@ export async function AdminBlogView() {
                     className={post.published ? "" : styles.dim}
                   >
                     <td>
-                      <div>{post.translations[0]?.title ?? post.slug}</div>
+                      <div>
+                        {localizedTitle(post.translations, locale, post.slug)}
+                      </div>
                       <div className={styles.mono}>{post.slug}</div>
                     </td>
                     {/* Which languages exist, so a missing translation is
